@@ -1,0 +1,14 @@
+// Client settings for the Local server.
+{
+	// Analytics settings
+	"AnalyticsApiKeyAndroid": "",
+	"AnalyticsApiKeyIOS": "",
+	"AnalyticsApiKeyPC": "",
+
+	// Client settings
+	"SaveGameFilename": "player-save-local.dat",
+
+	// Server settings
+	"ServerBaseURL": "http://localhost:8080",
+	"ServerType": "LOCAL"
+}

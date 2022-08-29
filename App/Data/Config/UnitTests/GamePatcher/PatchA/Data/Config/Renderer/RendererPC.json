@@ -1,0 +1,34 @@
+{
+	"DefaultConfig": {
+		"DepthStencilSurfaces": {
+			"BackBufferDepth": {
+				"Format": "D24S8",
+				"HeightFactor": 1.0,
+				"HeightProportionalToBackBuffer": true,
+				"WidthFactor": 1.0,
+				"WidthProportionalToBackBuffer": true
+			}
+		},
+
+		"RenderTargets": {},
+
+		"RenderSurfaces": {
+			"BackBuffer": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "BackBuffer"
+			}
+		},
+
+		"RenderPasses": [
+			{
+				"Name": "UI",
+				"TrackRenderStats": true,
+				"ClearFlags": ["Color", "Depth"],
+				"ClearColor": [0.0, 0.0, 0.0, 0.0],
+				"ClearDepth": 1.0,
+				"PassRootType": "UI",
+				"Surface": "BackBuffer",
+			}
+		]
+	}
+}

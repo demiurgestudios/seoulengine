@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="Seoul::String">
+		<DisplayString Condition="m_zCapacity > 8">{m_buffer.pBuffer,s8}</DisplayString>
+		<DisplayString>{m_buffer.aSmallBuffer,s8}</DisplayString>
+	</Type>
+</AutoVisualizer>

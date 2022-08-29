@@ -1,0 +1,7 @@
+{
+	"DefaultState": "VideoCapture",
+
+	"VideoCapture": {
+		"Movies": ["Game::VideoCapture"]
+	}
+}

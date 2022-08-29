@@ -1,0 +1,204 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+
+//------------------------------------------------------------------------------
+// Output paths
+//------------------------------------------------------------------------------
+.InputBase  = 'Code'
+.BinBase    = 'Binaries'
+.LibBase    = 'Lib'
+.ObjBase    = 'Intermediate'
+
+//------------------------------------------------------------------------------
+// SeoulEngine
+//------------------------------------------------------------------------------
+#include '../SeoulEngine/SeoulEngine.bff'
+
+//------------------------------------------------------------------------------
+// SeoulEditor static libs
+//------------------------------------------------------------------------------
+{
+    .StaticLibBase    = '$InputBase$'
+
+    //------------------------------------------------------------------------------
+    // Projects to generate
+    //------------------------------------------------------------------------------
+    .ToBuildProjects = { 'Editor', 'EditorScene', 'EditorUI' }
+    .ToBuildProjectConfig = [
+        .Editor_Deps      = .DepsAnimation + { 'Animation3D', 'DevUI', 'FxStudio', 'Scene', '../../SeoulEditor/Code/EditorUI' } // TODO:
+        .EditorScene_Deps = .DepsEngine    + { 'Scene' }
+        .EditorUI_Deps    = .DepsEngine    + { 'DevUI', 'Scene', '../../SeoulEditor/Code/EditorScene' } // TODO:
+        .EditorUI_Externs = { 'imgui' }
+    ]
+
+    //------------------------------------------------------------------------------
+    // Generate the projects
+    //------------------------------------------------------------------------------
+    #include "../SeoulEngine/StaticLibGen.bff"
+}
+
+//------------------------------------------------------------------------------
+// SeoulEditor executables and dynamic libraries (C++ DLL and C# assemblies)
+//------------------------------------------------------------------------------
+.LocalConfigs = { .SeoulEngineDebugTools, .SeoulEngineDeveloperTools }
+.LocalProjectsEngine_PC = {
+    'Animation', 'Animation3D', 'Content', 'Core', 'D3DCommon', 'D3D11',
+    'DevUI', 'Engine', 'Events', 'Fx', 'FxStudio', 'HAL', 'HTTP', 'Jobs',
+    'Navigation', 'PC', 'Physics', 'Reflection', 'Rendering', 'Scene',
+    'Settings', 'Sound',
+}
+.LocalProjectsExtern_PC = {
+    'bounce', 'curl', 'fx11',
+#if SEOUL_WITH_FX_STUDIO
+    'FxStudioRuntime',
+#endif
+    'imgui',
+    'jemalloc', 'lz4', 'nghttp2', 'spng', 'wjcryptlib', 'zlib', 'zstd',
+}
+.LocalProjects_PC = { 'Editor', 'EditorScene', 'EditorUI' } + .LocalProjectsEngine_PC + .LocalProjectsExtern_PC
+
+ForEach(.LocalConfig in .LocalConfigs) {
+    .LocalPlatform = .SeoulPlatformPC
+    .LocalArchs = .'$LocalPlatform$Archs'
+    ForEach(.LocalArch in .LocalArchs) {
+        .LocalBinBase       = '$BinBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalLibBase       = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalNamePrefix    = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+        .LocalObjBase       = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalDebugPrefix   = '$LocalPlatform$-Debug-$LocalArch$'
+        .LocalReleasePrefix = '$LocalPlatform$-Release-$LocalArch$'
+
+        // TODO: Cleanup.
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^LocalBinBase = '$BinBase$/$LocalPlatform$/Debug/$LocalArch$'
+        }
+        If(.SeoulEngineDeveloperTools == .LocalConfig) {
+            ^LocalBinBase = '$BinBase$/$LocalPlatform$/Developer/$LocalArch$'
+        }
+
+        // Local context for GenExecutable().
+        #include '../SeoulEngine/CaptureLocalCtxt.bff'
+
+        //------------------------------------------------------------------------------
+        // C/C++ executables and DLLs
+        //------------------------------------------------------------------------------
+        // EditorPC
+        {
+            .TmpArgs = [
+                .LocalName = 'EditorPC'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$InputBase$/Editor', '$InputBase$/EditorScene',
+                    '$InputBase$/EditorUI',
+
+                    '$SeoulEngineBase$/Content',
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/D3DCommon',
+                    '$SeoulEngineBase$/Engine', '$SeoulEngineBase$/Events',
+                    '$SeoulEngineBase$/Fx', '$SeoulEngineBase$/Jobs',
+                    '$SeoulEngineBase$/HAL', '$SeoulEngineBase$/HTTP',
+                    '$SeoulEngineBase$/PC', '$SeoulEngineBase$/Reflection',
+                    '$SeoulEngineBase$/Rendering', '$SeoulEngineBase$/Settings',
+                    '$SeoulEngineBase$/Sound',
+                }
+
+                // Linker settings
+                .ArgExterns   = { 'openssl/libs/Windows/x64' }
+                .ArgLibraries = .LocalProjects_PC
+                .ArgExternLibs                        = {
+                    'Ws2_32', 'version', 'dbghelp', 'd3dcompiler', 'd3d11', 'dxgi', 'libeay32', 'ssleay32', 'XInput'
+                }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        //------------------------------------------------------------------------------
+        // Dependency copies.
+        //------------------------------------------------------------------------------
+        Copy('$LocalNamePrefix$-EditorPC-DepCopy') {
+            // Common sources, the same for all builds.
+            .Source = {
+#if SEOUL_WITH_FMOD
+                '$ExternalBase$/FMOD/Windows/api/core/lib/x64/fmod.dll',
+                '$ExternalBase$/FMOD/Windows/api/studio/lib/x64/fmodstudio.dll',
+#endif
+            }
+            .Dest = '$LocalBinBase$/'
+        }
+
+        //------------------------------------------------------------------------------
+        // Clean Targets
+        //------------------------------------------------------------------------------
+        RemoveDir('PC-$LocalConfig$-Clean') {
+            .RemovePaths = {
+                '$LocalBinBase$',
+                '$LocalObjBase$',
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Targets
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    Alias('PC-$LocalConfig$') {
+        .Targets = {
+            'PC-$LocalConfig$-x64-EditorPC',
+            'PC-$LocalConfig$-x64-EditorPC-DepCopy'
+        }
+    }
+}
+
+Alias('PC-All') {
+    .Targets = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        ^Targets + 'PC-$LocalConfig$'
+    }
+}
+
+//------------------------------------------------------------------------------
+// .sln and .vcxproj generation
+//------------------------------------------------------------------------------
+VSSolution('GenSln') {
+    .SolutionOutput = 'SeoulEditor.sln'
+
+    // Build configurations.
+    .SolutionConfigs = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        .TmpConfig = [
+            .Config   = .LocalConfig
+            .Platform = 'x64'
+        ]
+        ^SolutionConfigs + .TmpConfig
+    }
+
+    // Solution folders
+    .SeoulEditorFolder = [
+        .Path = 'SeoulEditor'
+        .Projects = { 'Editor-vcxproj', 'EditorPC-vcxproj', 'EditorScene-vcxproj', 'EditorUI-vcxproj' }
+    ]
+    .EngineFolder = [
+        .Path = 'Engine'
+        .Projects = {}
+        ForEach(.LocalProject in .LocalProjectsEngine_PC) {
+            ^Projects + '$LocalProject$-vcxproj'
+        }
+    ]
+    .ExternFolder = [
+        .Path = 'External'
+        .Projects = {}
+        ForEach(.LocalProject in .LocalProjectsExtern_PC) {
+            ^Projects + '$LocalProject$-vcxproj'
+        }
+    ]
+    .SolutionFolders = { .SeoulEditorFolder, .EngineFolder, .ExternFolder }
+
+    // Miscellaneous config.
+    .SolutionBuildProject               = 'EditorPC-vcxproj'
+    .SolutionMinimumVisualStudioVersion = .VS_Version
+    .SolutionVisualStudioVersion        = .VS_Version
+}

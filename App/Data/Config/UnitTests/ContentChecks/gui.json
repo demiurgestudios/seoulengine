@@ -1,0 +1,29 @@
+{
+	"StateMachines": [],
+
+	// Font configuration
+	"Fonts": {
+		"Regular": "content://Authored/UI/Fonts/RobotoMed.ttf",
+		"Bold": "content://Authored/UI/Fonts/Qanelas.ttf"
+	},
+
+	"FontAliases": {
+		"English": {
+			"FuseV.2Display-Black": {
+				"regular": "Regular",
+				"bold": "Regular"
+			},
+			"Qanelas Soft Heavy": {
+				"regular": "Bold",
+				"bold": "Bold"
+			},
+			"Roboto Black": {
+				"regular": "Regular",
+				"bold": "Regular"
+			}
+		}
+	},
+
+	"Stage3DSettings": "config://Stage3DSettings.json",
+	"TextEffects": "config://TextEffectSettings.json"
+}

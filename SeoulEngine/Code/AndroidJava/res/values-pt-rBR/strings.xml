@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_button_cancel">✓</string>
+    <string name="text_button_ok">✓</string>
+    <string name="initialization_failed_title">Initialization Failed</string>
+    <string name="initialization_failed_body">Failed to load system file (error %1$d).</string>
+</resources>

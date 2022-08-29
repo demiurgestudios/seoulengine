@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamehelper_sign_in_failed">Échec de la connexion. Vérifiez votre connexion au réseau et réessayez.</string>
+    <string name="gamehelper_app_misconfigured">L\'application n\'est pas correctement configurée. Vérifiez que le nom du paquet et que le certificat de signature correspondent à l\'ID client créée dans la console de développeur. De même, si l\'application n\'est pas encore publiée, vérifiez que le compte avec lequel vous essayez de vous connecter est listé en tant que compte de testeur. Voir les journaux pour plus d\'informations.</string>
+    <string name="gamehelper_license_failed">Échec de la vérification de licence.</string>
+    <string name="gamehelper_unknown_error">Erreur inconnue.</string>
+</resources>

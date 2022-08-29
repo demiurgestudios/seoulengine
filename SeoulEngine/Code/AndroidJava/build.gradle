@@ -1,0 +1,231 @@
+// Process configuration from BuildFeatures.h
+boolean SEOUL_WITH_AMAZON = false
+boolean SEOUL_WITH_APPS_FLYER = false
+boolean SEOUL_WITH_FACEBOOK = false
+boolean SEOUL_WITH_FMOD = false
+boolean SEOUL_WITH_HELPSHIFT = false
+boolean SEOUL_WITH_GOOGLE_ANALYTICS = false
+boolean SEOUL_WITH_SAMSUNG = false
+String SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID = ""
+String SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME = ""
+String SEOUL_LOCAL_NOTIFICATION_ICON_NAME = ""
+String SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL = ""
+String SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION = ""
+String SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION = ""
+String SEOUL_LOCAL_NOTIFICATION_AFSENDER = ""
+String SEOUL_ANDROID_LAUNCH_PACKAGE = ""
+String SEOUL_ANDROID_LAUNCH_NAME = ""
+String SEOUL_NATIVE_ANDROID_LIBNAME = ""
+
+def getMacroString(str, macro) {
+	// Regular expression match of a few #define cases (e.g. #define A 0, #define A 1, #define A SEOUL_PLATFORM_ANDROID)
+	def match = (str =~ /#define[ \t]+/ + macro + /[ \t]+\"(.*)\"/)
+	if (match.size() != 1 || match[0].size() != 2) {
+		throw new GradleException('could not parse macro "' + macro + '" from BuildFeatures.h')
+	} else {
+		return match[0][1]
+	}
+}
+
+def isMacroTrue(str, macro) {
+	// Regular expression match of a few #define cases (e.g. #define A 0, #define A 1, #define A SEOUL_PLATFORM_ANDROID)
+	return (str =~ /#define[ \t]+/ + macro + /[ \t]\(?(SEOUL_PLATFORM_[A-Z]+[ \t]*\|\|?[ \t]*)?(1|SEOUL_PLATFORM_ANDROID)([ \t]*\|\|?[ \t]*SEOUL_PLATFORM_[A-Z]+)?\)?/)
+}
+
+// Read feature configuration from the native header file.
+String std = (new File(java.nio.file.Paths.get(buildscript.sourceFile.getParent(), "../Core/BuildFeatures.h").toString())).text
+
+// Configuration.
+if (isMacroTrue(std, "SEOUL_WITH_AMAZON"))           { SEOUL_WITH_AMAZON = true     }
+if (isMacroTrue(std, "SEOUL_WITH_APPS_FLYER"))       { SEOUL_WITH_APPS_FLYER = true }
+if (isMacroTrue(std, "SEOUL_WITH_FACEBOOK"))         { SEOUL_WITH_FACEBOOK = true   }
+if (isMacroTrue(std, "SEOUL_WITH_FMOD"))             { SEOUL_WITH_FMOD = true   }
+if (isMacroTrue(std, "SEOUL_WITH_HELPSHIFT"))        { SEOUL_WITH_HELPSHIFT = true  }
+if (isMacroTrue(std, "SEOUL_WITH_GOOGLE_ANALYTICS")) { SEOUL_WITH_GOOGLE_ANALYTICS = true   }
+if (isMacroTrue(std, "SEOUL_WITH_SAMSUNG"))          { SEOUL_WITH_SAMSUNG = true     }
+SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID")
+SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME")
+SEOUL_LOCAL_NOTIFICATION_ICON_NAME = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_ICON_NAME")
+SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL")
+SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION")
+SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION")
+SEOUL_LOCAL_NOTIFICATION_AFSENDER = getMacroString(std, "SEOUL_LOCAL_NOTIFICATION_AFSENDER")
+SEOUL_ANDROID_LAUNCH_PACKAGE = getMacroString(std, "SEOUL_ANDROID_LAUNCH_PACKAGE")
+SEOUL_ANDROID_LAUNCH_NAME = getMacroString(std, "SEOUL_ANDROID_LAUNCH_NAME")
+SEOUL_NATIVE_ANDROID_LIBNAME = getMacroString(std, "SEOUL_NATIVE_ANDROID_LIBNAME")
+
+// Setup src paths.
+ArrayList srcDirs = ['src']
+if (SEOUL_WITH_AMAZON)           { srcDirs << 'srcWithAmazon'          } else { srcDirs << 'srcNoAmazon'          }
+if (SEOUL_WITH_APPS_FLYER)       { srcDirs << 'srcWithAppsFlyer'       } else { srcDirs << 'srcNoAppsFlyer'       }
+if (SEOUL_WITH_FACEBOOK)         { srcDirs << 'srcWithFacebook'        } else { srcDirs << 'srcNoFacebook'        }
+if (SEOUL_WITH_FMOD)             { srcDirs << 'srcWithFmod'            } else { srcDirs << 'srcNoFmod'            }
+if (SEOUL_WITH_HELPSHIFT)        { srcDirs << 'srcWithHelpshift'       } else { srcDirs << 'srcNoHelpshift'       }
+if (SEOUL_WITH_GOOGLE_ANALYTICS) { srcDirs << 'srcWithGoogleAnalytics' } else { srcDirs << 'srcNoGoogleAnalytics' }
+if (SEOUL_WITH_SAMSUNG)          { srcDirs << 'srcWithSamsung'         } else { srcDirs << 'srcNoSamsung'         }
+
+// Report.
+println "SEOUL_WITH_AMAZON = " + SEOUL_WITH_AMAZON
+println "SEOUL_WITH_APPS_FLYER = " + SEOUL_WITH_APPS_FLYER
+println "SEOUL_WITH_FACEBOOK = " + SEOUL_WITH_FACEBOOK
+println "SEOUL_WITH_FMOD = " + SEOUL_WITH_FMOD
+println "SEOUL_WITH_HELPSHIFT = " + SEOUL_WITH_HELPSHIFT
+println "SEOUL_WITH_GOOGLE_ANALYTICS = " + SEOUL_WITH_GOOGLE_ANALYTICS
+println "SEOUL_WITH_SAMSUNG = " + SEOUL_WITH_SAMSUNG
+println "SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID = \"" + SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID + "\""
+println "SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME = \"" + SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME + "\""
+println "SEOUL_LOCAL_NOTIFICATION_ICON_NAME = \"" + SEOUL_LOCAL_NOTIFICATION_ICON_NAME + "\""
+println "SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL = \"" + SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL + "\""
+println "SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION = \"" + SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION + "\""
+println "SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION = \"" + SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION + "\""
+println "SEOUL_LOCAL_NOTIFICATION_AFSENDER = \"" + SEOUL_LOCAL_NOTIFICATION_AFSENDER + "\""
+println "SEOUL_ANDROID_LAUNCH_PACKAGE = \"" + SEOUL_ANDROID_LAUNCH_PACKAGE + "\""
+println "SEOUL_ANDROID_LAUNCH_NAME = \"" + SEOUL_ANDROID_LAUNCH_NAME + "\""
+println "SEOUL_NATIVE_ANDROID_LIBNAME = \"" + SEOUL_NATIVE_ANDROID_LIBNAME + "\""
+println "srcDirs: " + srcDirs
+
+buildscript {
+	repositories {
+		if (gradle.startParameter.isOffline()) {
+			maven { url "${System.env.SEOUL_ANDROID_SDK}/gradle-5.5.1/repo-5" }
+		} else {
+			jcenter()
+			google()
+		}
+	}
+	dependencies {
+		classpath 'com.android.tools.build:gradle:3.2.0'
+	}
+}
+
+allprojects {
+	repositories {
+		if (gradle.startParameter.isOffline()) {
+			maven { url "${System.env.SEOUL_ANDROID_SDK}/gradle-5.5.1/repo-5" }
+		} else {
+			jcenter()
+			google()
+		}
+		if (SEOUL_WITH_HELPSHIFT) {
+			flatDir { dirs '../../../External/HelpShift/Android' }
+		}
+	}
+
+	// More aggressive lint checking.
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+			// TODO: Enable warnings as errors once we've replaced GCM.
+			// << "-Werror"
+		}
+	}
+}
+
+apply plugin: 'com.android.library'
+
+android {
+	compileSdkVersion 29
+	buildToolsVersion '29.0.2'
+
+	defaultConfig {
+		minSdkVersion 16
+		targetSdkVersion 29
+
+		// Define.
+		buildConfigField("String", "LOCAL_NOTIFICATION_CHANNEL_ID", '"' + SEOUL_LOCAL_NOTIFICATION_CHANNEL_ID + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_CHANNEL_NAME", '"' + SEOUL_LOCAL_NOTIFICATION_CHANNEL_NAME + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_ICON_NAME", '"' + SEOUL_LOCAL_NOTIFICATION_ICON_NAME + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL", '"' + SEOUL_LOCAL_NOTIFICATION_ACTION_BROADCAST_LOCAL + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION", '"' + SEOUL_LOCAL_NOTIFICATION_ACTION_POST_NOTIFICATION + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION", '"' + SEOUL_LOCAL_NOTIFICATION_ACTION_CONSUME_NOTIFICATION + '"')
+		buildConfigField("String", "LOCAL_NOTIFICATION_AFSENDER", '"' + SEOUL_LOCAL_NOTIFICATION_AFSENDER + '"')
+		buildConfigField("String", "ANDROID_LAUNCH_PACKAGE", '"' + SEOUL_ANDROID_LAUNCH_PACKAGE + '"')
+		buildConfigField("String", "ANDROID_LAUNCH_NAME", '"' + SEOUL_ANDROID_LAUNCH_NAME + '"')
+		buildConfigField("String", "NATIVE_ANDROID_LIBNAME", '"' + SEOUL_NATIVE_ANDROID_LIBNAME + '"')
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_7
+		targetCompatibility JavaVersion.VERSION_1_7
+	}
+
+	lintOptions {
+		abortOnError true
+		checkAllWarnings true
+		checkReleaseBuilds true
+		enable 'InlinedApi', 'NewApi', 'RtlCompat', 'RtlEnabled', 'RtlHardcoded'
+		disable 'ButtonStyle', 'GoogleAppIndexingWarning', 'GoogleAppIndexingApiWarning',
+			'GradleCompatible', 'GradleDependency', 'GradleOverrides', 'IconLauncherShape',
+			'LabelFor', 'LambdaLast', 'UnusedAttribute', 'UnknownNullness', 'UnusedResources'
+		warningsAsErrors true
+	}
+
+	sourceSets {
+		debug {
+			manifest.srcFile 'AndroidManifestDebug.xml'
+			aidl.srcDirs = srcDirs
+			java.srcDirs = srcDirs
+			res.srcDirs = ['res']
+		}
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+		}
+		release {
+			manifest.srcFile 'AndroidManifest.xml'
+			aidl.srcDirs = srcDirs
+			java.srcDirs = srcDirs
+			res.srcDirs = ['res']
+		}
+	}
+}
+
+// TODO: All uses of 'api' here should instead
+// be 'implementation' - this will require refactoring
+// code in AppAndroid.java, etc. so that it is actually
+// implemented at SeoulEngine level instead of app level.
+//
+// We're effectively deliberately "polluting" App with
+// our dependencies because many are also needed by
+// the app.
+dependencies {
+	api fileTree(dir: 'libs', include: ['*.jar'])
+	if (SEOUL_WITH_AMAZON) {
+		compileOnly fileTree(dir: '../../../External/AmazonMobileAppSDK/Android/DeviceMessaging/lib', include: ['*.jar'])
+		api fileTree(dir: '../../../External/AmazonMobileAppSDK/Android/InAppPurchasing/2.0/lib', include: ['*.jar'])
+	}
+	if (SEOUL_WITH_APPS_FLYER) {
+		api fileTree(dir: '../../../External/AppsFlyer/Android', include: ['*.jar'])
+	}
+	if (SEOUL_WITH_FMOD) {
+		api fileTree(dir: '../../../External/FMOD/Android/api/core/lib', include: ['*.jar'])
+	}
+	api 'com.android.billingclient:billing:1.2'
+	api 'com.google.android.gms:play-services-auth:15.0.1'
+	api 'com.google.firebase:firebase-messaging:17.1.0'
+	api 'com.google.android.gms:play-services-games:15.0.1'
+	api 'com.google.android.gms:play-services-ads-identifier:15.0.1'
+	api 'com.android.support:support-v4:27.1.1'
+	api 'com.android.support:support-v13:27.1.1'
+	if (SEOUL_WITH_HELPSHIFT) {
+		api 'com.android.support:design:28.0.0' // Helpshift
+		api 'com.android.support:recyclerview-v7:28.0.0' // Helpshift
+		api 'com.android.support:cardview-v7:28.0.0' // Helpshift
+		api fileTree(dir: '../../../External/HelpShift/Android', include: ['*.aar']) // Helpshift
+	}
+	if (SEOUL_WITH_FACEBOOK) {
+		api 'com.android.support:support-annotations:27.0.2' // Facebook
+		api 'com.android.support:support-core-utils:27.0.2' // Facebook
+		api 'com.android.installreferrer:installreferrer:1.0' // Facebook
+		api 'com.android.support:appcompat-v7:27.0.2' // Facebook
+		api 'com.android.support:cardview-v7:27.0.2' // Facebook
+		api 'com.android.support:customtabs:27.0.2' // Facebook
+		api 'com.google.zxing:core:3.3.3' // Facebook
+		api fileTree(dir: '../../../External/FacebookSDK/Android', include: ['*.aar']) // Facebook
+	}
+	if (SEOUL_WITH_GOOGLE_ANALYTICS) {
+		api 'com.google.firebase:firebase-analytics:16.0.1'
+	}
+	if (SEOUL_WITH_SAMSUNG) {
+		api project(':AndroidSamsung')
+	}
+}

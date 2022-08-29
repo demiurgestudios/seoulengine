@@ -1,0 +1,26 @@
+{
+	"DefaultConfig": {
+		"DepthStencilSurfaces": {},
+
+		"RenderTargets": {},
+
+		"RenderSurfaces": {
+			"BackBuffer": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "BackBuffer"
+			}
+		},
+
+		"RenderPasses": [
+			{
+				"Name": "UI",
+				"TrackRenderStats": true,
+				"ClearFlags": ["Color", "Depth"],
+				"ClearColor": [0.0, 0.0, 0.0, 0.0],
+				"ClearDepth": 1.0,
+				"PassRootType": "UI",
+				"Surface": "BackBuffer",
+			}
+		]
+	}
+}

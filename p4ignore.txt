@@ -1,0 +1,30 @@
+# File wildcards
+*.jar
+*.vcxproj.user
+*.csproj.user
+
+# Entire folders
+bin
+.cache
+.vs
+GeneratedAndroid
+GeneratedLocal
+GeneratedPC
+obj-developer
+AntBuild\assets\Data
+AntBuild\libs
+GradleBuild\.gradle
+GradleBuild\assets\Data
+GradleBuild\build
+GradleBuild\libs
+GradleBuild\obj-gradle-*
+
+# Specific files
+libAppAndroid.so
+.suo
+.d
+BuildConfig.java
+Manifest.java
+IInAppBillingService.java
+R.java
+R.java.d

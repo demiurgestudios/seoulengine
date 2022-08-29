@@ -1,0 +1,3 @@
+androidbuild text eol=lf
+iosbuild     text eol=lf
+linuxbuild   text eol=lf

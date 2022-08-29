@@ -1,0 +1,173 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+#include "SeoulEngineCommon.bff"
+
+//------------------------------------------------------------------------------
+// Basic configuration
+//------------------------------------------------------------------------------
+.Linux_ToolchainPath = '$SEOUL_LINUX_SDK$'
+.Linux_Bin           = '$Linux_ToolchainPath$/bin'
+.Linux_CppPlatform   = 'x86_64-unknown-linux-gnu'
+.Linux_CppStdLibBase = '$Linux_ToolchainPath$/lib'
+
+//------------------------------------------------------------------------------
+// C/C++ Preprocessor defines
+//------------------------------------------------------------------------------
+.Linux_DefinesCommon         = ' -DCURL_STATICLIB'
+                             + ' -DNGHTTP2_STATICLIB'
+                             + ' -DUSE_NGHTTP2'
+                             + ' -DFBXSDK_SHARED'
+                             + ' -DSPNG_STATIC'
+.Linux_DefinesDebug          = .Linux_DefinesCommon + ' -D_DEBUG -DDEBUG_HTTP2'
+.Linux_DefinesDebugTools     = .Linux_DefinesCommon + ' -D_DEBUG -DSEOUL_EDITOR_AND_TOOLS'
+.Linux_DefinesDeveloper      = .Linux_DefinesCommon + ' -DNDEBUG -DDEBUG_HTTP2'
+.Linux_DefinesDeveloperTools = .Linux_DefinesCommon + ' -DNDEBUG -DSEOUL_EDITOR_AND_TOOLS'
+.Linux_DefinesProfiling      = .Linux_DefinesCommon + ' -DNDEBUG -D_SHIP -DSEOUL_PROFILING_BUILD'
+.Linux_DefinesShip           = .Linux_DefinesCommon + ' -DNDEBUG -D_SHIP'
+
+//------------------------------------------------------------------------------
+// C/C++ Compiler options
+//------------------------------------------------------------------------------
+.Linux_ClOptsCommon                = ' -c'
+                                   + ' -fdata-sections'
+                                   + ' -ffunction-sections'
+                                   + ' -fstack-protector-strong'
+                                   // TODO: + ' -no-canonical-prefixes'
+                                   + ' --sysroot $Linux_ToolchainPath$'
+                                   + ' -g'
+                                   + ' -fno-limit-debug-info'
+                                   + ' -fno-exceptions'
+                                   + ' -fno-rtti'
+                                   + ' -fvisibility=hidden'
+                                   + ' -fno-strict-aliasing'
+                                   + ' -fomit-frame-pointer'
+                                   + ' -fno-short-enums'
+                                   + ' -Wall'
+                                   + ' -Werror'
+                                   + ' -Wno-self-assign-overloaded'
+                                   // TODO: Necessary because FASTBuild uses messages to emulate compiler output, but messages are "warnings" under clang.
+                                   + ' -Wno-#pragma-messages'
+
+.'Linux_ClOpts_Debug_x64'          = .Linux_ClOptsCommon + ' -O0 -target $Linux_CppPlatform$ -march=x86-64 -funwind-tables'
+.'Linux_ClOpts_DebugTools_x64'     = .Linux_ClOptsCommon + ' -O0 -target $Linux_CppPlatform$ -march=x86-64 -funwind-tables'
+.'Linux_ClOpts_Developer_x64'      = .Linux_ClOptsCommon + ' -O2 -target $Linux_CppPlatform$ -march=x86-64 -funwind-tables'
+.'Linux_ClOpts_DeveloperTools_x64' = .Linux_ClOptsCommon + ' -O2 -target $Linux_CppPlatform$ -march=x86-64 -funwind-tables'
+.'Linux_ClOpts_Profiling_x64'      = .Linux_ClOptsCommon + ' -O2 -target $Linux_CppPlatform$ -march=x86-64 -funwind-tables'
+.'Linux_ClOpts_Ship_x64'           = .Linux_ClOptsCommon + ' -O2 -target $Linux_CppPlatform$ -march=x86-64'
+
+//------------------------------------------------------------------------------
+// C/C++ Linker options
+//------------------------------------------------------------------------------
+.Linux_LinkOptsCommon                = ''
+
+.'Linux_LinkOpts_Debug_x64'          = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+.'Linux_LinkOpts_DebugTools_x64'     = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+.'Linux_LinkOpts_Developer_x64'      = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+.'Linux_LinkOpts_DeveloperTools_x64' = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+.'Linux_LinkOpts_Profiling_x64'      = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+.'Linux_LinkOpts_Ship_x64'           = .Linux_LinkOptsCommon + ' $Linux_CppStdLibBase$/libstdc++.a -target $Linux_CppPlatform$'
+
+//------------------------------------------------------------------------------
+// Compilers
+//------------------------------------------------------------------------------
+Compiler('Compiler-Clang-Linux-x64') {
+    .CompilerFamily = 'clang'
+    .Executable     = '$Linux_Bin$/clang.exe'
+}
+
+//------------------------------------------------------------------------------
+// "C# compiler" (placeholder for clang)
+//------------------------------------------------------------------------------
+."Linux-Debug-x64-CompilerCSharp"               = []
+."Linux-DebugTools-x64-CompilerCSharp"          = []
+."Linux-Developer-x64-CompilerCSharp"           = []
+."Linux-DeveloperTools-x64-CompilerCSharp"      = []
+."Linux-Profiling-x64-CompilerCSharp"           = []
+."Linux-Ship-x64-CompilerCSharp"                = []
+
+."Linux-Debug-x64-CompilerCSharpNaked"          = []
+."Linux-DebugTools-x64-CompilerCSharpNaked"     = []
+."Linux-Developer-x64-CompilerCSharpNaked"      = []
+."Linux-DeveloperTools-x64-CompilerCSharpNaked" = []
+."Linux-Profiling-x64-CompilerCSharpNaked"      = []
+."Linux-Ship-x64-CompilerCSharpNaked"           = []
+
+//------------------------------------------------------------------------------
+// "Resource compiler" (placeholder for clang)
+//------------------------------------------------------------------------------
+."Linux-Debug-x64-ResourceCompiler"             = []
+."Linux-DebugTools-x64-ResourceCompiler"        = []
+."Linux-Developer-x64-ResourceCompiler"         = []
+."Linux-DeveloperTools-x64-ResourceCompiler"    = []
+."Linux-Profiling-x64-ResourceCompiler"         = []
+."Linux-Ship-x64-ResourceCompiler"              = []
+
+//------------------------------------------------------------------------------
+// C/C++ compiler targets
+//------------------------------------------------------------------------------
+.Linux_CompilerC_Base = [
+    .Compiler          = 'Compiler-Clang-Linux-x64'
+    .CompilerOptions   = '-c "%1" -o "%2"'
+    .StdIncludePaths   = ''
+
+    // Librarian
+    .Librarian         = '$Linux_Bin$/llvm-ar.exe'
+    .LibrarianOptions  = 'crsD "%2" "%1"'
+    .LibrarianType     = 'ar'
+
+    // Linker
+    .Linker            = '$Linux_Bin$/clang++.exe'
+    .LinkerLinkObjects = false
+    .LinkerOptions     = ' "%1"'
+                       // TODO: + + ' -fuse-ld=lld'
+                       // TODO: + ' -no-canonical-prefixes'
+                       // TODO: + ' -Wl,--build-id=sha1'
+                       + ' --sysroot $Linux_ToolchainPath$'
+                       // TODO: + ' -nostdlib++'
+                       // TODO: + ' -Wl,--no-undefined'
+                       + ' -o "%2"'
+    .LinkerType        = 'gcc'
+    .StdLibPaths       = ''
+    .StdLibs           = ''
+]
+
+// Establish base
+."Linux-Debug-x64-CompilerC"          = .Linux_CompilerC_Base
+."Linux-DebugTools-x64-CompilerC"     = .Linux_CompilerC_Base
+."Linux-Developer-x64-CompilerC"      = .Linux_CompilerC_Base
+."Linux-DeveloperTools-x64-CompilerC" = .Linux_CompilerC_Base
+."Linux-Profiling-x64-CompilerC"      = .Linux_CompilerC_Base
+."Linux-Ship-x64-CompilerC"           = .Linux_CompilerC_Base
+
+// Customize variations
+ForEach(.LocalArch in .LinuxArchs) {
+    ForEach(.LocalConfig in .SeoulEngineConfigs) {
+        .LocalCustom = [
+            .CompilerOptions = ."Linux_Defines$LocalConfig$"
+                             + ."Linux_ClOpts_$LocalConfig$_$LocalArch$"
+            .LinkerOptions   = ."Linux_LinkOpts_$LocalConfig$_$LocalArch$"
+        ]
+        ^"Linux-$LocalConfig$-$LocalArch$-CompilerC" + .LocalCustom
+    }
+}
+
+//------------------------------------------------------------------------------
+// llvm-strip compiler targets
+//------------------------------------------------------------------------------
+.Linux_Strip_Base = [
+    .ExecExecutable = '$Linux_Bin$/x86_64-unknown-linux-gnu-strip.exe'
+    .ExecArguments  = '--strip-unneeded "%1" -o "%2"'
+]
+
+// Establish base
+."Linux-Debug-x64-Strip"          = .Linux_Strip_Base
+."Linux-DebugTools-x64-Strip"     = .Linux_Strip_Base
+."Linux-Developer-x64-Strip"      = .Linux_Strip_Base
+."Linux-DeveloperTools-x64-Strip" = .Linux_Strip_Base
+."Linux-Profiling-x64-Strip"      = .Linux_Strip_Base
+."Linux-Ship-x64-Strip"           = .Linux_Strip_Base

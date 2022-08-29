@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="Seoul::HString">
+		<DisplayString>{s_kGlobalData.m_apGlobalArrayTable.m_a[m_hHandle]->m_pData}</DisplayString>
+	</Type>
+</AutoVisualizer>

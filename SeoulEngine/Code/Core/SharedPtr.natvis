@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="Seoul::SharedPtr&lt;*&gt;">
+		<DisplayString Condition="m_p == 0">empty</DisplayString>
+		<DisplayString>SharedPtr {*m_p}</DisplayString>
+		<Expand>
+			<Item Name="[ptr]" Condition="m_p != 0">_Ptr</Item>
+		</Expand>
+	</Type>
+</AutoVisualizer>

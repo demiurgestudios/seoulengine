@@ -1,0 +1,26 @@
+{
+	// This has become an unfortunate bit of boilerplate - in short, to prevent errors
+	// around soft patching, all state machines must have a global transition back
+	// to their default state and that default state must have one and only one transition,
+	// keyed on the GameLoaded conditional.
+	"DefaultState": "GameNotLoaded",
+	"Transitions": [
+		{ "NegativeConditions": ["GameLoaded"], "Target": "GameNotLoaded", "Tag": "RestartTransition" }
+	],
+	"GameNotLoaded": {
+		"Movies": [],
+		"Transitions": [
+			{ "Conditions": ["GameLoaded"], "Target": "Empty" }
+		]
+	},
+
+	"Empty" : {
+		"Transitions": [
+			{ "Conditions": ["GameLoaded"], "Target": "GlobalBroadcastHandler" }
+		]
+	},
+
+	"GlobalBroadcastHandler": {
+		"Movies": ["GlobalBroadcastHandler"]
+	}
+}

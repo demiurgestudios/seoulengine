@@ -1,0 +1,401 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+//------------------------------------------------------------------------------
+// External projects are currently all static libs (use StaticLibGen.bff).
+//------------------------------------------------------------------------------
+{
+    .StaticLibBase = '$ExternalBase$'
+    .StdCppExt     = false
+
+    // Exclude default SeoulEngine includes from External projects.
+    .DepsCore      = {}
+
+    //------------------------------------------------------------------------------
+    // Projects to generate
+    //------------------------------------------------------------------------------
+    .ToBuildProjects = {
+        'amd_tootle', 'AndroidSupport', 'bounce', 'breakpad', 'crunch', 'curl',
+        'fx11',
+#if SEOUL_WITH_FX_STUDIO
+        'FxStudioRuntime',
+#endif
+        'glslang', 'imgui', 'jemalloc', 'lua_protobuf',
+        'lz4', 'miniz', 'mongoose-mit', 'nghttp2',
+        'spng', 'tess2', 'wjcryptlib', 'zlib', 'zstd',
+    }
+
+    .ToBuildProjectConfig = [
+        //------------------------------------------------------------------------------
+        // amd_tootle
+        //------------------------------------------------------------------------------
+        .amd_tootle_Defines    = { '_SOFTWARE_ONLY_VERSION', '_DISABLE_EXCEPTIONS' }
+        .amd_tootle_Externs    = {
+            'amd_tootle/src/TootleLib/include',
+            'amd_tootle/src/TootleLib',
+            'amd_tootle/src/TootleLib/RayTracer',
+            'amd_tootle/src/TootleLib/RayTracer/JRT',
+            'amd_tootle/src/TootleLib/RayTracer/Math',
+        }
+        .amd_tootle_InputFiles = {
+            'src/TootleLib/aligned_malloc.cpp',
+            'src/TootleLib/clustering.cpp',
+            'src/TootleLib/error.c',
+            'src/TootleLib/feedback.cpp',
+            'src/TootleLib/fit.cpp',
+            'src/TootleLib/heap.c',
+            'src/TootleLib/overdraw.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTBoundingBox.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTCamera.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTCore.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTCoreUtils.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTH2KDTreeBuilder.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTHeuristicKDTreeBuilder.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTKDTree.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTKDTreeBuilder.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTMesh.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTOrthoCamera.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTPPMImage.cpp',
+            'src/TootleLib/RayTracer/JRT/JRTTriangleIntersection.cpp',
+            'src/TootleLib/RayTracer/Math/JMLFuncs.cpp',
+            'src/TootleLib/RayTracer/TootleRaytracer.cpp',
+            'src/TootleLib/soup.cpp',
+            'src/TootleLib/souptomesh.cpp',
+            'src/TootleLib/Stripifier.cpp',
+            'src/TootleLib/Timer.cpp',
+            'src/TootleLib/tootlelib.cpp',
+            'src/TootleLib/triorder.cpp',
+        }
+        .amd_tootle_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // AndroidSupport
+        //------------------------------------------------------------------------------
+        .AndroidSupport_InputPath       = { '$ExternalBase$/Android/cpufeatures', '$ExternalBase$/Android/native_app_glue' }
+        .AndroidSupport_Platforms       = { .SeoulPlatformAndroid }
+        .AndroidSupport_RootDirOverride = 'Android'
+
+        //------------------------------------------------------------------------------
+        // bounce
+        //------------------------------------------------------------------------------
+        .bounce_Externs = { 'bounce/include' }
+
+        //------------------------------------------------------------------------------
+        // breakpad
+        //------------------------------------------------------------------------------
+        .breakpad_Externs = { 'breakpad/src', 'breakpad/src/common/android/include' }
+        .breakpad_InputFiles = {
+            'src/client/linux/crash_generation/crash_generation_client.cc',
+            'src/client/linux/dump_writer_common/thread_info.cc',
+            'src/client/linux/dump_writer_common/ucontext_reader.cc',
+            'src/client/linux/handler/exception_handler.cc',
+            'src/client/linux/handler/minidump_descriptor.cc',
+            'src/client/linux/log/log.cc',
+            'src/client/linux/microdump_writer/microdump_writer.cc',
+            'src/client/linux/minidump_writer/linux_dumper.cc',
+            'src/client/linux/minidump_writer/linux_ptrace_dumper.cc',
+            'src/client/linux/minidump_writer/minidump_writer.cc',
+            'src/client/minidump_file_writer.cc',
+            'src/common/android/breakpad_getcontext.S',
+            'src/common/convert_UTF.c',
+            'src/common/md5.cc',
+            'src/common/string_conversion.cc',
+            'src/common/linux/elfutils.cc',
+            'src/common/linux/file_id.cc',
+            'src/common/linux/guid_creator.cc',
+            'src/common/linux/linux_libc_support.cc',
+            'src/common/linux/memory_mapped_file.cc',
+            'src/common/linux/safe_readlink.cc',
+        }
+        .breakpad_Platforms = { .SeoulPlatformAndroid }
+
+        //------------------------------------------------------------------------------
+        // crunch
+        //------------------------------------------------------------------------------
+        .crunch_AdditionalOptionsClang = ''
+        .crunch_AdditionalOptionsVS    = ' /wd4018 /wd4244 /wd4312 /wd4334 /wd4554'
+        .crunch_Defines                = { 'WIN32' }
+        .crunch_InputFiles = {
+            'crnlib/crnlib.cpp', 'crnlib/crn_arealist.cpp',
+            'crnlib/crn_assert.cpp', 'crnlib/crn_checksum.cpp',
+            'crnlib/crn_colorized_console.cpp', 'crnlib/crn_comp.cpp',
+            'crnlib/crn_console.cpp', 'crnlib/crn_core.cpp',
+            'crnlib/crn_data_stream.cpp', 'crnlib/crn_dds_comp.cpp',
+            'crnlib/crn_decomp.cpp', 'crnlib/crn_dxt.cpp',
+            'crnlib/crn_dxt1.cpp', 'crnlib/crn_dxt5a.cpp',
+            'crnlib/crn_dxt_endpoint_refiner.cpp', 'crnlib/crn_dxt_fast.cpp',
+            'crnlib/crn_dxt_hc.cpp', 'crnlib/crn_dxt_hc_common.cpp',
+            'crnlib/crn_dxt_image.cpp', 'crnlib/crn_dynamic_string.cpp',
+            'crnlib/crn_etc.cpp', 'crnlib/crn_file_utils.cpp',
+            'crnlib/crn_find_files.cpp', 'crnlib/crn_hash.cpp',
+            'crnlib/crn_hash_map.cpp', 'crnlib/crn_huffman_codes.cpp',
+            'crnlib/crn_image_utils.cpp', 'crnlib/crn_jpgd.cpp',
+            'crnlib/crn_jpge.cpp', 'crnlib/crn_ktx_texture.cpp',
+            'crnlib/crn_math.cpp', 'crnlib/crn_mem.cpp',
+            'crnlib/crn_mipmapped_texture.cpp', 'crnlib/crn_pixel_format.cpp',
+            'crnlib/crn_platform.cpp', 'crnlib/crn_prefix_coding.cpp',
+            'crnlib/crn_qdxt1.cpp', 'crnlib/crn_qdxt5.cpp',
+            'crnlib/crn_rand.cpp', 'crnlib/crn_resampler.cpp',
+            'crnlib/crn_resample_filters.cpp', 'crnlib/crn_rg_etc1.cpp',
+            'crnlib/crn_ryg_dxt.cpp', 'crnlib/crn_sparse_bit_array.cpp',
+            'crnlib/crn_stb_image.cpp', 'crnlib/crn_strutils.cpp',
+            'crnlib/crn_symbol_codec.cpp', 'crnlib/crn_texture_comp.cpp',
+            'crnlib/crn_texture_conversion.cpp', 'crnlib/crn_texture_file_types.cpp',
+            'crnlib/crn_threaded_resampler.cpp', 'crnlib/crn_threading_pthreads.cpp',
+            'crnlib/crn_threading_win32.cpp', 'crnlib/crn_timer.cpp',
+            'crnlib/crn_utils.cpp', 'crnlib/crn_value.cpp',
+            'crnlib/crn_vector.cpp',
+        }
+        .crunch_InputPath = {}
+
+        //------------------------------------------------------------------------------
+        // curl
+        //------------------------------------------------------------------------------
+        .curl_AdditionalOptionsClang = ' -Wno-string-plus-int'
+
+        .curl_Defines = { 'BUILDING_LIBCURL', 'CURL_STATICLIB', 'CURL_DISABLE_LDAP' }
+        .curl_Externs = {
+            'curl/lib',
+            'curl/include',
+            'nghttp2/include',
+            'openssl/include',
+            'zlib',
+        }
+        .curl_InputFiles = {
+            'lib/amigaos.c', 'lib/asyn-ares.c', 'lib/asyn-thread.c',
+            'lib/base64.c', 'lib/conncache.c', 'lib/connect.c',
+            'lib/content_encoding.c', 'lib/cookie.c',
+            'lib/curl_addrinfo.c', 'lib/curl_ctype.c', 'lib/curl_des.c',
+            'lib/curl_endian.c', 'lib/curl_fnmatch.c', 'lib/curl_gethostname.c',
+            'lib/curl_gssapi.c', 'lib/curl_memrchr.c', 'lib/curl_multibyte.c',
+            'lib/curl_ntlm_core.c', 'lib/curl_ntlm_wb.c', 'lib/curl_path.c',
+            'lib/curl_range.c', 'lib/curl_rtmp.c', 'lib/curl_sasl.c',
+            'lib/curl_sspi.c', 'lib/curl_threads.c',
+            'lib/dict.c', 'lib/dotdot.c', 'lib/easy.c',
+            'lib/escape.c', 'lib/file.c', 'lib/fileinfo.c',
+            'lib/formdata.c', 'lib/ftp.c', 'lib/ftplistparser.c',
+            'lib/getenv.c', 'lib/getinfo.c', 'lib/gopher.c',
+            'lib/hash.c', 'lib/hmac.c', 'lib/hostasyn.c',
+            'lib/hostcheck.c', 'lib/hostip.c', 'lib/hostip4.c',
+            'lib/hostip6.c', 'lib/hostsyn.c', 'lib/http.c',
+            'lib/http2.c', 'lib/http_chunks.c', 'lib/http_digest.c',
+            'lib/http_negotiate.c', 'lib/http_ntlm.c', 'lib/http_proxy.c',
+            'lib/idn_win32.c', 'lib/if2ip.c', 'lib/imap.c',
+            'lib/inet_ntop.c', 'lib/inet_pton.c', 'lib/krb5.c',
+            'lib/ldap.c', 'lib/llist.c', 'lib/md4.c',
+            'lib/md5.c', 'lib/memdebug.c', 'lib/mime.c',
+            'lib/mprintf.c', 'lib/multi.c', 'lib/netrc.c',
+            'lib/non-ascii.c', 'lib/nonblock.c', 'lib/nwlib.c',
+            'lib/nwos.c', 'lib/openldap.c', 'lib/parsedate.c',
+            'lib/pingpong.c', 'lib/pipeline.c', 'lib/pop3.c',
+            'lib/progress.c', 'lib/psl.c', 'lib/rand.c',
+            'lib/rtsp.c', 'lib/security.c', 'lib/select.c',
+            'lib/sendf.c', 'lib/seoul_check.c', 'lib/setopt.c',
+            'lib/sha256.c', 'lib/share.c', 'lib/slist.c',
+            'lib/smb.c', 'lib/smtp.c', 'lib/socks.c',
+            'lib/socks_gssapi.c', 'lib/socks_sspi.c', 'lib/speedcheck.c',
+            'lib/splay.c', 'lib/ssh.c', 'lib/strcase.c', 'lib/strdup.c',
+            'lib/strerror.c', 'lib/strtok.c', 'lib/strtoofft.c',
+            'lib/system_win32.c', 'lib/telnet.c', 'lib/tftp.c',
+            'lib/timeval.c', 'lib/transfer.c', 'lib/url.c',
+            'lib/vauth/cleartext.c', 'lib/vauth/cram.c', 'lib/vauth/digest.c',
+            'lib/vauth/digest_sspi.c', 'lib/vauth/krb5_gssapi.c', 'lib/vauth/krb5_sspi.c',
+            'lib/vauth/ntlm.c', 'lib/vauth/ntlm_sspi.c', 'lib/vauth/oauth2.c',
+            'lib/vauth/spnego_gssapi.c', 'lib/vauth/spnego_sspi.c', 'lib/vauth/vauth.c',
+            'lib/version.c', 'lib/vtls/axtls.c', 'lib/vtls/cyassl.c',
+            'lib/vtls/darwinssl.c', 'lib/vtls/gskit.c', 'lib/vtls/gtls.c',
+            'lib/vtls/mbedtls.c', 'lib/vtls/nss.c', 'lib/vtls/openssl.c',
+            'lib/vtls/polarssl.c', 'lib/vtls/polarssl_threadlock.c', 'lib/vtls/schannel.c',
+            'lib/vtls/schannel_verify.c', 'lib/vtls/vtls.c', 'lib/warnless.c',
+            'lib/wildcard.c', 'lib/x509asn1.c',
+        }
+        .curl_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // fx11
+        //------------------------------------------------------------------------------
+        .fx11_AdditionalOptionsVS = ' /wd4062'
+        .fx11_Externs             = { 'fx11/inc', 'fx11/Binary' }
+
+#if SEOUL_WITH_FX_STUDIO
+        //------------------------------------------------------------------------------
+        // FxStudioRuntime
+        //------------------------------------------------------------------------------
+        .FxStudioRuntime_Externs = { 'FxStudio/SDK/include', 'FxStudio/Source/Runtime' }
+        .FxStudioRuntime_InputFiles = {
+            'Source/Runtime/AllocatorImpl.cpp', 'Source/Runtime/BankManager.cpp',
+            'Source/Runtime/ComponentImpl.cpp', 'Source/Runtime/ErrorDataImpl.cpp',
+            'Source/Runtime/Fx.cpp', 'Source/Runtime/FxBank.cpp',
+            'Source/Runtime/FxInstanceImpl.cpp', 'Source/Runtime/FxLicense.cpp',
+            'Source/Runtime/ListenerImpl.cpp', 'Source/Runtime/ManagerImpl.cpp',
+            'Source/Runtime/PreviewImpl.cpp', 'Source/Runtime/PropertyImpl.cpp',
+            'Source/Runtime/PropertyTypeImpl.cpp',
+        }
+        .FxStudioRuntime_InputFiles_PC = { 'Source/Runtime/Win32/SocketBase_Win32.cpp', 'Source/Runtime/Win32/ThreadRunner_Win32.cpp' }
+        .FxStudioRuntime_InputPath = {}
+        .FxStudioRuntime_RootDirOverride = 'FxStudio'
+#endif
+
+        //------------------------------------------------------------------------------
+        // glslang
+        //------------------------------------------------------------------------------
+        .glslang_AdditionalOptionsVS = ' /D_ENFORCE_MATCHING_ALLOCATORS=0'
+        .glslang_Externs = {
+            'glslang',
+            'glslang/Public',
+            'glslang/OSDependent/Windows',
+        }
+        .glslang_InputFiles = {
+            'GenericCodeGen/CodeGen.cpp', 'GenericCodeGen/Link.cpp',
+
+            'MachineIndependent/Constant.cpp', 'MachineIndependent/glslang_tab.cpp',
+            'MachineIndependent/InfoSink.cpp', 'MachineIndependent/Initialize.cpp',
+            'MachineIndependent/InitializeDll.cpp', 'MachineIndependent/Intermediate.cpp',
+            'MachineIndependent/intermOut.cpp', 'MachineIndependent/IntermTraverse.cpp',
+            'MachineIndependent/limits.cpp', 'MachineIndependent/linkValidate.cpp',
+            'MachineIndependent/parseConst.cpp', 'MachineIndependent/ParseHelper.cpp',
+            'MachineIndependent/PoolAlloc.cpp',
+
+            'MachineIndependent/preprocessor/Pp.cpp', 'MachineIndependent/preprocessor/PpAtom.cpp',
+            'MachineIndependent/preprocessor/PpContext.cpp', 'MachineIndependent/preprocessor/PpMemory.cpp',
+            'MachineIndependent/preprocessor/PpScanner.cpp', 'MachineIndependent/preprocessor/PpSymbols.cpp',
+            'MachineIndependent/preprocessor/PpTokens.cpp', 'MachineIndependent/reflection.cpp',
+
+            'MachineIndependent/RemoveTree.cpp', 'MachineIndependent/Scan.cpp',
+            'MachineIndependent/ShaderLang.cpp', 'MachineIndependent/SymbolTable.cpp',
+            'MachineIndependent/Versions.cpp', 'OSDependent/Windows/ossource.cpp',
+        }
+        .glslang_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // jemalloc
+        //------------------------------------------------------------------------------
+        .jemalloc_AdditionalOptionsClang = ''
+        .jemalloc_AdditionalOptionsVS    = ' /wd4146 /wd4267 /wd4244 /wd4090 /wd4334'
+        .jemalloc_Externs                = { 'jemalloc/include', 'jemalloc/include/msvc_compat', 'jemalloc/include/msvc_compat/C99' }
+        .jemalloc_InputFiles = {
+            'src/arena.c', 'src/atomic.c',
+            'src/base.c', 'src/bitmap.c',
+            'src/chunk.c', 'src/chunk_dss.c',
+            'src/chunk_mmap.c', 'src/ckh.c',
+            'src/ctl.c', 'src/extent.c',
+            'src/hash.c', 'src/huge.c',
+            'src/jemalloc.c', 'src/mb.c',
+            'src/mutex.c', 'src/nstime.c',
+            'src/pages.c', 'src/prng.c',
+            'src/prof.c', 'src/quarantine.c',
+            'src/rtree.c', 'src/spin.c',
+            'src/stats.c', 'src/tcache.c',
+            'src/ticker.c', 'src/tsd.c',
+            'src/util.c', 'src/witness.c',
+        }
+        .jemalloc_InputPath = {}
+
+        //------------------------------------------------------------------------------
+        // lz4
+        //------------------------------------------------------------------------------
+        .lz4_InputFiles = { 'lib/lz4.c', 'lib/lz4hc.c' }
+        .lz4_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // lua_protobuf
+        //------------------------------------------------------------------------------
+        .lua_protobuf_Externs    = { 'luajit/src' }
+        .lua_protobuf_InputFiles = { 'pb.c' }
+        .lua_protobuf_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // miniz
+        //------------------------------------------------------------------------------
+        .miniz_InputFiles = { 'miniz.c' }
+        .miniz_InputPath  = {}
+
+        //------------------------------------------------------------------------------
+        // mongoose-mit
+        //------------------------------------------------------------------------------
+        ."mongoose-mit_InputFiles" = { 'mongoose-mit.c' }
+        ."mongoose-mit_InputPath"  = {}
+
+        //------------------------------------------------------------------------------
+        // nghttp2
+        //------------------------------------------------------------------------------
+        .nghttp2_AdditionalOptionsClang = ' -Wno-string-plus-int'
+        .nghttp2_AdditionalOptionsVS    = ' /wd4244'
+        .nghttp2_Defines                = { 'HAVE_CONFIG_H', 'BUILDING_NGHTTP2', 'nghttp2_EXPORTS' }
+        .nghttp2_Externs                = { 'nghttp2', 'nghttp2/include', 'nghttp2/lib' }
+        .nghttp2_InputFiles             = {
+            'lib/nghttp2_buf.c', 'lib/nghttp2_callbacks.c',
+            'lib/nghttp2_debug.c', 'lib/nghttp2_frame.c',
+            'lib/nghttp2_hd.c', 'lib/nghttp2_hd_huffman.c',
+            'lib/nghttp2_hd_huffman_data.c', 'lib/nghttp2_helper.c',
+            'lib/nghttp2_http.c', 'lib/nghttp2_map.c',
+            'lib/nghttp2_mem.c', 'lib/nghttp2_npn.c',
+            'lib/nghttp2_option.c', 'lib/nghttp2_outbound_item.c',
+            'lib/nghttp2_pq.c', 'lib/nghttp2_priority_spec.c',
+            'lib/nghttp2_queue.c', 'lib/nghttp2_rcbuf.c',
+            'lib/nghttp2_session.c', 'lib/nghttp2_stream.c',
+            'lib/nghttp2_submit.c', 'lib/nghttp2_version.c',
+        }
+        .nghttp2_InputPath = {}
+
+        //------------------------------------------------------------------------------
+        // spng
+        //------------------------------------------------------------------------------
+        .spng_Externs    = { 'zlib' }
+
+        //------------------------------------------------------------------------------
+        // tess2
+        //------------------------------------------------------------------------------
+        .tess2_InputFiles = {
+            'bucketalloc.c', 'dict.c', 'geom.c', 'mesh.c',
+            'priorityq.c', 'sweep.c', 'tess.c',
+        }
+        .tess2_InputPath = {}
+
+        //------------------------------------------------------------------------------
+        // zlib
+        //------------------------------------------------------------------------------
+        .zlib_AdditionalOptionsClang = ' -Wno-implicit-function-declaration -Wno-shift-negative-value'
+        .zlib_AdditionalOptionsVS    = ' /wd4996'
+        .zlib_InputFiles = {
+            'adler32.c', 'compress.c', 'crc32.c', 'deflate.c',
+            'gzclose.c', 'gzlib.c', 'gzread.c', 'gzwrite.c',
+            'infback.c', 'inffast.c', 'inflate.c', 'inftrees.c',
+            'trees.c', 'uncompr.c', 'zutil.c',
+        }
+        .zlib_InputPath = {}
+
+        //------------------------------------------------------------------------------
+        // zstd
+        //------------------------------------------------------------------------------
+        .zstd_InputFiles = {
+            'lib/common/debug.c', 'lib/common/entropy_common.c', 'lib/common/error_private.c',
+            'lib/common/fse_decompress.c', 'lib/common/pool.c', 'lib/common/threading.c',
+            'lib/common/xxhash.c', 'lib/common/zstd_common.c',
+
+            'lib/compress/fse_compress.c', 'lib/compress/hist.c',
+            'lib/compress/huf_compress.c', 'lib/compress/zstd_compress.c',
+            'lib/compress/zstd_compress_literals.c', 'lib/compress/zstd_compress_sequences.c',
+            'lib/compress/zstd_compress_superblock.c', 'lib/compress/zstd_double_fast.c',
+            'lib/compress/zstd_fast.c', 'lib/compress/zstd_lazy.c',
+            'lib/compress/zstd_ldm.c', 'lib/compress/zstd_opt.c',
+            'lib/compress/zstdmt_compress.c',
+
+            'lib/decompress/huf_decompress.c', 'lib/decompress/zstd_ddict.c',
+            'lib/decompress/zstd_decompress.c', 'lib/decompress/zstd_decompress_block.c',
+
+            'lib/dictBuilder/cover.c', 'lib/dictBuilder/divsufsort.c',
+            'lib/dictBuilder/fastcover.c', 'lib/dictBuilder/zdict.c',
+        }
+        .zstd_InputPath = {}
+    ]
+
+    //------------------------------------------------------------------------------
+    // Generate the builds
+    //------------------------------------------------------------------------------
+    #include "../SeoulEngine/StaticLibGen.bff"
+}

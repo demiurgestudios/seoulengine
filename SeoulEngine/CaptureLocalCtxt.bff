@@ -1,0 +1,54 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+.LocalCtxt = [
+    // Environmental context
+    .BinBase                                   = .BinBase
+    .ExternalBase                              = .ExternalBase
+    .InputBase                                 = .InputBase
+    .LibBase                                   = .LibBase
+    .ObjBase                                   = .ObjBase
+    .LocalArch                                 = .LocalArch
+    .LocalBinBase                              = .LocalBinBase
+    .LocalLibBase                              = .LocalLibBase
+    .LocalConfig                               = .LocalConfig
+    .LocalConfigs                              = .LocalConfigs
+    .LocalDebugPrefix                          = .LocalDebugPrefix
+    .LocalObjBase                              = .LocalObjBase
+    .LocalNamePrefix                           = .LocalNamePrefix
+    .LocalPlatform                             = .LocalPlatform
+    .LocalReleasePrefix                        = .LocalReleasePrefix
+    .SeoulEngineDebug                          = .SeoulEngineDebug
+    .SeoulEngineDebugTools                     = .SeoulEngineDebugTools
+    .SeoulEngineDeveloper                      = .SeoulEngineDeveloper
+    .SeoulEngineDeveloperTools                 = .SeoulEngineDeveloperTools
+    .SeoulEngineProfiling                      = .SeoulEngineProfiling
+    .SeoulEngineShip                           = .SeoulEngineShip
+    .SeoulPlatformAndroid                      = .SeoulPlatformAndroid
+    .SeoulPlatformLinux                        = .SeoulPlatformLinux
+    .SeoulPlatformPC                           = .SeoulPlatformPC
+    .StdCppExt                                 = .StdCppExt
+    .StdCppExtClang                            = .StdCppExtClang
+    .StdCppExtVS                               = .StdCppExtVS
+    .'$LocalNamePrefix$-CompilerC'             = .'$LocalNamePrefix$-CompilerC'
+    .'$LocalNamePrefix$-CompilerCSharp'        = .'$LocalNamePrefix$-CompilerCSharp'
+    .'$LocalNamePrefix$-CompilerCSharpNaked'   = .'$LocalNamePrefix$-CompilerCSharpNaked'
+    .'$LocalNamePrefix$-ResourceCompiler'      = .'$LocalNamePrefix$-ResourceCompiler'
+    .VS_PlatformToolset                        = .VS_PlatformToolset
+
+    // Defaults.
+    .ArgDLL                               = false
+    .ArgExterns                           = {}
+    .ArgExternLibs                        = {}
+    .ArgExtraOptions                      = ''
+    .ArgIcon                              = ''
+    .ArgIncludes                          = {}
+    .ArgLibraries                         = {}
+    .ArgNakedLibrary                      = false
+    .'$LocalDebugPrefix$-ArgExterns'      = {}
+    .'$LocalReleasePrefix$-ArgExterns'    = {}
+    .'$LocalDebugPrefix$-ArgExternLibs'   = {}
+    .'$LocalReleasePrefix$-ArgExternLibs' = {}
+]

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamehelper_sign_in_failed">Fallo al registrarte. Comprueba tu conexión de red y vuelve a intentarlo.</string>
+    <string name="gamehelper_app_misconfigured">La aplicación está configurada incorrectamente. Verifica que el nombre del paquete y el certificado de firma coincidan con el ID de cliente creado en Developer Console. Además, si la aplicación todavía no está publicada, verifica que tu cuenta esté catalogada como una cuenta de probador. Ve los registros para obtener más información.</string>
+    <string name="gamehelper_license_failed">Comprobación de licencia falló.</string>
+    <string name="gamehelper_unknown_error">Error desconocido.</string>
+</resources>

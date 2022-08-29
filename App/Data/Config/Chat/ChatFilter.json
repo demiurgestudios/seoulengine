@@ -1,0 +1,417 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// README, README: Talk to engineering before updating this file. Unit tests
+// run to check for false positives against this file, so updating this file
+// may require updating a unit test specific file to allow new false
+// positives.
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+{
+	"Configuration": {
+		"EnableApplyDefaultSubstitutionToWholeWords": true,
+		"EnableLeetSpeak": true,
+		"EnableSelfFilter": false
+	},
+
+	"Blacklist": [
+		// Drop Entire Filters
+		["adolf", "Whole", "Drop"],
+		["blurdclart", "Drop"],
+		["chinaman", "Whole", "Drop"],
+		["chink", "Whole", "Drop"],
+		["chinks", "Whole", "Drop"],
+		["condom", "Whole", "Drop"],
+		["condoms", "Whole", "Drop"],
+		["dago", "Whole", "Drop"],
+		["dagos", "Whole", "Drop"],
+		["darkie", "Whole", "Drop"],
+		["darkies", "Whole", "Drop"],
+		["darky", "Whole", "Drop"],
+		["daterape", "Drop"],
+		["faggot", "Drop"],
+		["faggots", "Drop"],
+		["fiddler", "Drop"],
+		["golliwog", "Drop"],
+		["gollywog", "Drop"],
+		["gook", "Whole", "Drop"],
+		["gooks", "Whole", "Drop"],
+		["hitler", "Likely", "Drop"],
+		["jap", "Whole", "Drop"],
+		["japs", "Whole", "Drop"],
+		["japseye", "Drop"],
+		["jew", "Whole", "Drop"],
+		["jews", "Whole", "Drop"],
+		["juden", "Likely", "Drop"],
+		["kiddy", "Drop"],
+		["kike", "Whole", "Drop"],
+		["kikes", "Whole", "Drop"],
+		["mong", "Likely"],
+		["nambla", "Whole", "Drop"],
+		["namblas", "Whole", "Drop"],
+		["nigga", "Drop"],
+		["niggas", "Drop"],
+		["niggah", "Drop"],
+		["niggahs", "Drop"],
+		["nigger", "Drop"],
+		["nignog", "Drop"],
+		["niiger", "Likely", "Drop"],
+		["nlgger", "Drop"],
+		["nlggers", "Drop"],
+		["nudes", "Whole", "Drop"],
+		["paedophile", "Drop"],
+		["pedobear", "Drop"],
+		["pedophile", "Drop"],
+		["pollock", "Whole", "Drop"],
+		["pollocks", "Whole", "Drop"],
+		["puta", "Whole", "Drop"],
+		["radfem", "Whole", "Drop"],
+		["radfems", "Whole", "Drop"],
+		["raghead", "Drop"],
+		["rape", "Whole", "Drop"],
+		["raped", "Whole", "Drop"],
+		["rapes", "Whole", "Drop"],
+		["raping", "Whole", "Drop"],
+		["rapings", "Whole", "Drop"],
+		["rapist", "Whole", "Drop"],
+		["rapists", "Whole", "Drop"],
+		["rassclart", "Drop"],
+		["redfem", "Whole", "Drop"],
+		["redfems", "Whole", "Drop"],
+		["spic", "Whole", "Drop"],
+		["spics", "Whole", "Drop"],
+		["slanteye", "Drop"],
+		["slanteyes", "Drop"],
+		["towelhead", "Drop"],
+		["towelheads", "Drop"],
+		["whitepower", "Drop"],
+		["yid", "Whole", "Drop"],
+
+		// Address parts
+		".avi", ".com", ".gif", "http", "https", ".jpeg", ".jpg", ".net",
+		".org", ".png", ".us", ".wmv", ["www", "Whole"], "xhamster",
+
+		// German standard [no drop] filters
+		["angriff88", "Likely"],
+		["arsch", "Likely"],
+		["bratze", "Likely"],
+		["bumsen", "Likely"],
+		["dödel", "Likely"],
+		["ficken", "Likely"],
+		["fratze", "Likely"],
+		["geil", "Likely"],
+		["hackfresse", "Likely"],
+		["hupen", "Likely"],
+		["hure", "Whole"],
+		["hurensohn", "Whole"],
+		["ische", "Likely"],
+		["flittchen", "Likely"],
+		["führer", "Likely"],
+		["kampflesbe", "Likely"],
+		["kackbratze", "Likely"],
+		["kacke", "Likely"],
+		["kacken", "Likely"],
+		["kimme", "Likely"],
+		["knackwurst", "Likely"],
+		["latte", "Likely"],
+		["lümmel", "Likely"],
+		["milchtüten", "Likely"],
+		["möpse", "Likely"],
+		["morgenlatte", "Likely"],
+		["möse", "Likely"],
+		["mucke", "Likely"],
+		["mufti", "Likely"],
+		["muschi", "Likely"],
+		["nippel", "Likely"],
+		["onanieren", "Likely"],
+		["picheln", "Likely"],
+		["pimpern", "Likely"],
+		["pinkeln", "Likely"],
+		["pissen", "Likely"],
+		["pisser", "Likely"],
+		["popel", "Likely"],
+		["poppen", "Likely"],
+		["reudig", "Likely"],
+		["rosette", "Likely"],
+		["schabracke", "Likely"],
+		["scheiße", "Likely"],
+		["schnackeln", "Likely"],
+		["tittchen", "Likely"],
+		["titten", "Whole"],
+		["vollpfosten", "Likely"],
+		["wichsen", "Likely"],
+		["wichser", "Likely"],
+
+		// English standard [no drop] filters
+		// numbers
+		"2g1c", "2girls1cup",
+
+		// a
+		"acrotomophilia", ["anal", "Likely"], "anilingus", "anus", ["arse", "Likely"],
+		["aryan", "Likely"], ["ass", "Likely"],
+
+		// b
+		"babeland", "babybatter", "ballgag", "ballgravy", "ballkicking",
+		"balllicking", ["balls", "Likely"], "ballsack", "ballsucking",
+		"bangbros", "bareback", "barenaked", "bastardo", "bastinado",
+		"beavercleaver", "beaverlips", "bellend", "bbw", "bdsm", "bestiality",
+		"betch", "bicurious", "bigblack", "bigbreasts", "bigknockers",
+		"bimbos", ["bj", "Whole"], "birdlock", "bitch", "blackcock", "blondeaction",
+		"blondeonblondeaction", "blowj", "blowjob", "blowyourl", "bluewaffle",
+		"blumpkin", "bollocks", "bondage", "boner", "bong", "boob", "bootycall",
+		"brownshowers", "brunetteaction", "bulletvibe", "bukak", "bung", "busty",
+
+		// c
+		"cameltoe", "camgirl", "camwhore", "carpetmuncher",
+		"chocolaterosebuds", "circlejerk", "clevelandsteamer",
+		"clit", "cloverclamps", "clunge", "cock", "coprolagnia",
+		"coprophilia", "cornhole", ["cracka", "Whole"],
+		["crap", "Whole"], ["cum", "Likely"], "cumming", "cunnilingus", "cunt",
+
+		// d
+		"deepthroat", ["dick", "Likely"], "dike", "dildo",
+		"dirtypillows", "dirtysanchez", "doggystyle", "dogstyle",
+		"dolcett", "domination", "dominatrix", "dommes", "donkeypunch",
+		"doubledong", "doublepenetration", "dpaction", "dyke",
+
+		// e
+		"ecchi", "ejaculat", "erotic", "erotism", "eunuch",
+
+		// f
+		"fag", "fatfuck", "fck", "fcuk", "fecal", "fellat", "felch", "feltch",
+		"femalesquirting", "femdom", "figging", "fingering", "fisting",
+		"footfetish", "footjob", "frotting", "fuck", "fuckme",
+		"fudgepacker", "futanari", "fux",
+
+		// g
+		"gangbang", "gasm", ["gay", "Likely"], "genitals", "gilf", "girlontop",
+		"girlsgonewild", "goatc", "goatse", "gokkun", "goldenshower",
+		"googirl", "goombah", "goyim", "grope", "gspot", "guro",
+
+		// h
+		"handjob", "hardcore", "hentai", ["homo", "Whole"], "honky", "honkey",
+		"honkie", "hooker", "humping",
+
+		// i
+		"incest", "intercourse",
+
+		// j
+		"jackoff", "jailbait", "jerkoff", "jigaboo", "jiggerboo",
+		"jizz", "juggs",
+
+		// k
+		"kinbaku", "kinkster", "kinky", "knobbing",
+
+		// l
+		["labia", "Likely"], "leatherrestraint", "lemonparty", "lesbian",
+		["loli", "Whole"], "lolita", "lovemaking",
+
+		// m
+		"makemecome", "malesquirt", "menageatrois", "missionaryposition",
+		"moundofvenus", "mrhands", "masturbate", "migger", "milf", "mook",
+		"muff",
+
+		// n
+		"nappy", "nawashi", "nazi", "negro", "nipple",
+		["nonce", "Likely"], ["nonse", "Likely"], "nympho",
+
+		// o
+		"omorashi", "onecuptwogirls", "oneguyonejar", "orgasm", "orgy",
+
+		// p
+		["paki", "Whole"], "panties", "panty", "peanes", "pedo", "pegged", "pegging", "penis",
+		"piss", "playboy", "pleasurechest", "polesmoker", "ponyplay", "poof",
+		"porn", "princealbertpiercing", "pthc", "pubes", "pussy",
+
+		// q
+		"queaf", "queer",
+
+		// r
+		"rectum", ["retard", "Likely"], "reversecowgirl", "rimjob", "rimming",
+		"rosypalm", "rustytrombone",
+
+		// s
+		"sandm", "sadism", ["scat", "Likely"], "schlong", "scissoring", "scrote",
+		"scrotum", ["semen", "Likely"], "sex", "shavedbeaver", "shemale", "shibari",
+		"shit", "shota", "shrimping", "slut", "smut", "snatch", "snowballing", "sodom",
+		"spooge", "spreadlegs", "strapon", "strappado",
+		"stripclub", "styledoggy", "suicidegirls", "swastika", "swinger",
+
+		// t
+		["testicle", "Likely"], ["tit", "Whole"], "tities", "tits", "tity", "twat", "twink",
+		"taintedlove", "teabagging", "threesome", "throating", "topless",
+		"tosser", "tranny", "tribadism", "tubgirl", "tushy", "twogirlsonecup",
+
+		// u
+		"undressing", "upskirt", "urethra", "urophilia",
+
+		// v
+		"vagina", "vaginat", "venusmound", "vibrator", "violetwand",
+		"vorarephilia", "vulva",
+
+		// w
+		"wank", "wetback", "wetdream", "whore", "womenrapping", "rappingmen",
+		"wrinkledstarfish",
+
+		// y
+		"yaoi", "yellowshower", "yiffy", ["yip", "Whole"],
+
+		// z
+		"zoophilia"],
+
+	"DefaultSubstitution": "\u2026", // U+2026 "Horizontal Ellipsis, General Punctuation"
+
+	"KnownWords": [
+		// German known words and word parts
+		"ficker", "lecker", "loch", "ritter",
+
+		// One letter
+		"a", "i",
+		// Two letters
+		"am", "an", "as", "at", "be", "by", "do", "go", "ha", "he", "hi", "if",
+		"in", "is", "it", "me", "my", "no", "of", "oh", "ok", "on", "or", "so",
+		"to", "up", "us", "we",
+		// Three letters
+		"and", "any", "are", "ask", "ate", "bad", "bag", "box", "bum", "fir",
+		"gay", "get", "god", "had", "has", "hat", "hey", "him", "joy", "key",
+		"ler", "mad", "nod", "nor", "not", "off", "one", "out", "pan", "pee",
+		"poo", "put", "rap", "rat", "rim", "sad", "sat", "saw", "see", "sex",
+		"she", "sin", "sow", "the", "try", "two", "use", "was", "web", "who",
+		"why", "wow", "yep", "yes", "yet", "you", "yum",
+
+		// Valid word endings
+		["ed", "Suffix"], ["eds", "Suffix"], ["er", "Suffix"],["ers", "Suffix"],
+		["es", "Suffix"], ["ey", "Suffix"], ["ie", "Suffix"], ["ier", "Suffix"],
+		["iers", "Suffix"], ["ies", "Suffix"], ["iest", "Suffix"], ["iests", "Suffix"],
+		["ing", "Suffix"], ["ings", "Suffix"], ["ly", "Suffix"], ["s", "Suffix"],
+		["ter", "Suffix"], ["y", "Suffix"],
+
+		// Four and more letters
+		"anti", "back", "blow", "blue", "cancer", "cold", "dump", "face", "guz", "head",
+		"hole", "know", "lord", "love", "many", "meat", "more", "much", "munch", "nice",
+		"pick", "screw", "self", "sleaze", "slime", "some", "sour", "speed", "spit", "ster",
+		"stick", "stuff", "sweet", "this", "what", "your"
+	],
+
+	"Substitutions": [],
+
+	"Whitelist": [
+		// Places
+		["Essex", "Whole"],
+		["Essexville", "Whole"],
+		["Fukushima", "Whole"],
+		["Fukuura", "Whole"],
+		["Fukuyama", "Whole"],
+		["Hancock", "Whole"],
+		["Hitchcock", "Whole"],
+		["Klondike", "Whole"],
+		["Middlesex", "Whole"],
+		["Milfield", "Whole"],
+		["Milford", "Whole"],
+		["Milford-on-Sea", "Whole"],
+		["Nanticoke", "Whole"],
+		["Scunthorpe", "Whole"],
+		["Sussex", "Whole"],
+		["Villersexel", "Whole"],
+
+		// People
+		["benedick", "Whole"],
+		["cumiskey", "Whole"],
+		["gilfillan", "Whole"],
+		["gilford", "Whole"],
+		["gilfoy", "Whole"],
+		["mcspedon", "Whole"],
+		["montenegro", "Whole"],
+		["noonkester", "Whole"],
+		["taldykurgan", "Whole"],
+		["vandyke", "Whole"],
+
+		// Whole Words
+		["amass", "Whole"],
+		["assess", "Whole"],
+		["assessed", "Whole"],
+		["assesses", "Whole"],
+		["assessing", "Whole"],
+		["assessor", "Whole"],
+		["assessors", "Whole"],
+		["brimming", "Whole"],
+		["coke", "Whole"],
+		["cockeye", "Whole"],
+		["gasman", "Whole"],
+		["gasmen", "Whole"],
+		["hairballs", "Whole"],
+		["liqueur", "Whole"],
+		["liqueurs", "Whole"],
+		["sandman", "Whole"],
+		["sandmen", "Whole"],
+		["snappy", "Whole"],
+		["twinkle", "Whole"],
+		["winegrower", "Whole"],
+		["winegrowers", "Whole"],
+
+		// Likely Words
+		["dickens", "Likely"],
+		["torpedo", "Likely"],
+
+		// Word Parts
+		["afk", "Whole"],
+		"analys",
+		"assassin",
+		"assoon",
+		"assure",
+		"assurer",
+		"assuring",
+		"assuror",
+		"backlit",
+		"bismuth",
+		"bungalow",
+		"bungee",
+		"bungl",
+		"carbonara",
+		"cook",
+		"coquet",
+		"coqui",
+		"dragrope",
+		"entities",
+		"entity",
+		"fulgurous",
+		"hosannahs",
+		"hurry",
+		"incestuous",
+		"inspissat",
+		"kum",
+		"manuscript",
+		"medic",
+		"monocoque",
+		"monger",
+		"mongan",
+		"mongar",
+		"mongon",
+		"monges",
+		"neurotic",
+		"nordic",
+		"offkey",
+		"outwatch",
+		"quantities",
+		"quantity",
+		"rapped",
+		"sass",
+		"savannahs",
+		"scathe",
+		"scathes",
+		"scatter",
+		"sextan",
+		"sextile",
+		"sextillion",
+		"sexton",
+		"sextuple",
+		"sextuplicat",
+		"sextupling",
+		"sextuply",
+		"skate",
+		"skater",
+		"skating",
+		"spoof",
+		"swank",
+		"transmut"
+	]
+}

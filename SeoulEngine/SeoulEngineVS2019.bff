@@ -1,0 +1,319 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+#include "SeoulEngineCommon.bff"
+
+// VS2019 configuration import.
+#import SEOUL_VS2019
+
+//------------------------------------------------------------------------------
+// Configuration
+//------------------------------------------------------------------------------
+.VS2019_Version = '14.29.30133'
+.W10SDK_Version = '10.0.22000.0'
+
+//------------------------------------------------------------------------------
+// C/C++ Preprocessor defines
+//------------------------------------------------------------------------------
+.VS2019_DefinesCommon         = ' /D"WIN64"'
+                              + ' /D"CURL_STATICLIB"'
+                              + ' /D"NGHTTP2_STATICLIB"'
+                              + ' /D"USE_NGHTTP2"'
+                              + ' /D"FBXSDK_SHARED"'
+                              + ' /D"SPNG_STATIC"'
+                              + ' /D"_HAS_EXCEPTIONS=0"'
+                              + ' /D"_WIN64"'
+                              + ' /D"_MBCS"'
+.VS2019_DefinesDebug          = .VS2019_DefinesCommon + ' /D"_DEBUG" /D"DEBUG_HTTP2"'
+.VS2019_DefinesDebugTools     = .VS2019_DefinesCommon + ' /D"_DEBUG" /D"SEOUL_EDITOR_AND_TOOLS"'
+.VS2019_DefinesDeveloper      = .VS2019_DefinesCommon + ' /D"NDEBUG" /D"DEBUG_HTTP2"'
+.VS2019_DefinesDeveloperTools = .VS2019_DefinesCommon + ' /D"NDEBUG" /D"SEOUL_EDITOR_AND_TOOLS"'
+.VS2019_DefinesProfiling      = .VS2019_DefinesCommon + ' /D"NDEBUG" /D"_SHIP" /D"SEOUL_PROFILING_BUILD"'
+.VS2019_DefinesShip           = .VS2019_DefinesCommon + ' /D"NDEBUG" /D"_SHIP"'
+
+//------------------------------------------------------------------------------
+// C/C++ Compiler options
+//------------------------------------------------------------------------------
+.VS2019_ClOptsCommon         = ' /c'
+                             + ' /Z7'
+                             + ' /nologo'
+                             + ' /W3'
+                             + ' /WX'
+                             + ' /diagnostics:classic'
+                             + ' /Gm-'
+                             + ' /GS'
+                             + ' /fp:precise'
+                             + ' /fp:except-'
+                             + ' /Zc:wchar_t'
+                             + ' /Zc:forScope'
+                             + ' /Zc:inline'
+                             + ' /GR-'
+                             + ' /openmp-'
+                             + ' /Gd'
+                             // TODO: Compile As C++ (/TP) and C (/TC)     + ' /TP'
+                             + ' /FC'
+                             + ' /errorReport:prompt'
+                             + ' /w14062'
+
+.VS2019_ClOptsDebug          = .VS2019_ClOptsCommon + ' /Od /GF- /MDd /Gy'
+.VS2019_ClOptsDebugTools     = .VS2019_ClOptsCommon + ' /Od /GF- /MDd /Gy'
+.VS2019_ClOptsDeveloper      = .VS2019_ClOptsCommon + ' /Ox /GF /MD /Gy /Ob2 /Oi /Ot /GT'
+.VS2019_ClOptsDeveloperTools = .VS2019_ClOptsCommon + ' /Ox /GF /MD /Gy /Ob2 /Oi /Ot /GT'
+.VS2019_ClOptsProfiling      = .VS2019_ClOptsCommon + ' /Ox /GF /MD /Gy- /Ob2 /Oi /Ot /Oy /GT'
+.VS2019_ClOptsShip           = .VS2019_ClOptsCommon + ' /Ox /GF /MD /Gy- /Ob2 /Oi /Ot /Oy /GT'
+
+//------------------------------------------------------------------------------
+// C/C++ Linker options
+//------------------------------------------------------------------------------
+.VS2019_LinkOptsCommon         = ' /ERRORREPORT:PROMPT'
+                               + ' /NOLOGO'
+                               + ' /NODEFAULTLIB:libcmt.lib'
+                               + ' /MANIFEST:NO'
+                               + ' /DEBUG'
+                               + ' /TLBID:1'
+                               + ' /NXCOMPAT'
+                               + ' /MACHINE:X64'
+                               + ' /WX'
+                               + ' /Brepro'
+.VS2019_LinkOptsDebug          = .VS2019_LinkOptsCommon + ' /INCREMENTAL /OPT:NOREF /OPT:NOICF /DYNAMICBASE:NO'
+.VS2019_LinkOptsDebugTools     = .VS2019_LinkOptsCommon + ' /INCREMENTAL /OPT:NOREF /OPT:NOICF /DYNAMICBASE:NO'
+.VS2019_LinkOptsDeveloper      = .VS2019_LinkOptsCommon + ' /INCREMENTAL /OPT:NOREF /OPT:NOICF /DYNAMICBASE'
+.VS2019_LinkOptsDeveloperTools = .VS2019_LinkOptsCommon + ' /INCREMENTAL /OPT:NOREF /OPT:NOICF /DYNAMICBASE'
+.VS2019_LinkOptsProfiling      = .VS2019_LinkOptsCommon + ' /INCREMENTAL:NO /OPT:REF /OPT:ICF /DYNAMICBASE'
+.VS2019_LinkOptsShip           = .VS2019_LinkOptsCommon + ' /INCREMENTAL:NO /OPT:REF /OPT:ICF /DYNAMICBASE'
+
+//------------------------------------------------------------------------------
+// C# Compiler options
+//------------------------------------------------------------------------------
+.VS2019_CSGacBase4                = 'C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0'
+.VS2019_CSGacBase471              = 'C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.7.1'
+
+.VS2019_CSOptsCommon              = ' /deterministic+'
+                                  + ' /noconfig'
+                                  + ' /nostdlib+'
+                                  + ' /filealign:512'
+                                  + ' /platform:AnyCPU'
+                                  + ' /errorreport:prompt'
+                                  + ' /warnaserror+'
+.VS2019_CSSystemRefs              = ' /reference:"$VS2019_CSGacBase4$/mscorlib.dll"'
+                                  + ' /reference:"$VS2019_CSGacBase4$/System.dll"'
+                                  + ' /reference:"$VS2019_CSGacBase4$/System.Core.dll"'
+                                  + ' /reference:"$VS2019_CSGacBase4$/System.Data.dll"'
+                                  // TODO:
+                                  + ' /reference:"$VS2019_CSGacBase4$/System.Drawing.dll"'
+                                  + ' /reference:"$VS2019_CSGacBase4$/System.Xml.dll"'
+
+.VS2019_CSOptsDebug               = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:DEBUG;TRACE  /debug+ /debug:full'
+.VS2019_CSOptsDebugTools          = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:DEBUG;TRACE  /debug+ /debug:full'
+.VS2019_CSOptsDeveloper           = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSOptsDeveloperTools      = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSOptsProfiling           = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSOptsShip                = .VS2019_CSOptsCommon + .VS2019_CSSystemRefs + ' /define:TRACE /debug:pdbonly /optimize+'
+
+.VS2019_CSNakedOptsDebug          = .VS2019_CSOptsCommon + ' /define:DEBUG;TRACE  /debug+ /debug:full'
+.VS2019_CSNakedOptsDebugTools     = .VS2019_CSOptsCommon + ' /define:DEBUG;TRACE  /debug+ /debug:full'
+.VS2019_CSNakedOptsDeveloper      = .VS2019_CSOptsCommon + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSNakedOptsDeveloperTools = .VS2019_CSOptsCommon + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSNakedOptsProfiling      = .VS2019_CSOptsCommon + ' /define:TRACE /debug:pdbonly /optimize+'
+.VS2019_CSNakedOptsShip           = .VS2019_CSOptsCommon + ' /define:TRACE /debug:pdbonly /optimize+'
+
+//------------------------------------------------------------------------------
+// Paths and Config
+//------------------------------------------------------------------------------
+.W10SDK_BasePath      = 'C:/Program Files (x86)/Windows Kits/10'
+.W10SDK_BaseInclude   = '$W10SDK_BasePath$/Include/$W10SDK_Version$'
+.W10SDK_BaseLib       = '$W10SDK_BasePath$/Lib/$W10SDK_Version$'
+.VS2019_BasePath      = '$SEOUL_VS2019$'
+.VS2019_ToolchainPath = '$VS2019_BasePath$/VC/Tools/MSVC/$VS2019_Version$'
+.VS2019_MsBuild       = '$VS2019_BasePath$/MSBuild/Current/Bin/MSBuild.exe'
+.VS2019_IncludePaths  = ' /I"$VS2019_ToolchainPath$/include"'
+                      + ' /I"$W10SDK_BaseInclude$/shared"'
+                      + ' /I"$W10SDK_BaseInclude$/ucrt"'
+                      + ' /I"$W10SDK_BaseInclude$/um"'
+.VS2019_LibPaths      = ' /LIBPATH:"$VS2019_ToolchainPath$/lib/x64"'
+                      + ' /LIBPATH:"$W10SDK_BaseLib$/ucrt/x64"'
+                      + ' /LIBPATH:"$W10SDK_BaseLib$/um/x64"'
+                      + ' /LIBPATH:"$VS2019_ToolchainPath$/atlmfc/lib/x64"'
+.VS2019_StdLibs       = ' kernel32.lib'
+                      + ' user32.lib'
+                      + ' gdi32.lib'
+                      + ' winspool.lib'
+                      + ' comdlg32.lib'
+                      + ' advapi32.lib'
+                      + ' shell32.lib'
+                      + ' ole32.lib'
+                      + ' oleaut32.lib'
+                      + ' uuid.lib'
+                      + ' odbc32.lib'
+                      + ' odbccp32.lib'
+
+///------------------------------------------------------------------------------
+// Exports
+//------------------------------------------------------------------------------
+.VS_AtlmfcBasePath    = '$VS2019_ToolchainPath$/atlmfc'
+.VS_PlatformToolset   = 'v142'
+.VS_Version           = .VS2019_Version
+.CS_GacBase4          = .VS2019_CSGacBase4
+.CS_GacBase471        = .VS2019_CSGacBase471
+
+//------------------------------------------------------------------------------
+// Compilers
+//------------------------------------------------------------------------------
+Compiler('Compiler-ISPC-Windows10') {
+    .CompilerFamily = 'custom'
+    .Executable     = '$ExternalBase$/ispc/bin/ispc.exe'
+}
+
+Compiler('Compiler-ResourceCompiler-Windows10') {
+    .CompilerFamily = 'custom'
+    .Executable     = 'C:/Program Files (x86)/Windows Kits/10/bin/$W10SDK_Version$/x64/rc.exe'
+}
+
+Compiler('Compiler-VS2019-C#') {
+    .Executable = '$VS2019_BasePath$/MSBuild/Current/Bin/Roslyn/csc.exe'
+}
+
+Compiler('Compiler-VS2019-x64') {
+    .Root       = '$VS2019_ToolchainPath$/bin/Hostx64/x64'
+    .Executable = '$Root$/cl.exe'
+    .ExtraFiles = {
+        '$Root$/c1.dll'
+        '$Root$/c1xx.dll',
+        '$Root$/c2.dll',
+        '$Root$/msobj140.dll'
+        '$Root$/mspdb140.dll'
+        '$Root$/mspdbcore.dll'
+        '$Root$/mspdbsrv.exe'
+        '$Root$/mspft140.dll'
+        '$Root$/msvcp140.dll'
+        '$Root$/msvcp140_atomic_wait.dll'
+        '$Root$/tbbmalloc.dll'
+        '$Root$/vcruntime140.dll'
+        '$Root$/vcruntime140_1.dll'
+        '$Root$/1033/clui.dll'
+    }
+}
+
+//------------------------------------------------------------------------------
+// ISPC compiler targets
+//------------------------------------------------------------------------------
+.ISPCCompiler = [
+    .Compiler                = 'Compiler-ISPC-Windows10'
+    .CompilerInputPattern    = '*.ispc'
+    .CompilerOptions         = '-O2 "%1" -g -o "%2" --emit-obj --arch=x86_64 --target=avx2 --opt=fast-math --wno-perf'
+    .CompilerOutputExtension = '.obj'
+]
+
+//------------------------------------------------------------------------------
+// Resource compiler targets
+//------------------------------------------------------------------------------
+.ResourceCompiler_Base = [
+    .Compiler                = 'Compiler-ResourceCompiler-Windows10'
+    .CompilerOptions         = '/nologo /fo"%2"'
+                             + ' /I"$SeoulEngineBase$/Core"'
+                             + ' /I"$W10SDK_BaseInclude$/shared"'
+                             + ' /I"$W10SDK_BaseInclude$/ucrt"'
+                             + ' /I"$W10SDK_BaseInclude$/um"'
+    .CompilerInputPattern    = '*.rc'
+    .CompilerOutputExtension = '.res'
+]
+
+// Establish base
+."PC-Debug-x64-ResourceCompiler"          = .ResourceCompiler_Base
+."PC-DebugTools-x64-ResourceCompiler"     = .ResourceCompiler_Base
+."PC-Developer-x64-ResourceCompiler"      = .ResourceCompiler_Base
+."PC-DeveloperTools-x64-ResourceCompiler" = .ResourceCompiler_Base
+."PC-Profiling-x64-ResourceCompiler"      = .ResourceCompiler_Base
+."PC-Ship-x64-ResourceCompiler"           = .ResourceCompiler_Base
+
+// Customize variations
+ForEach(.LocalConfig in .SeoulEngineConfigs) {
+    .LocalCustom = [
+        .CompilerOptions = ."VS2019_Defines$LocalConfig$"
+                         + ' "%1"' // Must be last to the RC.
+    ]
+    ^"PC-$LocalConfig$-x64-ResourceCompiler" + .LocalCustom
+}
+
+//------------------------------------------------------------------------------
+// C# compiler targets
+//------------------------------------------------------------------------------
+.VS2019_CompilerCSharp_Base = [
+    .Compiler         = 'Compiler-VS2019-C#'
+    .CompilerOptions  = '/out:"%2" "%1"'
+]
+
+// Establish base
+."PC-Debug-x64-CompilerCSharp"          = .VS2019_CompilerCSharp_Base
+."PC-DebugTools-x64-CompilerCSharp"     = .VS2019_CompilerCSharp_Base
+."PC-Developer-x64-CompilerCSharp"      = .VS2019_CompilerCSharp_Base
+."PC-DeveloperTools-x64-CompilerCSharp" = .VS2019_CompilerCSharp_Base
+."PC-Profiling-x64-CompilerCSharp"      = .VS2019_CompilerCSharp_Base
+."PC-Ship-x64-CompilerCSharp"           = .VS2019_CompilerCSharp_Base
+
+// Customize variations
+ForEach(.LocalConfig in .SeoulEngineConfigs) {
+    .LocalCustom = [
+        .CompilerOptions = ."VS2019_CSOpts$LocalConfig$"
+    ]
+    ^"PC-$LocalConfig$-x64-CompilerCSharp" + .LocalCustom
+}
+
+// Establish base
+."PC-Debug-x64-CompilerCSharpNaked"          = .VS2019_CompilerCSharp_Base
+."PC-DebugTools-x64-CompilerCSharpNaked"     = .VS2019_CompilerCSharp_Base
+."PC-Developer-x64-CompilerCSharpNaked"      = .VS2019_CompilerCSharp_Base
+."PC-DeveloperTools-x64-CompilerCSharpNaked" = .VS2019_CompilerCSharp_Base
+."PC-Profiling-x64-CompilerCSharpNaked"      = .VS2019_CompilerCSharp_Base
+."PC-Ship-x64-CompilerCSharpNaked"           = .VS2019_CompilerCSharp_Base
+
+// Customize variations
+ForEach(.LocalConfig in .SeoulEngineConfigs) {
+    .LocalCustom = [
+        .CompilerOptions = ."VS2019_CSNakedOpts$LocalConfig$"
+    ]
+    ^"PC-$LocalConfig$-x64-CompilerCSharpNaked" + .LocalCustom
+}
+
+//------------------------------------------------------------------------------
+// C/C++ compiler targets
+//------------------------------------------------------------------------------
+.VS2019_CompilerC_Base = [
+    .Compiler          = 'Compiler-VS2019-X64'
+    .CompilerOptions   = '"%1" /Fo"%2"'
+                       + ' /I"./"'
+    .StdIncludePaths   = .VS2019_IncludePaths
+
+    // Librarian
+    .Librarian         = '$VS2019_ToolchainPath$/bin/Hostx64/x64/lib.exe'
+    .LibrarianOptions  = '/IGNORE:4221 /WX /NOLOGO /MACHINE:X64 /OUT:"%2" "%1"'
+
+    // Linker
+    .Linker            = '$VS2019_ToolchainPath$/bin/Hostx64/x64/link.exe'
+    .LinkerLinkObjects = false
+    .LinkerOptions     = '/OUT:"%2" "%1"'
+    .StdLibPaths       = .VS2019_LibPaths
+    .StdLibs           = .VS2019_StdLibs
+]
+
+// Establish base
+."PC-Debug-x64-CompilerC"          = .VS2019_CompilerC_Base
+."PC-DebugTools-x64-CompilerC"     = .VS2019_CompilerC_Base
+."PC-Developer-x64-CompilerC"      = .VS2019_CompilerC_Base
+."PC-DeveloperTools-x64-CompilerC" = .VS2019_CompilerC_Base
+."PC-Profiling-x64-CompilerC"      = .VS2019_CompilerC_Base
+."PC-Ship-x64-CompilerC"           = .VS2019_CompilerC_Base
+
+// Customize variations
+ForEach(.LocalConfig in .SeoulEngineConfigs) {
+    .LocalCustom = [
+        .CompilerOptions = ."VS2019_Defines$LocalConfig$"
+                         + ."VS2019_ClOpts$LocalConfig$"
+        .LinkerOptions   = ."VS2019_LinkOpts$LocalConfig$"
+    ]
+    ^"PC-$LocalConfig$-x64-CompilerC" + .LocalCustom
+}

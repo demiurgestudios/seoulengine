@@ -1,0 +1,7 @@
+// Order matters - the first entry to pass is applied to a file.
+[
+	{ "Pattern": "Animations/*", "Schema": "config://Schema/AnimationNetwork.json" },
+	{ "Pattern": "Schema/SchemaMapping", "Schema": null },
+	{ "Pattern": "Schema/*", "Schema": "config://Schema/JsonSchemaDraft04.json" },
+	{ "Pattern": "TextEffectSettings", "Schema": "config://Schema/TextEffectSettings.json" },
+]

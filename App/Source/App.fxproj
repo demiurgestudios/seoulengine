@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+  <project name="App" fxpath=".\Authored" xcdname="AppComponentDefinition.xcd" xcdpath="." id="07f30316-fc54-41de-9443-89be6a3f56e1">
+    <platforms>
+      <platform id="38c3409d-8620-449a-abe7-824d99af44cb" assetpath="." outputpath="..\Data\ContentPC" />
+    </platforms>
+  </project>
+</root>

@@ -1,0 +1,423 @@
+Seoul Engine integrates v2.01.08 of FMOD Studio Programmer API: https://www.fmod.com/download
+
+To enable FMOD support, extract Android, iOS, and Windows SDKs into the
+External\FMODStudio folder as follows, then set SEOUL_WITH_FMOD to 1 in BuildFeatures.h:
+
+- D3DCompiler_43.dll
+- FMOD Studio.exe
+- fmodstudio.exe
+- fmodstudiocl.exe
+- fmodstudioui.dll
+- libeay32.dll
+- libEGL.dll
+- libfsbvorbis64.dll
+- libGLESv2.dll
+- LICENSE.TXT
+- msvcp140.dll
+- opus.dll
+- qt.conf
+- Qt5Core.dll
+- Qt5Gui.dll
+- Qt5Network.dll
+- Qt5Positioning.dll
+- Qt5PrintSupport.dll
+- Qt5Qml.dll
+- Qt5Quick.dll
+- Qt5QuickWidgets.dll
+- Qt5Script.dll
+- Qt5WebChannel.dll
+- Qt5WebEngine.dll
+- Qt5WebEngineCore.dll
+- Qt5WebEngineWidgets.dll
+- Qt5WebSockets.dll
+- Qt5Widgets.dll
+- Qt5Xml.dll
+- QtWebEngineProcess.exe
+- ssleay32.dll
+- tfsclient.dll
+- uninstall.exe
+- xmaencoder64.dll
+- documentation\revision_studio.txt
+- documentation\FMOD Studio User Manual\advanced-topics.html
+- documentation\FMOD Studio User Manual\appendix-a-celeste.html
+- documentation\FMOD Studio User Manual\appendix-b-reaper-integration.html
+- documentation\FMOD Studio User Manual\authoring-events.html
+- documentation\FMOD Studio User Manual\dialogue-and-localization.html
+- documentation\FMOD Studio User Manual\editing-during-live-update.html
+- documentation\FMOD Studio User Manual\event-macro-controls-reference.html
+- documentation\FMOD Studio User Manual\fmod-studio-concepts.html
+- documentation\FMOD Studio User Manual\getting-events-into-your-game.html
+- documentation\FMOD Studio User Manual\glossary.html
+- documentation\FMOD Studio User Manual\keyboard-shortcut-reference.html
+- documentation\FMOD Studio User Manual\managing-assets.html
+- documentation\FMOD Studio User Manual\mixing.html
+- documentation\FMOD Studio User Manual\modulator-reference.html
+- documentation\FMOD Studio User Manual\organizing-the-project.html
+- documentation\FMOD Studio User Manual\parameters-reference.html
+- documentation\FMOD Studio User Manual\parameters.html
+- documentation\FMOD Studio User Manual\plugin-reference.html
+- documentation\FMOD Studio User Manual\profiling.html
+- documentation\FMOD Studio User Manual\quick-start-tutorial.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-globals.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-menu.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-project.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-system.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-ui.html
+- documentation\FMOD Studio User Manual\scripting-api-reference-window.html
+- documentation\FMOD Studio User Manual\scripting-api-reference.html
+- documentation\FMOD Studio User Manual\scripting-terminal-reference.html
+- documentation\FMOD Studio User Manual\supporting-downloadable-and-user-generated-content.html
+- documentation\FMOD Studio User Manual\troubleshooting.html
+- documentation\FMOD Studio User Manual\using-source-control.html
+- documentation\FMOD Studio User Manual\welcome-to-fmod-studio-new-in-110.html
+- documentation\FMOD Studio User Manual\welcome-to-fmod-studio-new-in-200.html
+- documentation\FMOD Studio User Manual\welcome-to-fmod-studio-new-in-201.html
+- documentation\FMOD Studio User Manual\welcome-to-fmod-studio-revision-history.html
+- documentation\FMOD Studio User Manual\welcome-to-fmod-studio.html
+- documentation\FMOD Studio User Manual\working-with-instruments.html
+- documentation\FMOD Studio User Manual\images\110_714format.png
+- documentation\FMOD Studio User Manual\images\110_addParameterDialog.png
+- documentation\FMOD Studio User Manual\images\110_busActivity.png
+- documentation\FMOD Studio User Manual\images\110_busPitch.png
+- documentation\FMOD Studio User Manual\images\110_channelFormats.png
+- documentation\FMOD Studio User Manual\images\110_convertToPreset.png
+- documentation\FMOD Studio User Manual\images\110_deckAutomation.png
+- documentation\FMOD Studio User Manual\images\110_eventTabs.png
+- documentation\FMOD Studio User Manual\images\110_gainEffect.png
+- documentation\FMOD Studio User Manual\images\110_liveValues.png
+- documentation\FMOD Studio User Manual\images\110_parameterDeck.png
+- documentation\FMOD Studio User Manual\images\110_platformExclusionEffects.png
+- documentation\FMOD Studio User Manual\images\110_platformExclusionTracks.png
+- documentation\FMOD Studio User Manual\images\110_presetEffects.png
+- documentation\FMOD Studio User Manual\images\110_presetParameters.png
+- documentation\FMOD Studio User Manual\images\110_showAutomationInEditor.png
+- documentation\FMOD Studio User Manual\images\110_spawnRate.png
+- documentation\FMOD Studio User Manual\images\110_transportControls.png
+- documentation\FMOD Studio User Manual\images\200_ahdsrModulator.png
+- documentation\FMOD Studio User Manual\images\200_autosaveOption.png
+- documentation\FMOD Studio User Manual\images\200_bankEncryption.png
+- documentation\FMOD Studio User Manual\images\200_bankFolderMirroring.png
+- documentation\FMOD Studio User Manual\images\200_binaryDataAsset.png
+- documentation\FMOD Studio User Manual\images\200_customKeyboardShortcuts.png
+- documentation\FMOD Studio User Manual\images\200_discreteParameter.png
+- documentation\FMOD Studio User Manual\images\200_editLabeledParameter.png
+- documentation\FMOD Studio User Manual\images\200_editParameter.png
+- documentation\FMOD Studio User Manual\images\200_globalAutomation.png
+- documentation\FMOD Studio User Manual\images\200_globalSidechainModulator.png
+- documentation\FMOD Studio User Manual\images\200_hideUnknownFileTypes.png
+- documentation\FMOD Studio User Manual\images\200_labeledParameter.png
+- documentation\FMOD Studio User Manual\images\200_lfoModulator.png
+- documentation\FMOD Studio User Manual\images\200_localePreferences.png
+- documentation\FMOD Studio User Manual\images\200_localizedAudioTable.png
+- documentation\FMOD Studio User Manual\images\200_masterBankFlag.png
+- documentation\FMOD Studio User Manual\images\200_nestedMultiInstrument.png
+- documentation\FMOD Studio User Manual\images\200_parameterAutomatingParameter.png
+- documentation\FMOD Studio User Manual\images\200_playlistControls.png
+- documentation\FMOD Studio User Manual\images\200_presetEffectChains.png
+- documentation\FMOD Studio User Manual\images\200_projectPackaging.png
+- documentation\FMOD Studio User Manual\images\200_readOnlyParameterFlag.png
+- documentation\FMOD Studio User Manual\images\200_reaperProject.png
+- documentation\FMOD Studio User Manual\images\200_reaperTimelineImport.png
+- documentation\FMOD Studio User Manual\images\200_removeEventTimeline.png
+- documentation\FMOD Studio User Manual\images\200_sidechainInputInterface.png
+- documentation\FMOD Studio User Manual\images\200_speedParameter.png
+- documentation\FMOD Studio User Manual\images\200_stopCommandInstrument.png
+- documentation\FMOD Studio User Manual\images\200_transitionTimelineCrossfade.png
+- documentation\FMOD Studio User Manual\images\200_transitionToLoopRegion.png
+- documentation\FMOD Studio User Manual\images\200_vorbisSampleRate.png
+- documentation\FMOD Studio User Manual\images\200_wrapInEffectChain.png
+- documentation\FMOD Studio User Manual\images\201_3d-view.png
+- documentation\FMOD Studio User Manual\images\201_action-sheets.png
+- documentation\FMOD Studio User Manual\images\201_advanced-conditions.png
+- documentation\FMOD Studio User Manual\images\201_bus-notes.png
+- documentation\FMOD Studio User Manual\images\201_command-instrument-types.png
+- documentation\FMOD Studio User Manual\images\201_event-condition.png
+- documentation\FMOD Studio User Manual\images\201_event-notes.png
+- documentation\FMOD Studio User Manual\images\201_inverted-conditions.png
+- documentation\FMOD Studio User Manual\images\201_mixing-desk-interface.png
+- documentation\FMOD Studio User Manual\images\201_panner-effect.png
+- documentation\FMOD Studio User Manual\images\201_profiler-memory.png
+- documentation\FMOD Studio User Manual\images\201_profiler-table-button.png
+- documentation\FMOD Studio User Manual\images\201_profiler-table.png
+- documentation\FMOD Studio User Manual\images\201_sandbox-scenes.png
+- documentation\FMOD Studio User Manual\images\201_silence-instrument.png
+- documentation\FMOD Studio User Manual\images\3DPreview.png
+- documentation\FMOD Studio User Manual\images\3DPreviewEmitterDisplacedAndRotated.png
+- documentation\FMOD Studio User Manual\images\3DPreviewEmitterMoved.png
+- documentation\FMOD Studio User Manual\images\add-parameter-dialog.png
+- documentation\FMOD Studio User Manual\images\addPluginEffect.png
+- documentation\FMOD Studio User Manual\images\addPluginInstrument.png
+- documentation\FMOD Studio User Manual\images\ADHSRModulator.png
+- documentation\FMOD Studio User Manual\images\apiPlayback.png
+- documentation\FMOD Studio User Manual\images\assetListView.png
+- documentation\FMOD Studio User Manual\images\assetPreview.png
+- documentation\FMOD Studio User Manual\images\assetProperties.png
+- documentation\FMOD Studio User Manual\images\assets-folder-property.png
+- documentation\FMOD Studio User Manual\images\assetsBrowser.png
+- documentation\FMOD Studio User Manual\images\asynchronousButton.png
+- documentation\FMOD Studio User Manual\images\audio-output-configurations.png
+- documentation\FMOD Studio User Manual\images\audioTrackAndDeck.png
+- documentation\FMOD Studio User Manual\images\auditioningArea.png
+- documentation\FMOD Studio User Manual\images\automaticallyStreamAssetsCheckbox.png
+- documentation\FMOD Studio User Manual\images\automation.png
+- documentation\FMOD Studio User Manual\images\autopitchModulator.png
+- documentation\FMOD Studio User Manual\images\bank-encryption-key.png
+- documentation\FMOD Studio User Manual\images\banksBrowserWithBanks.png
+- documentation\FMOD Studio User Manual\images\banksBrowserWithSelectedBank.png
+- documentation\FMOD Studio User Manual\images\blankEventEditorWindow.png
+- documentation\FMOD Studio User Manual\images\browseForProjectDialogBrowser.png
+- documentation\FMOD Studio User Manual\images\browseForProjectDialogOpen.png
+- documentation\FMOD Studio User Manual\images\browseForSVNProjectDialogOpen.png
+- documentation\FMOD Studio User Manual\images\builtBanks.png
+- documentation\FMOD Studio User Manual\images\builtBanksOutputDirectoryField.png
+- documentation\FMOD Studio User Manual\images\builtinParametersLegend.png
+- documentation\FMOD Studio User Manual\images\bulkEditingEvents.png
+- documentation\FMOD Studio User Manual\images\busSignalChain.png
+- documentation\FMOD Studio User Manual\images\celesteBoxArt.png
+- documentation\FMOD Studio User Manual\images\celesteTitleScreenWithLiveUpdateEnabled.png
+- documentation\FMOD Studio User Manual\images\changeChannelFormat.png
+- documentation\FMOD Studio User Manual\images\channelFormats.png
+- documentation\FMOD Studio User Manual\images\clickToAddACPES.png
+- documentation\FMOD Studio User Manual\images\command-instrument-trigger-region.png
+- documentation\FMOD Studio User Manual\images\conflictResolutionDialog.png
+- documentation\FMOD Studio User Manual\images\console.png
+- documentation\FMOD Studio User Manual\images\consolidatingAssets.png
+- documentation\FMOD Studio User Manual\images\contextMenu.png
+- documentation\FMOD Studio User Manual\images\convertToPresetContextMenuItem.png
+- documentation\FMOD Studio User Manual\images\cooldown.png
+- documentation\FMOD Studio User Manual\images\cueButtonAndSustainPoint.png
+- documentation\FMOD Studio User Manual\images\cursor.png
+- documentation\FMOD Studio User Manual\images\customEncodedAssets.png
+- documentation\FMOD Studio User Manual\images\customEncodingSettings.png
+- documentation\FMOD Studio User Manual\images\customPlatformEncodingSetting.png
+- documentation\FMOD Studio User Manual\images\customPluginDeck.png
+- documentation\FMOD Studio User Manual\images\deck.png
+- documentation\FMOD Studio User Manual\images\deckSignalChain.png
+- documentation\FMOD Studio User Manual\images\destinationMarker.png
+- documentation\FMOD Studio User Manual\images\direction.png
+- documentation\FMOD Studio User Manual\images\disableSourceAndSaveDialog.png
+- documentation\FMOD Studio User Manual\images\distance.png
+- documentation\FMOD Studio User Manual\images\dopplerAndScale.png
+- documentation\FMOD Studio User Manual\images\draggingAutomationPoints.png
+- documentation\FMOD Studio User Manual\images\editParameterDialog.png
+- documentation\FMOD Studio User Manual\images\effect-chain-with-gain-and-delay.png
+- documentation\FMOD Studio User Manual\images\effectPluginIssue.png
+- documentation\FMOD Studio User Manual\images\effects.png
+- documentation\FMOD Studio User Manual\images\elevation.png
+- documentation\FMOD Studio User Manual\images\empty-assets-browser.png
+- documentation\FMOD Studio User Manual\images\empty-effect-chain.png
+- documentation\FMOD Studio User Manual\images\empty-event.png
+- documentation\FMOD Studio User Manual\images\empty-multi-instrument.png
+- documentation\FMOD Studio User Manual\images\emptySourceControlTab.png
+- documentation\FMOD Studio User Manual\images\event.png
+- documentation\FMOD Studio User Manual\images\eventConeAngle.png
+- documentation\FMOD Studio User Manual\images\eventEditorTab.png
+- documentation\FMOD Studio User Manual\images\eventEditorWindow.png
+- documentation\FMOD Studio User Manual\images\eventEditorWindowEditor.png
+- documentation\FMOD Studio User Manual\images\eventEditorWindowMightyDiagram.png
+- documentation\FMOD Studio User Manual\images\eventMacros.png
+- documentation\FMOD Studio User Manual\images\eventOrientation.png
+- documentation\FMOD Studio User Manual\images\eventsBrowser.png
+- documentation\FMOD Studio User Manual\images\eventsWithChanges.png
+- documentation\FMOD Studio User Manual\images\exampleSignalChain.png
+- documentation\FMOD Studio User Manual\images\excluded-track-and-effect.png
+- documentation\FMOD Studio User Manual\images\fadeIn.png
+- documentation\FMOD Studio User Manual\images\filenameClash.png
+- documentation\FMOD Studio User Manual\images\fmodIO.png
+- documentation\FMOD Studio User Manual\images\fmodIOBrowse.png
+- documentation\FMOD Studio User Manual\images\fmodIOSearch.png
+- documentation\FMOD Studio User Manual\images\followPlaybackAndLoopPlaybackButtons.png
+- documentation\FMOD Studio User Manual\images\followPlaybackPositionButtonOn.png
+- documentation\FMOD Studio User Manual\images\followPlaybackPositionMenuItem.png
+- documentation\FMOD Studio User Manual\images\ghostedSourceControlIcons.png
+- documentation\FMOD Studio User Manual\images\graph-categories.png
+- documentation\FMOD Studio User Manual\images\includeReferencedEventsAudioFileNamesInBanks.png
+- documentation\FMOD Studio User Manual\images\InstrumentsOnTrack.png
+- documentation\FMOD Studio User Manual\images\instrumentWithAllModulators.png
+- documentation\FMOD Studio User Manual\images\keyboard-shortcuts.png
+- documentation\FMOD Studio User Manual\images\labeledParameter.png
+- documentation\FMOD Studio User Manual\images\lfo-modulator.png
+- documentation\FMOD Studio User Manual\images\liveUpdateOff.png
+- documentation\FMOD Studio User Manual\images\liveUpdateOn.png
+- documentation\FMOD Studio User Manual\images\logicTrackContextMenu.png
+- documentation\FMOD Studio User Manual\images\logicTrackDisclosureTriangle.png
+- documentation\FMOD Studio User Manual\images\logicTracksWithMarkers.png
+- documentation\FMOD Studio User Manual\images\loopInstrumentToggleButton.png
+- documentation\FMOD Studio User Manual\images\loopPlaybackModeOn.png
+- documentation\FMOD Studio User Manual\images\loopPlaylistToggleButton.png
+- documentation\FMOD Studio User Manual\images\loopRegion.png
+- documentation\FMOD Studio User Manual\images\loopRegionDeckPanel.png
+- documentation\FMOD Studio User Manual\images\loopRegionDeckPanelWithParameters.png
+- documentation\FMOD Studio User Manual\images\loopRegionDeckPanelWithProbability.png
+- documentation\FMOD Studio User Manual\images\loupeAssets.png
+- documentation\FMOD Studio User Manual\images\loupeDropDownMenu.png
+- documentation\FMOD Studio User Manual\images\macro-pitch-automation-section-with-automation-points.png
+- documentation\FMOD Studio User Manual\images\macro-pitch-automation-section-with-empty-curve.png
+- documentation\FMOD Studio User Manual\images\macro-pitch-automation-section-with-one-point.png
+- documentation\FMOD Studio User Manual\images\magnet-regions.png
+- documentation\FMOD Studio User Manual\images\master-track-head-highlighted.png
+- documentation\FMOD Studio User Manual\images\masterBusMixerStrip.png
+- documentation\FMOD Studio User Manual\images\masterTrack.png
+- documentation\FMOD Studio User Manual\images\masterTrackAndDeck.png
+- documentation\FMOD Studio User Manual\images\maxEventInstances.png
+- documentation\FMOD Studio User Manual\images\maxInstances.png
+- documentation\FMOD Studio User Manual\images\meteringChannelOrder.png
+- documentation\FMOD Studio User Manual\images\missingFile.png
+- documentation\FMOD Studio User Manual\images\mixer-view-dropdown.png
+- documentation\FMOD Studio User Manual\images\mixerWindow.png
+- documentation\FMOD Studio User Manual\images\mixing-desk-sidebar-toggle-buttons.png
+- documentation\FMOD Studio User Manual\images\mixingDesk.png
+- documentation\FMOD Studio User Manual\images\mixingDeskWithActiveBuses.png
+- documentation\FMOD Studio User Manual\images\mixingDeskWithSnapshotSelected.png
+- documentation\FMOD Studio User Manual\images\modulatorRoguesGallery.png
+- documentation\FMOD Studio User Manual\images\multi-instrument-deck.png
+- documentation\FMOD Studio User Manual\images\multi-instrument-one-two-three.png
+- documentation\FMOD Studio User Manual\images\new-effect-chain-command.png
+- documentation\FMOD Studio User Manual\images\object_spatializer_effect_diagram.png
+- documentation\FMOD Studio User Manual\images\onHoldTab.png
+- documentation\FMOD Studio User Manual\images\overview.png
+- documentation\FMOD Studio User Manual\images\packageProjectDialog.png
+- documentation\FMOD Studio User Manual\images\packageSelection.png
+- documentation\FMOD Studio User Manual\images\panner.png
+- documentation\FMOD Studio User Manual\images\parameter-number-box-with-orange-dot.png
+- documentation\FMOD Studio User Manual\images\parameter-sheet.png
+- documentation\FMOD Studio User Manual\images\parameter.png
+- documentation\FMOD Studio User Manual\images\parameterCursorAndPlayback.png
+- documentation\FMOD Studio User Manual\images\parameterDeck.png
+- documentation\FMOD Studio User Manual\images\parameterDials.png
+- documentation\FMOD Studio User Manual\images\parameterTabBar.png
+- documentation\FMOD Studio User Manual\images\parameterTriggeringInstrument.png
+- documentation\FMOD Studio User Manual\images\parameter_trigger_condition.png
+- documentation\FMOD Studio User Manual\images\pauseButton.png
+- documentation\FMOD Studio User Manual\images\perforceAssetAndBankInclusionCheckboxes.png
+- documentation\FMOD Studio User Manual\images\perforceOnlineIcon.png
+- documentation\FMOD Studio User Manual\images\perforceSourceControlTab.png
+- documentation\FMOD Studio User Manual\images\persistent.png
+- documentation\FMOD Studio User Manual\images\pitch.png
+- documentation\FMOD Studio User Manual\images\platformEncodingSettings.png
+- documentation\FMOD Studio User Manual\images\playbackPosition.png
+- documentation\FMOD Studio User Manual\images\playButton.png
+- documentation\FMOD Studio User Manual\images\postFaderEffect.png
+- documentation\FMOD Studio User Manual\images\preFaderEffect.png
+- documentation\FMOD Studio User Manual\images\presetEffectIcon.png
+- documentation\FMOD Studio User Manual\images\presetEffectIconBlinking.png
+- documentation\FMOD Studio User Manual\images\presetEffectIndicatorIcon.png
+- documentation\FMOD Studio User Manual\images\presetEffectsBrowser.png
+- documentation\FMOD Studio User Manual\images\priority.png
+- documentation\FMOD Studio User Manual\images\profiler-api-calls-view.png
+- documentation\FMOD Studio User Manual\images\profiler-transport-bar.png
+- documentation\FMOD Studio User Manual\images\profilerParameters.png
+- documentation\FMOD Studio User Manual\images\projectMigrationDialog.png
+- documentation\FMOD Studio User Manual\images\projectMigrationDialogDesigner.png
+- documentation\FMOD Studio User Manual\images\randomizePlaylistToggleButton.png
+- documentation\FMOD Studio User Manual\images\randomModulator.png
+- documentation\FMOD Studio User Manual\images\reaperActionsDialog.png
+- documentation\FMOD Studio User Manual\images\reaperActionsMenu.png
+- documentation\FMOD Studio User Manual\images\reaperApplicationPath.png
+- documentation\FMOD Studio User Manual\images\reaperImportedMasterMix.png
+- documentation\FMOD Studio User Manual\images\reaperImportedSeparateTracks.png
+- documentation\FMOD Studio User Manual\images\reaperLinkedAssetsRemoval.png
+- documentation\FMOD Studio User Manual\images\reaperMasterMixRendering.png
+- documentation\FMOD Studio User Manual\images\reaperProjectInAssetsBrowser.png
+- documentation\FMOD Studio User Manual\images\reaperProjectSettings.png
+- documentation\FMOD Studio User Manual\images\reaperProjectsFolder.png
+- documentation\FMOD Studio User Manual\images\reaperRenderLinkedAssets.png
+- documentation\FMOD Studio User Manual\images\reaperRenderToFileDialog.png
+- documentation\FMOD Studio User Manual\images\reaperSeparateTracksRendering.png
+- documentation\FMOD Studio User Manual\images\reaperTimelineExporterInstall.png
+- documentation\FMOD Studio User Manual\images\recordingPlayback.png
+- documentation\FMOD Studio User Manual\images\referencedEvents.png
+- documentation\FMOD Studio User Manual\images\repairPlugin.png
+- documentation\FMOD Studio User Manual\images\resonance_audio_source_effect_diagram.png
+- documentation\FMOD Studio User Manual\images\returnBusInTheMixer.png
+- documentation\FMOD Studio User Manual\images\returnTrackAndDeck.png
+- documentation\FMOD Studio User Manual\images\routingBrowser.png
+- documentation\FMOD Studio User Manual\images\routingBrowserTopLevelSelected.png
+- documentation\FMOD Studio User Manual\images\sandboxWindow.png
+- documentation\FMOD Studio User Manual\images\searchbar.png
+- documentation\FMOD Studio User Manual\images\sends.png
+- documentation\FMOD Studio User Manual\images\sidechainModulator.png
+- documentation\FMOD Studio User Manual\images\signalChain.png
+- documentation\FMOD Studio User Manual\images\signalChainWithEffects.png
+- documentation\FMOD Studio User Manual\images\smcConfirmationDialog.png
+- documentation\FMOD Studio User Manual\images\snapshotBehaviors.png
+- documentation\FMOD Studio User Manual\images\snapshotIntensity.png
+- documentation\FMOD Studio User Manual\images\snapshotPrioritiesExample.png
+- documentation\FMOD Studio User Manual\images\snapshotPriority.png
+- documentation\FMOD Studio User Manual\images\spatializerEffect.png
+- documentation\FMOD Studio User Manual\images\spatializer_effect_diagram.png
+- documentation\FMOD Studio User Manual\images\stealing.png
+- documentation\FMOD Studio User Manual\images\stopButton.png
+- documentation\FMOD Studio User Manual\images\streamingAssets.png
+- documentation\FMOD Studio User Manual\images\stripsButton.png
+- documentation\FMOD Studio User Manual\images\stripsView.png
+- documentation\FMOD Studio User Manual\images\submitDialog.png
+- documentation\FMOD Studio User Manual\images\submixExample.png
+- documentation\FMOD Studio User Manual\images\svnSourceControlTab.png
+- documentation\FMOD Studio User Manual\images\taggingAnEvent.png
+- documentation\FMOD Studio User Manual\images\tempoButton.png
+- documentation\FMOD Studio User Manual\images\tempoMarker.png
+- documentation\FMOD Studio User Manual\images\timeButton.png
+- documentation\FMOD Studio User Manual\images\trackMonitorButton.png
+- documentation\FMOD Studio User Manual\images\trackMuteAndSoloButtons.png
+- documentation\FMOD Studio User Manual\images\tracks.png
+- documentation\FMOD Studio User Manual\images\transitionMarkers.png
+- documentation\FMOD Studio User Manual\images\transitionRegionDeckPanelWithQuantization.png
+- documentation\FMOD Studio User Manual\images\transitionRegions.png
+- documentation\FMOD Studio User Manual\images\transitionRegionWithCollapsedTransitionTimeline.png
+- documentation\FMOD Studio User Manual\images\transitionTimeline.png
+- documentation\FMOD Studio User Manual\images\transitionTimelineCollapsed.png
+- documentation\FMOD Studio User Manual\images\transitionTimelineWithSourceAndDestinationRegions.png
+- documentation\FMOD Studio User Manual\images\transport-controls.png
+- documentation\FMOD Studio User Manual\images\trim.png
+- documentation\FMOD Studio User Manual\images\unimportedAsset.png
+- documentation\FMOD Studio User Manual\images\unityStudioEventEmitter.png
+- documentation\FMOD Studio User Manual\images\unrealBlueprintExample.png
+- documentation\FMOD Studio User Manual\images\welcome-dialog.png
+- documentation\FMOD Studio User Manual\images\xyz.png
+- documentation\FMOD Studio User Manual\scripts\language-selector.js
+- documentation\FMOD Studio User Manual\style\code_highlight.css
+- documentation\FMOD Studio User Manual\style\DINWeb-Medium.woff
+- documentation\FMOD Studio User Manual\style\DINWeb.woff
+- documentation\FMOD Studio User Manual\style\docs.css
+- extras\FMOD Studio SSL Nucleus Profile.zip
+- extras\fmod-studio-integration.eel
+- platforms\qwindows.dll
+- plugins\audiogaming_audiomotors.dll
+- plugins\audiogaming_audiomotors.plugin.js
+- plugins\audiogaming_audiomotors_demo_engine.agp
+- plugins\audiogaming_audiomotors_logo.png
+- plugins\audiogaming_audiorain.dll
+- plugins\audiogaming_audiorain.plugin.js
+- plugins\audiogaming_audioweather.dll
+- plugins\audiogaming_audiowind.dll
+- plugins\audiogaming_audiowind.plugin.js
+- plugins\resonanceaudio.dll
+- plugins\resonanceaudio.plugin.js
+- plugins\resonanceaudio_logo.png
+- plugins\audiogaming\audiogaming_audiorain_logo.png
+- plugins\audiogaming\audiogaming_audiowind_logo.png
+- plugins\audiogaming\background.png
+- plugins\audiogaming\fader_lock.png
+- plugins\audiogaming\global.png
+- plugins\audiogaming\gusts.png
+- plugins\audiogaming\LFE.png
+- plugins\audiogaming\liquid1.png
+- plugins\audiogaming\liquid2.png
+- plugins\audiogaming\rumble.png
+- plugins\audiogaming\shower.png
+- plugins\audiogaming\squalls.png
+- plugins\audiogaming\whistling.png
+- resources\icudtl.dat
+- resources\qtwebengine_resources.pak
+- resources\qtwebengine_resources_100p.pak
+- resources\qtwebengine_resources_200p.pak
+- scripts\AddAhdsrToSelectedEvents.js
+- scripts\AddGroupTrack.js
+- scripts\BatchRename.js
+- scripts\EngineDesigner.js
+- scripts\exportGUIDsHeader.js
+- scripts\Perforce.sc.js
+- scripts\RandomizeColors.js
+- scripts\SVN.sc.js
+- translations\qtwebengine_locales\en-US.pak

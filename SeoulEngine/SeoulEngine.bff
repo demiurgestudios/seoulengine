@@ -1,0 +1,95 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+//------------------------------------------------------------------------------
+// Common first
+//------------------------------------------------------------------------------
+#include 'SeoulEngineCommon.bff'
+
+//------------------------------------------------------------------------------
+// Toolchain config
+//------------------------------------------------------------------------------
+#include 'SeoulEngineClangAndroid.bff'
+#include 'SeoulEngineClangLinux.bff'
+#include 'SeoulEngineVS2019.bff'
+
+//------------------------------------------------------------------------------
+// SeoulEngine projects are currently all static libs (use StaticLibGen.bff).
+//------------------------------------------------------------------------------
+{
+    .StaticLibBase      = '$SeoulEngineBase$'
+
+    //------------------------------------------------------------------------------
+    // Projects to generate
+    //------------------------------------------------------------------------------
+    .ToBuildProjects = .SeoulEngineProjects
+    .ToBuildProjectConfig = [
+        .Android_Deps                 = .DepsEngine + { 'FMODSound', 'OGLES2' }
+        .Android_Externs              = { 'breakpad/src' }
+        .Android_Platforms            = { .SeoulPlatformAndroid }
+        .Animation_Deps               = .DepsEngine
+        .Animation2D_Deps             = .DepsAnimation
+        .Animation3D_Deps             = .DepsAnimation
+        .Content_Deps                 = .DepsCore + { 'Events', 'Jobs' }
+        .Core_Deps                    = {}
+        .Core_Externs                 = { 'Android/cpufeatures', 'jemalloc/include', 'lz4/lib', 'miniz', 'pugi', 'rapidjson/include', 'spng', 'stb', 'wjcryptlib', 'zlib', 'zstd/lib' }
+        .D3DCommon_Deps               = .DepsEngine
+        .D3D11_Deps                   = .DepsEngine + { 'D3DCommon' }
+        .D3D11_Externs                = { 'fx11/inc' }
+        .DevUI_Deps                   = .DepsEngine
+        .DevUI_Externs                = { 'imgui' }
+        .EffectConverter_Deps         = .DepsEngine
+        .EffectConverter_Externs      = { 'gles2' }
+        .Engine_Deps                  = .DepsCore + { 'Content', 'Events', 'Fx', 'HAL', 'HTTP', 'Jobs', 'Rendering', 'Settings', 'Sound' }
+        .Falcon_Externs               = { 'pugi', 'stb', 'tess2' }
+        .FMODSound_Deps               = .DepsEngine
+        .FMODSound_Externs            = { 'FMOD/Windows/api/core/inc','FMOD/Windows/api/studio/inc' }
+        .FxStudio_Deps                = .DepsEngine
+        .FxStudio_Externs             = { 'FxStudio/SDK/Include' }
+        .Game_Deps                    = .DepsAnimation + { 'Animation2D', 'Animation3D', 'DevUI', 'Falcon', 'FxStudio', 'Scene', 'Script', 'ScriptScene', 'ScriptUI', 'UI', 'UnitTesting', 'Video' }
+        .Game_Externs                 = { 'imgui' }
+        .HAL_Deps                     = .DepsCore + { 'Content', 'Events', 'Jobs', 'Settings' }
+        .HAL_Externs                  = { 'crunch/inc' }
+        .HTTP_Deps                    = .DepsCore + { 'Jobs' }
+        .HTTP_Externs                 = { 'curl/include/curl', 'mongoose-mit', 'openssl/include' }
+        .IOS_Deps                     = .DepsEngine + { 'FMODSound', 'OGLES2' }
+        .NullGraphics_Deps            = .DepsEngine + { 'EffectConverter', 'OGLES2' }
+        .NullPlatform_Deps            = .DepsEngine + { 'NullGraphics' }
+        .OGLES2_Deps                  = .DepsEngine
+        .OGLES2_Externs               = { 'gles2' }
+        .OGLES2_Platforms             = { .SeoulPlatformAndroid } // TODO: IOS
+        .PC_Deps                      = .DepsEngine + { 'D3DCommon', 'FMODSound' }
+        .Physics_Externs              = { 'bounce/include' }
+        .Reflection_Deps              = { 'Core' }
+        .Rendering_Deps               = .DepsCore + { 'Content', 'HAL', 'Jobs', 'Settings' }
+        .Scene_Deps                   = .DepsAnimation + { 'Animation3D', 'Navigation', 'Physics' }
+        .Script_Deps                  = .DepsEngine
+        .Script_Externs               = { 'luajit/src', 'lua_protobuf' }
+        .ScriptAnimation2D_Deps       = .DepsAnimation + { 'Animation2D', 'Script' }
+        .ScriptEngine_Deps            = .DepsEngine + { 'Game', 'Script' } // TODO: Game reference here is a wart, bad up reference.
+        .ScriptMotion_Deps            = .DepsEngine + { 'Navigation', 'Physics', 'Scene', 'Script', 'ScriptScene' }
+        .ScriptNetwork_Deps           = .DepsEngine + { 'Network', 'Script' }
+        .ScriptScene_Deps             = .DepsEngine + { 'Physics', 'Scene', 'Script', 'ScriptEngine' }
+        .ScriptUI_Deps                = .DepsAnimation + { 'Animation2D', 'Falcon', 'Script', 'UI' }
+        .Settings_Deps                = .DepsCore + { 'Content', 'Events', 'Jobs' }
+        .Sound_Deps                   = .DepsCore + { 'Content', 'Events', 'Jobs' }
+        .Steam_Deps                   = .DepsEngine + { 'D3DCommon', 'PC' }
+        .UI_Deps                      = .DepsAnimation + { 'Animation2D', 'Falcon' }
+        .UnitTests_Deps               = .DepsAnimation + { 'Animation2D', 'Animation3D', 'Falcon', 'FMODSound', 'Game', 'Navigation', 'NullGraphics', 'NullPlatform', 'Physics', 'Script', 'UI', 'UnitTesting' }
+        .Video_Deps                   = .DepsEngine
+    ]
+
+    //------------------------------------------------------------------------------
+    // Generate the builds
+    //------------------------------------------------------------------------------
+    #include "StaticLibGen.bff"
+}
+
+//------------------------------------------------------------------------------
+// External projects
+//------------------------------------------------------------------------------
+#include "../External/External.bff"

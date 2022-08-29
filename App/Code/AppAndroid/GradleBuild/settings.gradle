@@ -1,0 +1,3 @@
+include 'AndroidJava', 'AndroidSamsung'
+project(':AndroidJava').projectDir = file('../../../../SeoulEngine/Code/AndroidJava')
+project(':AndroidSamsung').projectDir = file('../../../../External/Samsung/Libs/IAP5Helper')

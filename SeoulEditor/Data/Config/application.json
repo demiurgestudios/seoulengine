@@ -1,0 +1,26 @@
+{
+	"Application": {
+		"AndroidMaxBackBufferHeight": 1920,
+		"ApplicationName": "Seoul Editor",
+		"CompanyName": "Demiurge Studios",
+		"Fullscreen": false,
+		"FullscreenOnMaximize": false,
+		"HTTPMaxResendTimeInSeconds": 7.5,
+		"HTTPRandomResendTimeInSeconds": 1.0,
+		"LoadingTextureFadeTimeInSeconds": 0.125,
+		"LocalizedApplicationToken": "save_game_title",
+		"MuteAudioWhenInactive": false,
+
+		// If defined, sets a preferred rendering backend on PC. Valid values
+		// are: "D3D11"
+		"PCRenderBackend": "D3D11",
+
+		"FixedAspectRatioModePC": "Off",
+
+		// The editor always uses virtualized desktop mode.
+		"VirtualizedDesktop": true,
+
+		"Vsync": true,
+		"WindowedFullscreen": true
+	}
+}

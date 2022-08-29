@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+# Build
+make clean
+make CC=clang HOST_CC="clang -DLUAJIT_ENABLE_GC64 -DLUAJIT_USE_SYSMALLOC -DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_DISABLE_JIT -DLUAJIT_DISABLE_FFI -g -O2 -fomit-frame-pointer -Wall -Werror" TARGET_SYS=Linux TARGET_FLAGS="-DLUAJIT_ENABLE_GC64 -DLUAJIT_USE_SYSMALLOC -DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_DISABLE_JIT -DLUAJIT_DISABLE_FFI -g -O2 -fomit-frame-pointer -Wall -Werror"
+
+# Move to output
+mkdir -p lib/Linux/ReleaseGC64
+mv src/libluajit.a lib/Linux/ReleaseGC64/libluajit.a
+
+# Cleanup
+make clean

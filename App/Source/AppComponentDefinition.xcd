@@ -1,0 +1,1496 @@
+<root version="0.0">
+  <lod>
+    <categories>
+      <category name="Near Range" id="98157b92-07b8-4556-abe0-8fec724e1e07" minimumdistance="0" maximumdistance="0">
+        <lodids />
+        <lodcontainer platformid="00000000-0000-0000-0000-000000000000" minimumdistance="0" maximumdistance="1000">
+          <positions />
+        </lodcontainer>
+      </category>
+      <category name="Mid Range" id="13e4cd78-b908-4890-a3cd-0f8b3f45795b" minimumdistance="0" maximumdistance="0">
+        <lodids />
+        <lodcontainer platformid="00000000-0000-0000-0000-000000000000" minimumdistance="0" maximumdistance="5000">
+          <positions />
+        </lodcontainer>
+      </category>
+      <category name="Far Range" id="09d32ae3-2bad-4145-913d-9bb3905cefbd" minimumdistance="0" maximumdistance="0">
+        <lodids>
+          <lodid value="ee4df555-da8e-4d2c-8edd-b3619d7c83f9" />
+          <lodid value="637b061f-8d93-48be-92b5-c5f62d37667c" />
+        </lodids>
+        <lodcontainer platformid="00000000-0000-0000-0000-000000000000" minimumdistance="0" maximumdistance="20000">
+          <positions>
+            <position value="0.686018" />
+            <position value="0.3172527" />
+          </positions>
+        </lodcontainer>
+      </category>
+    </categories>
+  </lod>
+  <phases>
+    <object class="FxStudio.DataModel.PhaseDefinition" classid="ac4f8681-6d48-39ba-8e76-39563899445c" assembly="DataModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <data id="fc34bad5-e4a8-4855-bdd1-ece88d327719" name="Once" color="-16711681" initialduration="1" initialplaycount="1" tooltip="A &quot;Once&quot; Phase will play-through and then continue to the next phase." />
+    </object>
+    <object class="FxStudio.DataModel.PhaseDefinition" classid="ac4f8681-6d48-39ba-8e76-39563899445c" assembly="DataModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <data id="2d6a16c1-4632-4f7f-8097-4717dc65d7bd" name="Wait" color="-65536" initialduration="1" initialplaycount="-1" tooltip="A &quot;Wait&quot; phase will loop indefinitely, until an in-game event triggers that causes it to continue." />
+    </object>
+  </phases>
+  <inputs />
+  <components>
+    <component name="ParticleEmitter" tooltip="Encapsulates a particle system" color="-13447886">
+      <properties>
+        <property name="Color" id="93b34a52-eef2-4f88-80f6-19e3126188ca">
+          <definition typeid="22c6b703-4b0e-4944-9d37-43fd436f9c71" type="ColorRamp" specializable="False" tooltip="The color and alpha of each individual particle over its lifetime" keyframetype="ColorKeyframe">
+            <channels>
+              <channel name="Alpha" id="93b34a52-eef2-4f88-80f6-19e3126188ca" color="-1" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="255" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Spline" id="93b34a52-eef2-4f88-80f6-19e3126188ca">
+                    <keyframes>
+                      <keyframe time="0" value="16777215">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.1076031" value="-1">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.8782216" value="-1">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="1" value="16777215">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Lifetime" id="352fac77-0097-47ec-908c-7c0d334fc161">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="The lifespan of each particle" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Lifespan" id="352fac77-0097-47ec-908c-7c0d334fc161" color="-16711936" hidden="False" />
+              <channel name="Max Lifespan" id="5d1a5586-f360-4f08-a609-e649c8731a38" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="5" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="352fac77-0097-47ec-908c-7c0d334fc161">
+                    <keyframes>
+                      <keyframe time="0" value="2" />
+                      <keyframe time="1" value="2" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="5d1a5586-f360-4f08-a609-e649c8731a38">
+                    <keyframes>
+                      <keyframe time="0" value="2" />
+                      <keyframe time="1" value="2" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Uniform Scale" id="02e6012f-51af-4f4c-8897-2b8421952fa1">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="The uniform scale of each individual particle" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Scale" id="02e6012f-51af-4f4c-8897-2b8421952fa1" color="-4144960" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="400" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Spline" id="02e6012f-51af-4f4c-8897-2b8421952fa1">
+                    <keyframes>
+                      <keyframe time="0" value="20">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="1" value="20">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Maximum Particle Count" id="21176254-19ca-43e0-a890-b20fd264cca3">
+          <definition typeid="999607c1-f678-4767-9b93-2f54e2924642" type="IntegerSlider" specializable="True" tooltip="The maximum number of particles this particle system will create">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" maximum="1000" minimum="1" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="40" />
+            </data>
+          </definition>
+        </property>
+        <property name="Emit Rate" id="b16512bc-8157-4c11-bfde-732ec940b841">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" allowlod="True" specializable="True" tooltip="The rate at which particles are emitted (particles per second)" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Ramp Channel" id="b16512bc-8157-4c11-bfde-732ec940b841" color="-32768" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="300" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="b16512bc-8157-4c11-bfde-732ec940b841">
+                    <keyframes>
+                      <keyframe time="0" value="10" />
+                      <keyframe time="1" value="10" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Acceleration Along Velocity" id="38e1e9ac-f1e2-4cb6-b6d5-a6d7fa7c57d9">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The acceleration of the particles along the particle velocity" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Acceleration" id="6e2268d7-5a37-4b87-b8e1-b1df38027943" color="-2894893" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-10000" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="10000" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="6e2268d7-5a37-4b87-b8e1-b1df38027943">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Blend Mode" id="94d7a35f-95f0-44e5-8ef8-ca787640c331">
+          <definition typeid="fbb27f2a-c942-4840-8df1-0372bb898477" type="DropDownList" specializable="True" tooltip="The blending mode to use.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" strings="Normal|Additive|(Extended) InvSrcAlpha - One|(Extended) InvSrcColor - One|Lighten|Inverted Alpha|(Extended) One - SrcColor|Crispy Alpha|(Extended) SrcAlpha - InvSrcColor|Additive w Crispy Alpha|(Extended) SrcAlpha - SrcAlpha|Vibrant|(Extended) SrcColor - InvSrcColor|Additive Vibrant|Darken|Tint" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Particle Count" id="20d22bbd-2e85-41e1-bc13-00b2a72cdf9b">
+          <definition typeid="e449ac44-e15d-42ea-bc30-7892c77b42d4" type="IntegerRangeSlider" specializable="True" tooltip="The initial number of particles to emit">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" maximum="1000" minimum="0" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="1,1" />
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Velocity" id="79ab5e9c-2d87-496c-83bd-1b6c78cbd095">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The initial linear speed of the particle in units per second." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Velocity" id="79ab5e9c-2d87-496c-83bd-1b6c78cbd095" color="-16711936" hidden="False" />
+              <channel name="Max Velocity" id="67d22a4f-4307-4270-885d-d24360d99c5c" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="300" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="79ab5e9c-2d87-496c-83bd-1b6c78cbd095">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="67d22a4f-4307-4270-885d-d24360d99c5c">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Emit Angle Range" id="48938cdf-26e0-489f-b123-db5cffbc75bf">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="The inner and outer angles that define the cone for initial particle velocities" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Outer Angle" id="56c8f458-1e40-4e78-851f-68f3ba272bd4" color="-256" hidden="False" />
+              <channel name="Inner Angle" id="33d91bb8-d26c-42e2-a1b3-7040b3e41bdf" color="-32704" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="360" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="56c8f458-1e40-4e78-851f-68f3ba272bd4">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="33d91bb8-d26c-42e2-a1b3-7040b3e41bdf">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Emit Direction" id="917df2bc-bbb3-4205-8d28-2450ea069f00">
+          <definition typeid="321d4c50-4a05-45f4-a356-ec011b49c01c" type="Vector3" specializable="False" tooltip="The axis used to emit particles around">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0,1,0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Non-Uniform Scale" id="3ab58b27-d41b-4221-b714-cb35fd213ce7">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="Independent scaling each axis" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X Scale" id="ba924589-b36a-44a2-bf68-5e149e9b5d9b" color="-65536" hidden="False" />
+              <channel name="Unused Y Scale" id="92d6c55f-51f6-4f1f-8df6-f6479b9d89f4" color="-4144960" hidden="True" />
+              <channel name="Y Scale" id="384976bb-84e8-4e28-b91c-e11a988679a5" color="-16711936" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="20" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="ba924589-b36a-44a2-bf68-5e149e9b5d9b">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="92d6c55f-51f6-4f1f-8df6-f6479b9d89f4">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="384976bb-84e8-4e28-b91c-e11a988679a5">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Rotation" id="ba01543e-cd06-4c35-8e81-68d3fd7a7af8">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="The rotation of the particle in degrees" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Rotation" id="445265a2-9036-4ef2-85a1-9457fd75b079" color="-65408" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="360" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="445265a2-9036-4ef2-85a1-9457fd75b079">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Random Initial Rotation" id="a1d24203-e9f7-4066-ba47-6ee9f9ebcf83">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="Uses a random rotation for each particle if true">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Coordinate Space" id="b13c2ffd-c94f-4d56-947e-07077287ec52">
+          <definition typeid="fbb27f2a-c942-4840-8df1-0372bb898477" type="DropDownList" specializable="True" tooltip="Determines whether particles should be described in world space or local space (i.e. follow the particle system)">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" strings="World|Local|Local Translation with World Rotation|World Translation with Local Rotation" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Inherit Velocity" id="ec6a86f4-b53b-495a-99d2-df3accb37755">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="Determines if particles should inherit velocity from the particle systems motion">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Acceleration" id="769ee0b1-11e9-4da2-a539-e3ed123412fb">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The acceleration of the particles (including gravity)" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="a30e7659-a9cc-4111-9356-05f30fcaf6b4" color="-65536" hidden="False" />
+              <channel name="Y" id="61cad66d-03f0-46fc-a900-2fdf57ed3825" color="-16711936" hidden="False" />
+              <channel name="Z" id="1c0a2214-2da9-4994-80f1-a19c423b0a2c" color="-16776961" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-1500" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="1500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="a30e7659-a9cc-4111-9356-05f30fcaf6b4">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="61cad66d-03f0-46fc-a900-2fdf57ed3825">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="1c0a2214-2da9-4994-80f1-a19c423b0a2c">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Angular Acceleration" id="7b9391b4-3347-492f-875d-d9a9822af290">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="Angular/rotation acceleration over time in degrees per second." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Acceleration" id="bf93d507-bb9b-4ffe-b838-12fc994ccfa7" color="-16711936" hidden="False" />
+              <channel name="Max Acceleration" id="d1254212-3278-499c-8fec-c493b9d6ce24" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-1000" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="1000" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="bf93d507-bb9b-4ffe-b838-12fc994ccfa7">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="d1254212-3278-499c-8fec-c493b9d6ce24">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Emit Along Parent Velocity" id="1409be22-2e61-4e97-941f-cd7ee1ddfb15">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="Whether or not to emit this particel along the parent velocity">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Parent Space Emit Direction" id="cb28c83f-c0f0-47d4-a7c1-fac9439d30fe">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="False" tooltip="The emit direction specified above should use the parent's orientation">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Align to Emit Angle" id="c163cab2-ebd1-48d5-9d2d-8a5a11fa011a">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="UV Offset" id="0eee8888-e4fb-46ba-978c-7ed0bd219214">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="U Offset" id="7a5c2ea7-2f46-485f-8bbf-ad3022aa2ea2" color="-65536" hidden="False" />
+              <channel name="V Offset" id="d3a5677f-ca55-4b18-bd51-330518eb5129" color="-16711936" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-10" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="10" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="7a5c2ea7-2f46-485f-8bbf-ad3022aa2ea2">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="d3a5677f-ca55-4b18-bd51-330518eb5129">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="UV Scale" id="e1b89582-0def-4fad-a6de-296ea4536155">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="U Scale" id="e0c9db68-23ce-485f-ac92-afcfa7708287" color="-65536" hidden="False" />
+              <channel name="V Scale" id="f4fde87d-2eec-4f67-917e-030f0685666b" color="-16711936" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-10" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="10" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="e0c9db68-23ce-485f-ac92-afcfa7708287">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="f4fde87d-2eec-4f67-917e-030f0685666b">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Scale" id="0d0cd078-f0bd-4ee1-8fc4-8b4d9065e691">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="Starting scale of the particles" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Scale" id="5bb50571-c0f6-415a-a4be-d09b39863f06" color="-16711936" hidden="False" />
+              <channel name="Max Scale" id="454ede7c-22c9-4b5d-b04d-dc534992d897" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="5" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="5bb50571-c0f6-415a-a4be-d09b39863f06">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="454ede7c-22c9-4b5d-b04d-dc534992d897">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Shape" id="4edb7213-fa33-4700-9be2-8c70feb66232">
+          <definition typeid="fbb27f2a-c942-4840-8df1-0372bb898477" type="DropDownList" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" strings="Point|Line|Box|Sphere" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Width" id="fec5d1b9-a32a-4989-a5c6-94445ce9ce67">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Width" id="ab492d99-daeb-41d2-9a94-c260a12a2a70" color="-4144960" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="ab492d99-daeb-41d2-9a94-c260a12a2a70">
+                    <keyframes>
+                      <keyframe time="0" value="10" />
+                      <keyframe time="1" value="10" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Inner Dimensions" id="91442d0e-72b1-4108-833b-bf4c1d870138">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="41021c45-c5bd-49b7-a9b4-68f9fdebe8ca" color="-65536" hidden="False" />
+              <channel name="Y" id="5f6eecfb-a2ed-4eb8-a62d-94039db03196" color="-16711936" hidden="False" />
+              <channel name="Z" id="73848cfd-8940-4f51-bc54-5253f1d1c071" color="-16776961" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="41021c45-c5bd-49b7-a9b4-68f9fdebe8ca">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="5f6eecfb-a2ed-4eb8-a62d-94039db03196">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="73848cfd-8940-4f51-bc54-5253f1d1c071">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Outer Dimensions" id="1fa395c9-8448-47b4-b42d-9d8a319c6778">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="218c8665-1190-4212-9d86-94d7706c557d" color="-65536" hidden="False" />
+              <channel name="Y" id="4cc84792-082c-4570-80b3-ce424cc3a1e1" color="-16711936" hidden="False" />
+              <channel name="Z" id="27bce628-1715-406b-b7c8-78f4bc8189cb" color="-16776961" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="218c8665-1190-4212-9d86-94d7706c557d">
+                    <keyframes>
+                      <keyframe time="0" value="10" />
+                      <keyframe time="1" value="10" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="4cc84792-082c-4570-80b3-ce424cc3a1e1">
+                    <keyframes>
+                      <keyframe time="0" value="10" />
+                      <keyframe time="1" value="10" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="27bce628-1715-406b-b7c8-78f4bc8189cb">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Radius" id="10091b92-2250-401c-8d95-a2e5923b7060">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Inner Radius" id="943b545a-3345-4326-b415-e07a22fffbc9" color="-16711936" hidden="False" />
+              <channel name="Outer Radius" id="80a75e40-b400-46c2-a738-8140276d1eb6" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="943b545a-3345-4326-b415-e07a22fffbc9">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="80a75e40-b400-46c2-a738-8140276d1eb6">
+                    <keyframes>
+                      <keyframe time="0" value="10" />
+                      <keyframe time="1" value="10" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Initial Emitter Velocity" id="e4036464-1a61-43d4-bd4b-1ecb5866bc19">
+          <definition typeid="497241d5-8dcf-49f4-9f77-596b3f3c09a1" type="FloatRangeSlider" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" maximum="2000" minimum="0" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0,0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Emitter Acceleration" id="9f11e315-e1a6-45e8-8524-40c81d545f0c">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="8b4db2f2-aa7c-44bc-9bb9-9a28cdb8fe14" color="-65536" hidden="False" />
+              <channel name="Y" id="6446e083-593d-4e7d-a05d-7c3cc5807e79" color="-16711936" hidden="False" />
+              <channel name="Z" id="639939e0-7edc-4dc0-aec4-50cf782e45d3" color="-16776961" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-3000" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="3000" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="8b4db2f2-aa7c-44bc-9bb9-9a28cdb8fe14">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="6446e083-593d-4e7d-a05d-7c3cc5807e79">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="639939e0-7edc-4dc0-aec4-50cf782e45d3">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Emitter Velocity Angle Range" id="80edde02-2172-4311-8936-031527542e30">
+          <definition typeid="497241d5-8dcf-49f4-9f77-596b3f3c09a1" type="FloatRangeSlider" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" maximum="360" minimum="0" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0,0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Align Offset to Emit Velocity" id="8a2a19f2-27c5-4b2a-a64e-9c0fc105c202">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Local Origin" id="135e3db9-50e0-4f27-ae07-76c479f5162d">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="Offset to give the particle prior to applying transform" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="9474051c-7556-49e8-8255-4b0c3579c9eb" color="-65536" hidden="False" />
+              <channel name="Z" id="acb75e54-3a4a-476c-9352-1ebcddbf1ae4" color="-16711936" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-2" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="2" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="9474051c-7556-49e8-8255-4b0c3579c9eb">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="acb75e54-3a4a-476c-9352-1ebcddbf1ae4">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Emitter Offset" id="3f952d1b-4494-496d-a49d-90e4b5b5a40c">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The offset of the emitter relative to the owning object" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="b25fc2fc-de07-4bf6-8682-e2e9eff7b288" color="-65536" hidden="False" />
+              <channel name="Y" id="a902630a-dd3a-4f69-ac7f-7000e8841f77" color="-16711936" hidden="False" />
+              <channel name="Z" id="cac54f2c-1812-438d-b670-ec54fe10bbe3" color="-16776961" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-500" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="500" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="b25fc2fc-de07-4bf6-8682-e2e9eff7b288">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="a902630a-dd3a-4f69-ac7f-7000e8841f77">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="cac54f2c-1812-438d-b670-ec54fe10bbe3">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Emitter Acceleration Along Velocity" id="bbaffc3f-1415-42ed-a04c-7602b8c00e5b">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The acceleration of the emitter along the its velocity velocity" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Acceleration" id="2e14c3fd-1bdf-4a20-93b8-f855585f62a7" color="-2894893" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-10000" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="10000" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="2e14c3fd-1bdf-4a20-93b8-f855585f62a7">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Parent Space Emitter Offset" id="85fb1341-e08f-44f2-ac13-5ca87e797fef">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="False" tooltip="The emit offset specified should use the parent's rotation">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Snap Particles To Emitter Y" id="f4df4147-b002-402d-aae5-93beb92e7fa3">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="If true, particles will be snapped to their emitter's Y position when emitted.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Snap Particles To Emitter Z" id="62f79eef-cc78-429d-8dcb-4028f8f4df3c">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="If true, particles will be snapped to their emitter's Z position when emitted.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Align To Velocity" id="9bb8d1a7-57b1-4f96-bea4-146bb611c9af">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="False" tooltip="Align each particle to its velocity">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Use Rally Point" id="1abe59ce-404f-495d-85fd-42c6139f47c5">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="False">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Particle's Scale And Rotation Are Transform Independent" id="cda83d73-37ac-4091-9cdf-dfd93fc4d421">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Texture" id="791a2cb1-7990-4004-a3c2-66adf3c7e8b1">
+          <definition typeid="2485e9e1-e864-48f1-8e48-fbd51b3994f0" type="CustomImage" specializable="True" tooltip="The texture to display on each particle (or model if one is chosen)">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" assembly="seoul.texturesourcefilepicker" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="Authored\Textures\Fx\Light_Particle.png" />
+            </data>
+          </definition>
+        </property>
+        <property name="Configured Rally Point" id="b4d65768-909b-4824-bfc2-dd1cb5e2fcf6">
+          <definition typeid="321d4c50-4a05-45f4-a356-ec011b49c01c" type="Vector3" specializable="True">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0,1,0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Screen Align" id="363571d7-6da3-4fc8-a877-8995209295ba">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="If true, particles in a 3D world will stay oriented with the camera.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Angular Velocity" id="95d1d263-efa3-4b69-8079-b3ff002416c5">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The initial angular/rotational speed of the particle in degrees per second." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Velocity" id="380f2933-f042-4f76-a82f-423a15dffe16" color="-16711936" hidden="False" />
+              <channel name="Max Velocity" id="592ca2f9-7bb2-4a23-a793-ca2586a436c4" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-360" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="360" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="380f2933-f042-4f76-a82f-423a15dffe16">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="592ca2f9-7bb2-4a23-a793-ca2586a436c4">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Angular Friction" id="7ab98c30-ef4d-4349-b902-61fd9e2b2f0b">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="Damping of angular velocity. 0 is no damping, 1 is full stop (immediately kill of all angular velocity)." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Friction" id="706acb4b-0c1f-4fff-a961-6233430afa02" color="-2894893" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="1" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="706acb4b-0c1f-4fff-a961-6233430afa02">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Linear Friction" id="7fb35f47-f40c-40cf-8a51-892681001b7d">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="Damping of linear velocity. 0 is no damping, 1 is full stop (immediately kill of all linear velocity)." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Friction" id="63f8152d-fa4a-4f70-b0e9-d0ed83ad6202" color="-2894893" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="1" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="63f8152d-fa4a-4f70-b0e9-d0ed83ad6202">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Gravity Scalar" id="b72830d6-5276-4e06-a0f1-33d1c8b10a71">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="New Channel" id="d117a4ee-c0d0-409e-8ba5-9f43af1abe51" color="-2894893" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-2" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="2" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="d117a4ee-c0d0-409e-8ba5-9f43af1abe51">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <property name="Alpha Clamp" id="bb1604d6-82fe-4abb-9dbc-ff0629890e30">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" tooltip="Rescales the alpha channel to the specified range." keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min" id="1e52c37c-e584-4b0b-b8a3-b0e9ea4ba16f" color="-16711936" hidden="False" />
+              <channel name="Max" id="9336820c-e0e6-4bbb-8acb-1a9ff8097038" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="1" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="1e52c37c-e584-4b0b-b8a3-b0e9ea4ba16f">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="9336820c-e0e6-4bbb-8acb-1a9ff8097038">
+                    <keyframes>
+                      <keyframe time="0" value="1" />
+                      <keyframe time="1" value="1" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <property name="Initial Rotation Range" id="ab1bcafd-7239-47a4-a079-e21f84f0d237">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="False" tooltip="The range of rotation for the particle in degrees" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="Min Rotation" id="af08511b-3321-420c-8f46-aa4e5161ec8f" color="-16711872" hidden="False" />
+              <channel name="Max Rotation" id="08efd0a3-9f50-427d-bdae-6ca8f80673ef" color="-65536" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="0" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="360" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Linear" id="af08511b-3321-420c-8f46-aa4e5161ec8f">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Linear" id="08efd0a3-9f50-427d-bdae-6ca8f80673ef">
+                    <keyframes>
+                      <keyframe time="0" value="0" />
+                      <keyframe time="1" value="0" />
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+        </property>
+        <propertygroup id="61aaa428-9ed0-431f-bbb2-b010abc2e8bb" name="Property Group" collapsed="False">
+          <properties>
+            <property id="ef1d7d1e-02b6-4548-80d9-5ef2fbcda237" />
+            <property id="035b5248-d0ca-44b7-853f-3acb84110e67" />
+          </properties>
+          <children>
+            <propertygroup id="7713a2fc-71a8-4550-9dc9-3c2fe7daa99e" name="Particle" collapsed="False">
+              <children>
+                <propertygroup id="9472143c-f8a8-4bc4-9a27-d9fac8da046e" name="Appearance" collapsed="False">
+                  <properties>
+                    <property id="363571d7-6da3-4fc8-a877-8995209295ba" />
+                    <property id="791a2cb1-7990-4004-a3c2-66adf3c7e8b1" />
+                    <property id="94d7a35f-95f0-44e5-8ef8-ca787640c331" />
+                    <property id="93b34a52-eef2-4f88-80f6-19e3126188ca" />
+                    <property id="0eee8888-e4fb-46ba-978c-7ed0bd219214" />
+                    <property id="e1b89582-0def-4fad-a6de-296ea4536155" />
+                    <property id="135e3db9-50e0-4f27-ae07-76c479f5162d" />
+                    <property id="02e6012f-51af-4f4c-8897-2b8421952fa1" />
+                    <property id="3ab58b27-d41b-4221-b714-cb35fd213ce7" />
+                    <property id="38e1e9ac-f1e2-4cb6-b6d5-a6d7fa7c57d9" />
+                    <property id="769ee0b1-11e9-4da2-a539-e3ed123412fb" />
+                    <property id="b72830d6-5276-4e06-a0f1-33d1c8b10a71" />
+                    <property id="7b9391b4-3347-492f-875d-d9a9822af290" />
+                    <property id="7ab98c30-ef4d-4349-b902-61fd9e2b2f0b" />
+                    <property id="9bb8d1a7-57b1-4f96-bea4-146bb611c9af" />
+                    <property id="7fb35f47-f40c-40cf-8a51-892681001b7d" />
+                    <property id="bb1604d6-82fe-4abb-9dbc-ff0629890e30" />
+                  </properties>
+                </propertygroup>
+              </children>
+            </propertygroup>
+            <propertygroup id="4530c3ca-0e2f-4ba6-a780-d1fde4bc1a1c" name="Emitter" collapsed="False">
+              <children>
+                <propertygroup id="5b90075a-40b3-4b60-9b24-c245c4d1dfdf" name="Behavior" collapsed="False">
+                  <properties>
+                    <property id="b13c2ffd-c94f-4d56-947e-07077287ec52" />
+                    <property id="21176254-19ca-43e0-a890-b20fd264cca3" />
+                    <property id="20d22bbd-2e85-41e1-bc13-00b2a72cdf9b" />
+                    <property id="b16512bc-8157-4c11-bfde-732ec940b841" />
+                    <property id="352fac77-0097-47ec-908c-7c0d334fc161" />
+                    <property id="0d0cd078-f0bd-4ee1-8fc4-8b4d9065e691" />
+                    <property id="ba01543e-cd06-4c35-8e81-68d3fd7a7af8" />
+                    <property id="a1d24203-e9f7-4066-ba47-6ee9f9ebcf83" />
+                    <property id="95d1d263-efa3-4b69-8079-b3ff002416c5" />
+                    <property id="ab1bcafd-7239-47a4-a079-e21f84f0d237" />
+                    <property id="79ab5e9c-2d87-496c-83bd-1b6c78cbd095" />
+                    <property id="ec6a86f4-b53b-495a-99d2-df3accb37755" />
+                    <property id="48938cdf-26e0-489f-b123-db5cffbc75bf" />
+                    <property id="c163cab2-ebd1-48d5-9d2d-8a5a11fa011a" />
+                    <property id="8a2a19f2-27c5-4b2a-a64e-9c0fc105c202" />
+                    <property id="917df2bc-bbb3-4205-8d28-2450ea069f00" />
+                    <property id="cb28c83f-c0f0-47d4-a7c1-fac9439d30fe" />
+                    <property id="85fb1341-e08f-44f2-ac13-5ca87e797fef" />
+                    <property id="3f952d1b-4494-496d-a49d-90e4b5b5a40c" />
+                    <property id="1409be22-2e61-4e97-941f-cd7ee1ddfb15" />
+                    <property id="f4df4147-b002-402d-aae5-93beb92e7fa3" />
+                    <property id="62f79eef-cc78-429d-8dcb-4028f8f4df3c" />
+                  </properties>
+                  <children>
+                    <propertygroup id="19ee5d32-e593-456b-abf1-2bb22b91159e" name="Emitter Shape" collapsed="False">
+                      <properties>
+                        <property id="4edb7213-fa33-4700-9be2-8c70feb66232" />
+                      </properties>
+                      <children>
+                        <propertygroup id="bc315a61-a917-4c15-bdff-ac3ec86b5c62" name="Line Properties" collapsed="False">
+                          <properties>
+                            <property id="fec5d1b9-a32a-4989-a5c6-94445ce9ce67" />
+                          </properties>
+                        </propertygroup>
+                        <propertygroup id="0a0dfe41-5224-4e36-b8a6-41a437d771b3" name="Box Properties" collapsed="False">
+                          <properties>
+                            <property id="91442d0e-72b1-4108-833b-bf4c1d870138" />
+                            <property id="1fa395c9-8448-47b4-b42d-9d8a319c6778" />
+                          </properties>
+                        </propertygroup>
+                        <propertygroup id="bf7bfd30-f33f-40fb-bd4f-844fa38905dd" name="Sphere Properties" collapsed="False">
+                          <properties>
+                            <property id="10091b92-2250-401c-8d95-a2e5923b7060" />
+                          </properties>
+                        </propertygroup>
+                      </children>
+                    </propertygroup>
+                    <propertygroup id="5c056ae6-7e58-4e5f-91b7-8455e19b799d" name="Rally Point" collapsed="False">
+                      <properties>
+                        <property id="b4d65768-909b-4824-bfc2-dd1cb5e2fcf6" />
+                        <property id="cda83d73-37ac-4091-9cdf-dfd93fc4d421" />
+                        <property id="1abe59ce-404f-495d-85fd-42c6139f47c5" />
+                      </properties>
+                    </propertygroup>
+                  </children>
+                </propertygroup>
+                <propertygroup id="547d5799-2c85-470a-a787-385587d01d97" name="Emitter Movement" collapsed="False">
+                  <properties>
+                    <property id="e4036464-1a61-43d4-bd4b-1ecb5866bc19" />
+                    <property id="9f11e315-e1a6-45e8-8524-40c81d545f0c" />
+                    <property id="bbaffc3f-1415-42ed-a04c-7602b8c00e5b" />
+                    <property id="80edde02-2172-4311-8936-031527542e30" />
+                  </properties>
+                </propertygroup>
+              </children>
+            </propertygroup>
+          </children>
+        </propertygroup>
+      </properties>
+    </component>
+    <component name="PlaySoundEffect" tooltip="Play an FMOD Studio sound event. Starts at the start of the placed component." color="-8355712">
+      <properties>
+        <property name="Enable 3D Sound" id="cadc34f3-3241-4710-a23c-1d8f1910529a">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="If true, the position of the effect will be used to position the sound. Otherwise, it will be played without positioning.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <property name="Sound Event" id="df9b6b09-8e03-4460-bc27-08d4378aebfb">
+          <definition typeid="2afe2610-12a0-4301-a438-102a5d982d75" type="CustomString" specializable="True" tooltip="The name of the sound event to play and the sound project that contains it.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" assembly="seoul.soundeventpicker" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="&lt;click to select a sound event&gt;" />
+            </data>
+          </definition>
+        </property>
+        <property name="Stop At Deactivate" id="035a929a-d1ed-4fb9-8176-43f7121fd8ed">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="If true, the sound will be stopped when the PlaySoundEffect component deactivates.">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="0" />
+            </data>
+          </definition>
+        </property>
+        <propertygroup id="6b66846e-d30e-4d31-936c-4b828c80de03" name="Property Group" collapsed="False">
+          <properties>
+            <property id="ef1d7d1e-02b6-4548-80d9-5ef2fbcda237" />
+            <property id="035b5248-d0ca-44b7-853f-3acb84110e67" />
+            <property id="cadc34f3-3241-4710-a23c-1d8f1910529a" />
+            <property id="df9b6b09-8e03-4460-bc27-08d4378aebfb" />
+            <property id="035a929a-d1ed-4fb9-8176-43f7121fd8ed" />
+          </properties>
+        </propertygroup>
+      </properties>
+    </component>
+    <component name="ScreenShake" tooltip="" color="-65536">
+      <properties>
+        <property name="Motion" id="fdafc127-66ba-4258-8dd5-a6f4b75d1c9f">
+          <definition typeid="da8c974a-fe5b-415e-ae28-56c76d31094f" type="Ramp" specializable="True" keyframetype="FloatKeyframe">
+            <channels>
+              <channel name="X" id="b0231e21-0b36-48a1-85ef-9a1cb6588457" color="-65536" hidden="False" />
+              <channel name="Y" id="b3f0b1db-6cdd-4259-a10b-e95edd8480b9" color="-16711936" hidden="False" />
+            </channels>
+            <constraints>
+              <constraint classid="4944057f-9671-4e17-b3ae-f65b0bacff41" platform="00000000-0000-0000-0000-000000000000" value="-10" />
+              <constraint classid="dac71a24-ca97-40dd-93b5-306579b73197" platform="00000000-0000-0000-0000-000000000000" value="10" />
+            </constraints>
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000">
+                <rampchanneldata>
+                  <rampchannel type="Spline" id="b0231e21-0b36-48a1-85ef-9a1cb6588457">
+                    <keyframes>
+                      <keyframe time="0" value="10">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.07565162" value="10">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.151939" value="-10">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.2396694" value="6.555555">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.3820725" value="-5.222222">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.5104895" value="4.333333">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.6452639" value="-3.222222">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.7851239" value="2.111111">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.9364272" value="-0.1111116">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="1" value="0">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                    </keyframes>
+                  </rampchannel>
+                  <rampchannel type="Spline" id="b3f0b1db-6cdd-4259-a10b-e95edd8480b9">
+                    <keyframes>
+                      <keyframe time="0" value="10">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.07310871" value="10">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.1481246" value="-7">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.2460267" value="5.888889">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.3642721" value="-5">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.497775" value="3.444444">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.6274635" value="-2.555556">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.7596949" value="1.222221">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="0.9033694" value="-1">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                      <keyframe time="1" value="-0.4444442">
+                        <endcp changed="False" time="0" value="0" />
+                        <startcp changed="False" time="0" value="0" />
+                      </keyframe>
+                    </keyframes>
+                  </rampchannel>
+                </rampchanneldata>
+              </datum>
+            </data>
+          </definition>
+          <platformmetadata platform="00000000-0000-0000-0000-000000000000" expanded="true" />
+        </property>
+        <propertygroup id="9f537986-8c00-482c-91cc-c999c4f22238" name="Property Group" collapsed="False">
+          <properties>
+            <property id="ef1d7d1e-02b6-4548-80d9-5ef2fbcda237" />
+            <property id="035b5248-d0ca-44b7-853f-3acb84110e67" />
+            <property id="fdafc127-66ba-4258-8dd5-a6f4b75d1c9f" />
+          </properties>
+        </propertygroup>
+      </properties>
+    </component>
+    <component name="Settings" tooltip="" color="-8355712">
+      <properties>
+        <property name="Pre-Warm" id="f05e0bf6-a69a-4406-a6b1-71d619f0cf91">
+          <definition typeid="fcf65cf3-39b6-4bf9-9bd7-b941a6460519" type="Boolean" specializable="True" tooltip="Makes the effect pre-warm (only applies to looping effects)">
+            <viewdata>
+              <datum platform="00000000-0000-0000-0000-000000000000" />
+            </viewdata>
+            <data>
+              <datum platform="00000000-0000-0000-0000-000000000000" value="1" />
+            </data>
+          </definition>
+        </property>
+        <propertygroup id="05184be9-eead-41d7-aeaa-d451e72e5b2c" name="Property Group" collapsed="False">
+          <properties>
+            <property id="ef1d7d1e-02b6-4548-80d9-5ef2fbcda237" />
+            <property id="035b5248-d0ca-44b7-853f-3acb84110e67" />
+            <property id="f05e0bf6-a69a-4406-a6b1-71d619f0cf91" />
+          </properties>
+        </propertygroup>
+      </properties>
+    </component>
+  </components>
+</root>

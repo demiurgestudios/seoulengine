@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamehelper_sign_in_failed">ログインできませんでした。ネットワーク接続を確認してもう一度お試しください。</string>
+    <string name="gamehelper_app_misconfigured">アプリの設定に問題があります。パッケージ名と署名証明書がデベロッパーコンソールで作成されたクライアントIDと一致しているか確認してください。また、アプリがまだ公開されていない場合、ログインしようとしているアカウントはテスト用アカウントとして登録されます。詳細はログをご覧ください。</string>
+    <string name="gamehelper_license_failed">ライセンスを確認できませんでした。</string>
+    <string name="gamehelper_unknown_error">不明なエラー</string>
+</resources>

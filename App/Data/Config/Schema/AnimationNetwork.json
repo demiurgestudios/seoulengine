@@ -1,0 +1,12 @@
+{
+	// TODO: Need to update our schema validation so that *any* doc can instead
+	// be a JSON commands file. Allowing "array" in addition to "object" here is a workaround
+	// in the interim.
+	"type": ["array", "object"],
+	"properties": {
+		"Root": {
+			"type": "object"
+		}
+	},
+	"required": ["Root"]
+}

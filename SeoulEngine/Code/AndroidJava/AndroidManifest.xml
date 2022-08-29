@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.demiurgestudios.seoul" >
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="29" />
+
+    <!-- used for accessing connManager.getActiveNetworkInfo(); -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- Permissions required by Google Analytics (INTERNET and WAKE_LOCK) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application>
+        <activity android:name="com.demiurgestudios.seoul.AndroidNativeActivity" />
+
+        <!-- Notifications -->
+        <service
+            android:name="LocalNotificationService"
+            android:exported="false" />
+        <service
+            android:name=".LocalNotificationJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".LocalNotificationJobServiceCancel"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- Push notifications (Firebase Cloud Messaging) -->
+        <service android:name=".AppFirebaseCloudMessagingService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Receiver and service required for push notifications (Amazon Device Messaging) -->
+        <service
+            android:name=".AndroidAmazonDeviceMessagingBroadcastReceiverHandler"
+            android:exported="false" />
+    </application>
+</manifest>

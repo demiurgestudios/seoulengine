@@ -1,0 +1,115 @@
+//
+// AppPC_custom.rc: resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+#error This file is not editable by Microsoft Visual C++
+#endif // APSTUDIO_INVOKED
+
+#include "AppPCResource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+/////////////////////////////////////////////////////////////////////////////
+
+#include "BuildChangelist.h"
+#include "BuildDistro.h"
+#include "BuildVersion.h"
+
+// Each of the 4 fields of the FILEVERSION and PRODUCT version flags gets
+// truncated to 16 bits, so we break up the changelist number across the last
+// two fields.  But the resource compiler can't do division or right-shifts
+// (http://connect.microsoft.com/VisualStudio/feedback/details/727306/resource-compiler-cannot-do-bit-shifting-multiplication-or-division),
+// so we hack around this with multiple cases.  Hopefully by the time our CLs
+// get high enough, Visual Studio will have fixed this egregious bug.
+#if BUILD_CHANGELIST < 0x10000
+#define BUILD_CHANGELIST_HIGH 0
+#elif BUILD_CHANGELIST < 0x20000
+#define BUILD_CHANGELIST_HIGH 1
+#elif BUILD_CHANGELIST < 0x30000
+#define BUILD_CHANGELIST_HIGH 2
+#elif BUILD_CHANGELIST < 0x40000
+#define BUILD_CHANGELIST_HIGH 3
+#elif BUILD_CHANGELIST < 0x50000
+#define BUILD_CHANGELIST_HIGH 4
+#elif BUILD_CHANGELIST < 0x60000
+#define BUILD_CHANGELIST_HIGH 5
+#elif BUILD_CHANGELIST < 0x70000
+#define BUILD_CHANGELIST_HIGH 6
+#elif BUILD_CHANGELIST < 0x80000
+#define BUILD_CHANGELIST_HIGH 7
+#elif BUILD_CHANGELIST < 0x90000
+#define BUILD_CHANGELIST_HIGH 8
+#elif BUILD_CHANGELIST < 0xA0000
+#define BUILD_CHANGELIST_HIGH 9
+#elif BUILD_CHANGELIST < 0xB0000
+#define BUILD_CHANGELIST_HIGH 10
+#elif BUILD_CHANGELIST < 0xC0000
+#define BUILD_CHANGELIST_HIGH 11
+#elif BUILD_CHANGELIST < 0xD0000
+#define BUILD_CHANGELIST_HIGH 12
+#elif BUILD_CHANGELIST < 0xE0000
+#define BUILD_CHANGELIST_HIGH 13
+#elif BUILD_CHANGELIST < 0xF0000
+#define BUILD_CHANGELIST_HIGH 14
+#elif BUILD_CHANGELIST < 0x100000
+#define BUILD_CHANGELIST_HIGH 15
+#elif BUILD_CHANGELIST < 0x200000
+#define BUILD_CHANGELIST_HIGH 16
+#elif BUILD_CHANGELIST < 0x300000
+#define BUILD_CHANGELIST_HIGH 17
+#elif BUILD_CHANGELIST < 0x400000
+#define BUILD_CHANGELIST_HIGH 18
+#elif BUILD_CHANGELIST < 0x500000
+#define BUILD_CHANGELIST_HIGH 19
+#else
+#error Changelist too big!  Make this code kludgier by adding another case
+#endif
+
+// But it can do bitwise-AND's ok
+#define BUILD_CHANGELIST_LOW (BUILD_CHANGELIST&0xFFFF)
+
+// Due to the way the C preprocessor works, we need to use two layers of macros
+// to convert the macro SEOUL_BUILD_FOR_DISTRIBUTION into a string like "1" (instead of
+// the string "SEOUL_BUILD_FOR_DISTRIBUTION")
+#define SEOUL_BUILD_FOR_DISTRIBUTION_STR SEOUL_STRINGIZE(SEOUL_BUILD_FOR_DISTRIBUTION)
+
+// Version info
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION BUILD_VERSION_MAJOR,BUILD_CHANGELIST_HIGH,BUILD_CHANGELIST_LOW
+ PRODUCTVERSION BUILD_VERSION_MAJOR,BUILD_CHANGELIST_HIGH,BUILD_CHANGELIST_LOW
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+#ifndef _SHIP
+ FILEFLAGS VS_FF_DEBUG|VS_FF_PRERELEASE
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS VOS__WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "Demiurge Studios"
+            VALUE "DistroBuild", SEOUL_BUILD_FOR_DISTRIBUTION_STR
+            VALUE "FileDescription", "SETestApp"
+            VALUE "FileVersion", BUILD_VERSION_STR "." BUILD_CHANGELIST_STR
+            VALUE "LegalCopyright", "© 2016-2022 Demiurge Studios"
+            VALUE "ProductName", "SETestApp"
+            VALUE "ProductVersion", BUILD_VERSION_STR "." BUILD_CHANGELIST_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

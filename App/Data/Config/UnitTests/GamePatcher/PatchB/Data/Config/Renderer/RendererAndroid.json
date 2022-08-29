@@ -1,0 +1,28 @@
+{
+	"DefaultConfig": {
+		"DepthStencilSurfaces": {},
+
+		"RenderTargets": {},
+
+		"RenderSurfaces": {
+			"BackBuffer": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "BackBuffer"
+			}
+		},
+
+		"RenderPasses": [
+			{
+				"Name": "UI",
+				"TrackRenderStats": true,
+				// IMPORTANT: DO NOT remove this clear - it is a performance optimization
+				// on some hardware: https://developer.qualcomm.com/download/adreno200performanceoptimizationopenglestipsandtricksmarch10.pdf
+				"ClearFlags": ["Color", "Depth"],
+				"ClearColor": [0.0, 0.0, 0.0, 0.0],
+				"ClearDepth": 1.0,
+				"PassRootType": "UI",
+				"Surface": "BackBuffer",
+			}
+		]
+	}
+}

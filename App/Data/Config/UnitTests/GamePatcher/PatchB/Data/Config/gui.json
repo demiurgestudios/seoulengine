@@ -1,0 +1,51 @@
+{
+	"StateMachines": [
+		"config://UI/Screens2.json",
+		"config://UI/Screens.json"
+	],
+
+	"Fonts": {
+		"Bold": "content://Authored/UI/Fonts/RobotoBold.ttf",
+		"Italic": "content://Authored/UI/Fonts/RobotoMedItalic.ttf",
+		"Regular": "content://Authored/UI/Fonts/RobotoMed.ttf"
+	},
+
+	"FontAliases": {
+		"English": {
+			"Roboto Medium": {
+				"bold": "Bold",
+				"italic": "Italic",
+				"regular": "Regular"
+			}
+		}
+	},
+
+	"Stage3DSettings": "config://Stage3DSettings.json",
+	"TextEffects": "config://TextEffectSettings.json",
+
+	"SharedMovieSoundEvents": {
+		"onCloseButtonTap": "UI/Buttons/Close"
+	},
+
+	// Movies.
+	"Game::Patcher": {
+		"MinimumDisplayTimeInSeconds": 0.5,
+		"NativeMovie": true
+	},
+
+	"Game::PatcherStatus": {
+		"NativeMovie": true
+	},
+
+	"GamePatcherTestMovie": {
+		"MovieFilePath": "content://Authored/UI/TestMovie.swf",
+		"NativeMovie": true
+	},
+
+	// References so these are included in the build.
+	// "TestAnimation2D": "content://Authored/Animation2Ds/Test/Test.son",
+	// "TestFx": "content://Authored/Fx/TestFx.xfx",
+	"TestTexture": "content://Authored/Textures/TestTexture.png",
+
+	"ScriptSettingTest": "PatchB"
+}

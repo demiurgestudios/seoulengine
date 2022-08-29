@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="Seoul::FilePath">
+		<Expand>
+			<Item Name="Directory">(Seoul::GameDirectory::Enum)(int)m_uDirectory</Item>
+			<Item Name="Type">(Seoul::FileType)(int)m_uType</Item>
+			<Item Name="RelativeFilename">Seoul::HString::s_kGlobalData.m_apGlobalArrayTable.m_a[m_uRawHStringRelativeFilename]->m_pData</Item>
+		</Expand>
+	</Type>
+</AutoVisualizer>

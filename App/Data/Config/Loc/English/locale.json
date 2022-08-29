@@ -1,0 +1,10 @@
+{
+	"ThousandsSeparator": ",",
+	"game_already_running_message": "Another copy of SETestApp is already running.  Do you want to close it? (Selecting \"No\" will make this copy exit instead.)",
+	"game_already_running_title": "SETestApp is already running.",
+	"message_box_cancel_button_label": "Cancel",
+	"message_box_ok_button_label": "OK",
+	"save_game_title": "SETestApp",
+	"yes_no_message_box_no_button_label": "No",
+	"yes_no_message_box_yes_button_label": "Yes",
+}

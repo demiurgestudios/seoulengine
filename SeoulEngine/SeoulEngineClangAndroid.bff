@@ -1,0 +1,241 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+#include "SeoulEngineCommon.bff"
+
+//------------------------------------------------------------------------------
+// Basic configuration
+//------------------------------------------------------------------------------
+.NDK_Version = '22'
+.NDK_ToolchainPath      = '$SEOUL_ANDROID_SDK$/ndk-r$NDK_Version$/toolchains'
+#if __WINDOWS__
+.NDK_Prebuilt           = '$NDK_ToolchainPath$/llvm/prebuilt/windows-x86_64'
+#endif
+.NDK_PrebuiltBin        = '$NDK_Prebuilt$/bin'
+.NDK_CppPlatformARMv7   = 'armv7-none-linux-android16'
+.NDK_CppPlatformARM64   = 'aarch64-none-linux-android21'
+.NDK_CppStdLibBaseARMv7 = '$SEOUL_ANDROID_SDK$/ndk-r$NDK_Version$/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a'
+.NDK_CppStdLibBaseARM64 = '$SEOUL_ANDROID_SDK$/ndk-r$NDK_Version$/sources/cxx-stl/llvm-libc++/libs/arm64-v8a'
+
+//------------------------------------------------------------------------------
+// C/C++ Preprocessor defines
+//------------------------------------------------------------------------------
+.NDK_DefinesCommon         = ' -D_FORTIFY_SOURCE=2'
+                           + ' -DANDROID'
+                           + ' -DCURL_STATICLIB'
+                           + ' -DNGHTTP2_STATICLIB'
+                           + ' -DUSE_NGHTTP2'
+                           + ' -DFBXSDK_SHARED'
+                           + ' -DSPNG_STATIC'
+.NDK_DefinesDebug          = .NDK_DefinesCommon + ' -D_DEBUG -DDEBUG_HTTP2'
+.NDK_DefinesDebugTools     = .NDK_DefinesCommon + ' -D_DEBUG -DSEOUL_EDITOR_AND_TOOLS'
+.NDK_DefinesDeveloper      = .NDK_DefinesCommon + ' -DNDEBUG -DDEBUG_HTTP2'
+.NDK_DefinesDeveloperTools = .NDK_DefinesCommon + ' -DNDEBUG -DSEOUL_EDITOR_AND_TOOLS'
+.NDK_DefinesProfiling      = .NDK_DefinesCommon + ' -DNDEBUG -D_SHIP -DSEOUL_PROFILING_BUILD'
+.NDK_DefinesShip           = .NDK_DefinesCommon + ' -DNDEBUG -D_SHIP'
+
+//------------------------------------------------------------------------------
+// C/C++ Compiler options
+//------------------------------------------------------------------------------
+.NDK_ClOptsCommon                        = ' -c'
+                                         + ' -fdata-sections'
+                                         + ' -ffunction-sections'
+                                         + ' -fstack-protector-strong'
+                                         + ' -no-canonical-prefixes'
+                                         + ' --sysroot $NDK_Prebuilt$/sysroot'
+                                         + ' -g'
+                                         + ' -Wno-invalid-command-line-argument'
+                                         + ' -Wno-unused-command-line-argument'
+                                         + ' -fno-limit-debug-info'
+                                         + ' -fno-exceptions'
+                                         + ' -fno-rtti'
+                                         + ' -fpic'
+                                         + ' -mthumb'
+                                         + ' -fvisibility=hidden'
+                                         + ' -fno-strict-aliasing'
+                                         + ' -funswitch-loops'
+                                         + ' -fomit-frame-pointer'
+                                         + ' -mfloat-abi=softfp'
+                                         + ' -mfpu=vfpv3'
+                                         + ' -Wl,--fix-cortex-a8'
+                                         + ' -fno-short-enums'
+                                         + ' -Wall'
+                                         + ' -Werror'
+                                         + ' -Wno-unused-local-typedefs'
+                                         + ' -Wno-self-assign-overloaded'
+                                         // TODO: Necessary because FASTBuild uses messages to emulate compiler output, but messages are "warnings" under clang.
+                                         + ' -Wno-#pragma-messages'
+.'NDK_ClOpts_Debug_armeabi-v7a'          = .NDK_ClOptsCommon + ' -O0 -target $NDK_CppPlatformARMv7$ -march=armv7-a -funwind-tables'
+.'NDK_ClOpts_DebugTools_armeabi-v7a'     = .NDK_ClOptsCommon + ' -O0 -target $NDK_CppPlatformARMv7$ -march=armv7-a -funwind-tables'
+.'NDK_ClOpts_Developer_armeabi-v7a'      = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARMv7$ -march=armv7-a -funwind-tables'
+.'NDK_ClOpts_DeveloperTools_armeabi-v7a' = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARMv7$ -march=armv7-a -funwind-tables'
+.'NDK_ClOpts_Profiling_armeabi-v7a'      = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARMv7$ -march=armv7-a -funwind-tables'
+.'NDK_ClOpts_Ship_armeabi-v7a'           = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARMv7$'
+
+.'NDK_ClOpts_Debug_arm64-v8a'            = .NDK_ClOptsCommon + ' -O0 -target $NDK_CppPlatformARM64$ -march=armv8-a -funwind-tables'
+.'NDK_ClOpts_DebugTools_arm64-v8a'       = .NDK_ClOptsCommon + ' -O0 -target $NDK_CppPlatformARM64$ -march=armv8-a -funwind-tables'
+.'NDK_ClOpts_Developer_arm64-v8a'        = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARM64$ -march=armv8-a -funwind-tables'
+.'NDK_ClOpts_DeveloperTools_arm64-v8a'   = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARM64$ -march=armv8-a -funwind-tables'
+.'NDK_ClOpts_Profiling_arm64-v8a'        = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARM64$ -march=armv8-a -funwind-tables'
+.'NDK_ClOpts_Ship_arm64-v8a'             = .NDK_ClOptsCommon + ' -O2 -target $NDK_CppPlatformARM64$ -march=armv8-a'
+
+//------------------------------------------------------------------------------
+// C/C++ Linker options
+//------------------------------------------------------------------------------
+.NDK_LinkOptsCommon                        = ''
+
+.'NDK_LinkOpts_Debug_armeabi-v7a'          = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a $NDK_CppStdLibBaseARMv7$/libunwind.a -target $NDK_CppPlatformARMv7$'
+.'NDK_LinkOpts_DebugTools_armeabi-v7a'     = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a $NDK_CppStdLibBaseARMv7$/libunwind.a -target $NDK_CppPlatformARMv7$'
+.'NDK_LinkOpts_Developer_armeabi-v7a'      = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a $NDK_CppStdLibBaseARMv7$/libunwind.a -target $NDK_CppPlatformARMv7$'
+.'NDK_LinkOpts_DeveloperTools_armeabi-v7a' = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a $NDK_CppStdLibBaseARMv7$/libunwind.a -target $NDK_CppPlatformARMv7$'
+.'NDK_LinkOpts_Profiling_armeabi-v7a'      = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a $NDK_CppStdLibBaseARMv7$/libunwind.a -target $NDK_CppPlatformARMv7$'
+.'NDK_LinkOpts_Ship_armeabi-v7a'           = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARMv7$/libc++_static.a $NDK_CppStdLibBaseARMv7$/libc++abi.a $NDK_CppStdLibBaseARMv7$/libandroid_support.a -target $NDK_CppPlatformARMv7$'
+
+.'NDK_LinkOpts_Debug_arm64-v8a'            = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+.'NDK_LinkOpts_DebugTools_arm64-v8a'       = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+.'NDK_LinkOpts_Developer_arm64-v8a'        = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+.'NDK_LinkOpts_DeveloperTools_arm64-v8a'   = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+.'NDK_LinkOpts_Profiling_arm64-v8a'        = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+.'NDK_LinkOpts_Ship_arm64-v8a'             = .NDK_LinkOptsCommon + ' $NDK_CppStdLibBaseARM64$/libc++_static.a $NDK_CppStdLibBaseARM64$/libc++abi.a -target $NDK_CppPlatformARM64$'
+
+//------------------------------------------------------------------------------
+// Compilers
+//------------------------------------------------------------------------------
+Compiler('Compiler-Clang-Android-x64') {
+    .CompilerFamily = 'clang'
+    .Executable     = '$NDK_PrebuiltBin$/clang.exe'
+    .ExtraFiles     = {
+        '$NDK_PrebuiltBin$/libwinpthread-1.dll',
+    }
+}
+
+//------------------------------------------------------------------------------
+// "C# compiler" (placeholder for clang)
+//------------------------------------------------------------------------------
+."Android-Debug-armeabi-v7a-CompilerCSharp"               = []
+."Android-DebugTools-armeabi-v7a-CompilerCSharp"          = []
+."Android-Developer-armeabi-v7a-CompilerCSharp"           = []
+."Android-DeveloperTools-armeabi-v7a-CompilerCSharp"      = []
+."Android-Profiling-armeabi-v7a-CompilerCSharp"           = []
+."Android-Ship-armeabi-v7a-CompilerCSharp"                = []
+
+."Android-Debug-arm64-v8a-CompilerCSharp"                 = []
+."Android-DebugTools-arm64-v8a-CompilerCSharp"            = []
+."Android-Developer-arm64-v8a-CompilerCSharp"             = []
+."Android-DeveloperTools-arm64-v8a-CompilerCSharp"        = []
+."Android-Profiling-arm64-v8a-CompilerCSharp"             = []
+."Android-Ship-arm64-v8a-CompilerCSharp"                  = []
+
+."Android-Debug-armeabi-v7a-CompilerCSharpNaked"          = []
+."Android-DebugTools-armeabi-v7a-CompilerCSharpNaked"     = []
+."Android-Developer-armeabi-v7a-CompilerCSharpNaked"      = []
+."Android-DeveloperTools-armeabi-v7a-CompilerCSharpNaked" = []
+."Android-Profiling-armeabi-v7a-CompilerCSharpNaked"      = []
+."Android-Ship-armeabi-v7a-CompilerCSharpNaked"           = []
+
+."Android-Debug-arm64-v8a-CompilerCSharpNaked"            = []
+."Android-DebugTools-arm64-v8a-CompilerCSharpNaked"       = []
+."Android-Developer-arm64-v8a-CompilerCSharpNaked"        = []
+."Android-DeveloperTools-arm64-v8a-CompilerCSharpNaked"   = []
+."Android-Profiling-arm64-v8a-CompilerCSharpNaked"        = []
+."Android-Ship-arm64-v8a-CompilerCSharpNaked"             = []
+
+//------------------------------------------------------------------------------
+// "Resource compiler" (placeholder for clang)
+//------------------------------------------------------------------------------
+."Android-Debug-armeabi-v7a-ResourceCompiler"          = []
+."Android-DebugTools-armeabi-v7a-ResourceCompiler"     = []
+."Android-Developer-armeabi-v7a-ResourceCompiler"      = []
+."Android-DeveloperTools-armeabi-v7a-ResourceCompiler" = []
+."Android-Profiling-armeabi-v7a-ResourceCompiler"      = []
+."Android-Ship-armeabi-v7a-ResourceCompiler"           = []
+
+."Android-Debug-arm64-v8a-ResourceCompiler"            = []
+."Android-DebugTools-arm64-v8a-ResourceCompiler"       = []
+."Android-Developer-arm64-v8a-ResourceCompiler"        = []
+."Android-DeveloperTools-arm64-v8a-ResourceCompiler"   = []
+."Android-Profiling-arm64-v8a-ResourceCompiler"        = []
+."Android-Ship-arm64-v8a-ResourceCompiler"             = []
+
+//------------------------------------------------------------------------------
+// C/C++ compiler targets
+//------------------------------------------------------------------------------
+.NDK_CompilerC_Base = [
+    .Compiler          = 'Compiler-Clang-Android-x64'
+    .CompilerOptions   = '-c "%1" -o "%2"'
+    .StdIncludePaths   = ''
+
+    // Librarian
+    .Librarian         = '$NDK_PrebuiltBin$/llvm-ar.exe'
+    .LibrarianOptions  = 'crsD "%2" "%1"'
+    .LibrarianType     = 'ar'
+
+    // Linker
+    .Linker            = '$NDK_PrebuiltBin$/clang++.exe'
+    .LinkerLinkObjects = false
+    .LinkerOptions     = '-shared'
+                       + ' "%1"'
+                       + ' -no-canonical-prefixes'
+                       + ' -Wl,--build-id=sha1'
+                       + ' -Wl,--no-rosegment'
+                       + ' -nostdlib++'
+                       + ' -Wl,--no-undefined'
+                       + ' -o "%2"'
+    .LinkerType        = 'gcc'
+    .StdLibPaths       = ''
+    .StdLibs           = ''
+]
+
+// Establish base
+."Android-Debug-armeabi-v7a-CompilerC"          = .NDK_CompilerC_Base
+."Android-DebugTools-armeabi-v7a-CompilerC"     = .NDK_CompilerC_Base
+."Android-Developer-armeabi-v7a-CompilerC"      = .NDK_CompilerC_Base
+."Android-DeveloperTools-armeabi-v7a-CompilerC" = .NDK_CompilerC_Base
+."Android-Profiling-armeabi-v7a-CompilerC"      = .NDK_CompilerC_Base
+."Android-Ship-armeabi-v7a-CompilerC"           = .NDK_CompilerC_Base
+
+."Android-Debug-arm64-v8a-CompilerC"            = .NDK_CompilerC_Base
+."Android-DebugTools-arm64-v8a-CompilerC"       = .NDK_CompilerC_Base
+."Android-Developer-arm64-v8a-CompilerC"        = .NDK_CompilerC_Base
+."Android-DeveloperTools-arm64-v8a-CompilerC"   = .NDK_CompilerC_Base
+."Android-Profiling-arm64-v8a-CompilerC"        = .NDK_CompilerC_Base
+."Android-Ship-arm64-v8a-CompilerC"             = .NDK_CompilerC_Base
+
+// Customize variations
+ForEach(.LocalArch in .AndroidArchs) {
+    ForEach(.LocalConfig in .SeoulEngineConfigs) {
+        .LocalCustom = [
+            .CompilerOptions  = ."NDK_Defines$LocalConfig$"
+                              + ."NDK_ClOpts_$LocalConfig$_$LocalArch$"
+            .LinkerOptions    = ."NDK_LinkOpts_$LocalConfig$_$LocalArch$"
+        ]
+        ^"Android-$LocalConfig$-$LocalArch$-CompilerC" + .LocalCustom
+    }
+}
+
+//------------------------------------------------------------------------------
+// llvm-strip compiler targets
+//------------------------------------------------------------------------------
+.NDK_Strip_Base = [
+    .ExecExecutable    = '$NDK_PrebuiltBin$/llvm-strip.exe'
+    .ExecArguments     = '--strip-unneeded "%1" -o "%2"'
+]
+
+// Establish base
+."Android-Debug-armeabi-v7a-Strip"          = .NDK_Strip_Base
+."Android-DebugTools-armeabi-v7a-Strip"     = .NDK_Strip_Base
+."Android-Developer-armeabi-v7a-Strip"      = .NDK_Strip_Base
+."Android-DeveloperTools-armeabi-v7a-Strip" = .NDK_Strip_Base
+."Android-Profiling-armeabi-v7a-Strip"      = .NDK_Strip_Base
+."Android-Ship-armeabi-v7a-Strip"           = .NDK_Strip_Base
+
+."Android-Debug-arm64-v8a-Strip"            = .NDK_Strip_Base
+."Android-DebugTools-arm64-v8a-Strip"       = .NDK_Strip_Base
+."Android-Developer-arm64-v8a-Strip"        = .NDK_Strip_Base
+."Android-DeveloperTools-arm64-v8a-Strip"   = .NDK_Strip_Base
+."Android-Profiling-arm64-v8a-Strip"        = .NDK_Strip_Base
+."Android-Ship-arm64-v8a-Strip"             = .NDK_Strip_Base

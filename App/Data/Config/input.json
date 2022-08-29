@@ -1,0 +1,29 @@
+{
+	"InputAxisBindings": {
+		"MouseWheel": ["FxPreviewZoom"]
+	},
+	"InputButtonBindings": {
+		/* Hot loading and developer utilities. */
+		"Grave": ["ToggleMainMenuBar"],
+		"F2": ["HotLoad"],
+		"F3": ["CancelHotLoad"],
+		"F8": ["ToggleRuntimeStats"],
+		"F9": ["ToggleOverdrawMode"],
+		"F10": ["ToggleTextureResolutionMode"],
+
+		/* Engine standards. */
+		"ALT+Enter": ["UI.ToggleFullscreen"],
+		"ALT+F4": ["UI.ExitGame"],
+		"ALT+CTRL+Escape": ["UI.ExitFullscreen"],
+		"CTRL+V": ["Paste"],
+		"CTRL+ALT+L": ["ToggleOnlyShowLocTokens"],
+
+		/* UI bindings for the back button on various platforms. */
+		"BrowserBack": ["UI.Cancel"],
+		"Escape": ["UI.Cancel"],
+
+		/* Fx preview controls. */
+		"CTRL+MouseLeftButton": ["SetFxPreviewPosition"],
+		"MouseRightButton": ["FxPreviewGrabCamera"],
+	}
+}

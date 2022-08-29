@@ -1,0 +1,621 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+
+//------------------------------------------------------------------------------
+// Output paths
+//------------------------------------------------------------------------------
+.InputBase  = 'Code'
+.BinBase    = 'Binaries'
+.LibBase    = 'Lib'
+.ObjBase    = 'Intermediate'
+
+//------------------------------------------------------------------------------
+// SeoulEngine
+//------------------------------------------------------------------------------
+#include '../SeoulEngine/SeoulEngine.bff'
+
+//------------------------------------------------------------------------------
+// SeoulTools static libs
+//------------------------------------------------------------------------------
+{
+    .StaticLibBase    = '$InputBase$'
+
+    //------------------------------------------------------------------------------
+    // Projects to generate
+    //------------------------------------------------------------------------------
+    .ToBuildProjects = { 'CookerUnitTests', 'Cooking', 'EffectCompiler' }
+    .ToBuildProjectConfig = [
+        .CookerUnitTests_Deps = .DepsEngine + { 'UnitTesting' }
+        .Cooking_Deps         = .DepsAnimation + { 'Animation2D', 'Animation3D', 'Falcon', '../../SeoulTools/Code/EffectCompiler', 'Scc', 'UnitTesting' } // TODO:
+        .Cooking_Externs      = { 'amd_tootle/src/TootleLib/include', 'crunch/inc', 'fbxsdk/include', 'pugi', 'stb' }
+        .EffectCompiler_Deps      = .DepsEngine + { 'EffectConverter', 'OGLES2', '../../SeoulTools/Code/EffectCompiler' } // TODO:
+        .EffectCompiler_Externs   = { 'gles2', 'glslang', 'glslang/OSDependent/Windows' }
+    ]
+
+    //------------------------------------------------------------------------------
+    // Generate the projects
+    //------------------------------------------------------------------------------
+    #include "../SeoulEngine/StaticLibGen.bff"
+}
+
+//------------------------------------------------------------------------------
+// SeoulTools executables and dynamic libraries (C++ DLL and C# assemblies)
+//------------------------------------------------------------------------------
+.LocalConfigs = { .SeoulEngineDebugTools, .SeoulEngineDeveloperTools }
+
+ForEach(.LocalConfig in .LocalConfigs) {
+    .LocalPlatform = 'PC'
+    .LocalArchs = .'$LocalPlatform$Archs'
+    ForEach(.LocalArch in .LocalArchs) {
+        .LocalBinBase       = '$BinBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalLibBase       = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalNamePrefix    = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+        .LocalObjBase       = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalDebugPrefix   = '$LocalPlatform$-Debug-$LocalArch$'
+        .LocalReleasePrefix = '$LocalPlatform$-Release-$LocalArch$'
+
+        // TODO: Cleanup.
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^LocalBinBase = '$BinBase$/$LocalPlatform$/Debug/$LocalArch$'
+        }
+        If(.SeoulEngineDeveloperTools == .LocalConfig) {
+            ^LocalBinBase = '$BinBase$/$LocalPlatform$/Developer/$LocalArch$'
+        }
+
+        // Local context for GenExecutable().
+        #include '../SeoulEngine/CaptureLocalCtxt.bff'
+
+        //------------------------------------------------------------------------------
+        // C/C++ executables and DLLs
+        //------------------------------------------------------------------------------
+        // AssetTool
+        {
+            .TmpArgs = [
+                .LocalName = 'AssetTool'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core',
+                    '$SeoulEngineBase$/Falcon',
+                    '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Falcon', 'Reflection',
+                    'jemalloc', 'lz4', 'tess2', 'zlib',
+                    'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' } // TODO: dbghelp needed because unit test runner is implemented in the Reflection project.
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // ConsoleTool
+        {
+            .TmpArgs = [
+                .LocalName = 'ConsoleTool'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Reflection',
+                    'jemalloc', 'lz4', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' } // TODO: dbghelp needed because unit test runner is implemented in the Reflection project.
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // Cooker
+        {
+            ObjectList('$LocalNamePrefix$-Cooking-ISPC') {
+                // Select the ISPC toolchain.
+                Using(.ISPCCompiler)
+
+                .CompilerInputPath  = '$InputBase$/Cooking/'
+                .CompilerOutputPath = '$LocalObjBase$/Cooking-ISPC/'
+            }
+
+            .TmpArgs = [
+                .LocalName = 'Cooker'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$InputBase$/Cooking', '$InputBase$/CookerUnitTests',
+
+                    '$SeoulEngineBase$/Content',
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Engine',
+                    '$SeoulEngineBase$/Events', '$SeoulEngineBase$/Fx',
+                    '$SeoulEngineBase$/HAL', '$SeoulEngineBase$/HTTP',
+                    '$SeoulEngineBase$/Jobs', '$SeoulEngineBase$/NullPlatform',
+                    '$SeoulEngineBase$/Reflection', '$SeoulEngineBase$/Rendering',
+                    '$SeoulEngineBase$/Settings', '$SeoulEngineBase$/Sound',
+                    '$SeoulEngineBase$/Scc', '$SeoulEngineBase$/UnitTesting',
+
+                    '$ExternalBase$/glslang',
+                    '$ExternalBase$/glslang/OSDependent/Windows',
+                }
+
+                // Linker settings
+                .ArgExterns   = { 'fbxsdk/lib/vs2019/x64/release', 'openssl/libs/Windows/x64' }
+                .ArgLibraries = {
+                    'Cooking-ISPC', 'Cooking', 'CookerUnitTests', 'EffectCompiler',
+
+                    'Animation', 'Animation2D', 'Content', 'Core', 'EffectConverter', 'Engine',
+                    'Events', 'Falcon', 'Fx', 'HAL', 'HTTP', 'Jobs', 'NullGraphics', 'NullPlatform',
+                    'Reflection', 'Rendering', 'Settings', 'Sound', 'Scc', 'UnitTesting',
+
+                    'amd_tootle', 'crunch', 'curl', 'glslang', 'jemalloc', 'lz4', 'miniz',
+                    'nghttp2', 'spng', 'tess2', 'wjcryptlib', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'd3dcompiler', 'dbghelp', 'libfbxsdk', 'libeay32', 'ssleay32' }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // JsonFormatter
+        {
+            .TmpArgs = [
+                .LocalName = 'JsonFormatter'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Reflection',
+                    'jemalloc', 'lz4', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' } // TODO: dbghelp needed because unit test runner is implemented in the Reflection project.
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // JsonMerge
+        {
+            .TmpArgs = [
+                .LocalName = 'JsonMerge'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Reflection',
+                    'jemalloc', 'lz4', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' } // TODO: dbghelp needed because unit test runner is implemented in the Reflection project.
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // SarTool
+        {
+            .TmpArgs = [
+                .LocalName = 'SarTool'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Reflection',
+                    'jemalloc', 'lz4', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' } // TODO: dbghelp needed because unit test runner is implemented in the Reflection project.
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        // SeoulUtil (DLL)
+        {
+            .TmpArgs = [
+                .LocalName = 'SeoulUtil'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Reflection',
+                }
+
+                // Linker settings
+                .ArgLibraries = {
+                    'Core', 'Reflection',
+                    'jemalloc', 'lz4', 'miniz', 'zlib', 'zstd',
+                }
+                .ArgDLL = true
+                .ArgExternLibs = { 'Ws2_32', 'dbghelp' }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        //------------------------------------------------------------------------------
+        // C# executables and assembly libraries
+        //------------------------------------------------------------------------------
+        // CoreLib
+        {
+            .TmpArgs = [
+                .LocalName         = 'CoreLib'
+                .CompilerInputPath = '$InputBase$/CoreLib/'
+                .ArgDLL            = true
+
+                .PreBuildDependencies = { '$LocalNamePrefix$-SeoulUtil' } // TODO:
+            ]
+            GenCSAssembly(.LocalCtxt, .TmpArgs)
+        }
+
+        // FalconCooker
+        {
+            .TmpArgs = [
+                .LocalName         = 'FalconCooker'
+                .CompilerInputPath = '$InputBase$/FalconCooker/'
+
+                .ArgIcon           = '$InputBase$/FalconCooker/Images/falcon.ico'
+            ]
+            GenCSAssembly(.LocalCtxt, .TmpArgs)
+        }
+
+
+        // Moriarty
+        {
+            .TmpMoriartyProject = '$InputBase$/Moriarty/Moriarty.csproj'
+            Exec('$LocalNamePrefix$-Moriarty') {
+                .ExecExecutable   = '$VS2019_MsBuild$'
+                .ExecArguments    = ' /m /p:BuildInParallel=true /nologo /nr:false /t:Build /p:Configuration=$LocalConfig$;Platform=x64 Moriarty.csproj'
+                .ExecWorkingDir   = '$InputBase$/Moriarty/'
+                .ExecInputPath    = '$InputBase$/Moriarty/'
+                .ExecInputPattern = {
+                    '*.cs', '*.csproj', '*.ico', '*.png', '*.resx',
+                }
+                .ExecOutput = '$LocalBinBase$/Moriarty.exe'
+                .PreBuildDependencies = { '$LocalNamePrefix$-CoreLib' } // TODO:
+            }
+            If(.LocalConfig == .SeoulEngineDeveloperTools) {
+                VSProjectExternal('Moriarty-csproj') {
+                    .ExternalProjectPath = .TmpMoriartyProject
+                    .ProjectGuid = '{BB0C996E-36DF-4559-91E3-949F6543739E}'
+                    .ProjectTypeGuid = '{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}'
+                    .ProjectConfigs = {}
+                    ForEach(.TmpLocalConfig in .LocalConfigs) {
+                        .TmpConfig = [
+                            .Config       = .TmpLocalConfig
+                            .Platform     = 'x64'
+                            .Target       = 'PC-$TmpLocalConfig$-x64-Moriarty'
+                            .BuildLogFile = '^$(IntDir)Moriarty.log'
+                        ]
+                        ^ProjectConfigs + .TmpConfig
+                    }
+                }
+            }
+        }
+
+        // SlimCSCorlib
+        {
+            .TmpArgs = [
+                .LocalName         = 'SlimCSCorlib'
+                .CompilerInputPath = '$InputBase$/SlimCSCorlib/'
+
+                .ArgDLL            = true
+                .ArgNakedLibrary   = true
+                .ArgExtraOptions   = ' /nowarn:CS0626,CS1591 @$InputBase$/SlimCSCorlib/SlimCSCorlib.rsp /doc:$LocalBinBase$/SlimCSCorlib.xml'
+            ]
+            GenCSAssembly(.LocalCtxt, .TmpArgs)
+        }
+
+        // SlimCSLib
+        {
+            .TmpArgs = [
+                .LocalName         = 'SlimCSLib'
+                .CompilerInputPath = '$InputBase$/SlimCSLib/'
+
+                .ArgDLL            = true
+                .ArgNakedLibrary   = true
+                .ArgExtraOptions   = ' /subsystemversion:6.00'
+                .ArgExternLibs     = {
+                    '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.dll',
+                    '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.CSharp.dll',
+                    '$ExternalBase$/roslyn/System.Collections.Immutable.dll',
+                    '$ExternalBase$/roslyn/System.Reflection.Metadata.dll',
+                    '$CS_GacBase471$/mscorlib.dll',
+                    '$CS_GacBase471$/System.dll',
+                    '$CS_GacBase471$/System.Core.dll',
+                    '$CS_GacBase471$/Facades/System.IO.dll',
+                    '$CS_GacBase471$/Facades/System.Runtime.dll',
+                    '$CS_GacBase471$/Facades/System.Text.Encoding.dll',
+                    '$CS_GacBase471$/Facades/System.Threading.dll',
+                    '$CS_GacBase471$/Facades/System.Threading.Tasks.dll',
+                }
+            ]
+            GenCSAssembly(.LocalCtxt, .TmpArgs)
+        }
+
+        // SlimCS
+        {
+            .TmpArgs = [
+                .LocalName            = 'SlimCS'
+                .CompilerInputPath    = '$InputBase$/SlimCS/'
+
+                .ArgIcon              = '$InputBase$/SlimCS/seoul_engine_logo.ico'
+                .ArgLibraries         = { 'SlimCSLib' }
+                .PreBuildDependencies = { '$LocalNamePrefix$-SlimCSCorlib' } // TODO:
+
+                .ArgNakedLibrary   = true
+                .ArgExtraOptions   = ' /subsystemversion:6.00'
+                .ArgExternLibs     = {
+                    '$CS_GacBase471$/mscorlib.dll',
+                    '$CS_GacBase471$/System.dll',
+                    '$CS_GacBase471$/System.Core.dll',
+                    '$CS_GacBase471$/Facades/System.IO.dll',
+                    '$CS_GacBase471$/Facades/System.Runtime.dll',
+                    '$CS_GacBase471$/Facades/System.Text.Encoding.dll',
+                    '$CS_GacBase471$/Facades/System.Threading.dll',
+                    '$CS_GacBase471$/Facades/System.Threading.Tasks.dll',
+                }
+            ]
+            GenCSAssembly(.LocalCtxt, .TmpArgs)
+        }
+
+        //------------------------------------------------------------------------------
+        // Clean
+        //------------------------------------------------------------------------------
+        RemoveDir('PC-$LocalConfig$-Clean') {
+            .RemovePaths = {
+                '$LocalBinBase$',
+                '$LocalLibBase$',
+                '$LocalObjBase$',
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        // Copy externable dependencies.
+        //------------------------------------------------------------------------------
+        CopyDir('$LocalNamePrefix$-Copy-Android-MinTools') {
+            .SourcePaths = '$ExternalBase$/Android/MinimumPlatformTools'
+            .Dest = '$LocalBinBase$/Android'
+            .SourcePathsPattern = { '*.dll', '*.exe' }
+            .SourcePathsRecurse = false
+        }
+        Copy('$LocalNamePrefix$-Copy-AssetToolCss') {
+            .Source = '$InputBase$/AssetTool/AssetTool.css'
+            .Dest = '$LocalBinBase$/'
+        }
+        CopyDir('$LocalNamePrefix$-Copy-FBX') {
+            .SourcePaths = '$ExternalBase$/fbxsdk/lib/vs2019/x64/release'
+            .Dest = '$LocalBinBase$'
+            .SourcePathsPattern = '*.dll'
+            .SourcePathsRecurse = false
+        }
+        // FMOD
+#if SEOUL_WITH_FMOD
+        Copy('$LocalNamePrefix$-Copy-FMODCL') {
+            .Source = '$ExternalBase$/FMODStudio/fmodstudiocl.exe'
+            .Dest = '$LocalBinBase$/FMODStudio/'
+        }
+        CopyDir('$LocalNamePrefix$-Copy-FMODDLLS') {
+            .SourcePaths = '$ExternalBase$/FMODStudio'
+            .Dest = '$LocalBinBase$/FMODStudio'
+            .SourcePathsPattern = { '*.dll' }
+            .SourcePathsRecurse = false
+        }
+        Copy('$LocalNamePrefix$-Copy-FMODPlatforms') {
+            .Source = '$ExternalBase$/FMODStudio/platforms/qwindows.dll'
+            .Dest = '$LocalBinBase$/FMODStudio/platforms/'
+        }
+        Alias('$LocalNamePrefix$-Copy-FMOD') {
+            .Targets = {
+                '$LocalNamePrefix$-Copy-FMODCL',
+                '$LocalNamePrefix$-Copy-FMODDLLS',
+                '$LocalNamePrefix$-Copy-FMODPlatforms',
+            }
+        }
+#endif
+        Copy('$LocalNamePrefix$-Copy-LuaJITRelease') {
+            .Source = '$ExternalBase$/LuaJIT/bin/Win32/Release/luajit.exe'
+            .Dest = '$LocalBinBase$/LuaJIT/'
+        }
+        Copy('$LocalNamePrefix$-Copy-LuaJITReleaseGC64') {
+            .Source = '$ExternalBase$/LuaJIT/bin/x64/ReleaseGC64/luajit.exe'
+            .Dest = '$LocalBinBase$/LuaJITGC64/'
+        }
+        CopyDir('$LocalNamePrefix$-Copy-LuaJITReleaseScripts') {
+            .SourcePaths = '$ExternalBase$/LuaJIT/bin/Win32/Release/lua/jit'
+            .Dest = '$LocalBinBase$/LuaJIT/lua/jit'
+            .SourcePathsPattern = { '*.lua' }
+            .SourcePathsRecurse = false
+        }
+        CopyDir('$LocalNamePrefix$-Copy-LuaJITReleaseGC64Scripts') {
+            .SourcePaths = '$ExternalBase$/LuaJIT/bin/x64/ReleaseGC64/lua/jit'
+            .Dest = '$LocalBinBase$/LuaJITGC64/lua/jit'
+            .SourcePathsPattern = { '*.lua' }
+            .SourcePathsRecurse = false
+        }
+        Alias('$LocalNamePrefix$-Copy-LuaJIT') {
+            .Targets = {
+                '$LocalNamePrefix$-Copy-LuaJITRelease',
+                '$LocalNamePrefix$-Copy-LuaJITReleaseGC64',
+                '$LocalNamePrefix$-Copy-LuaJITReleaseScripts',
+                '$LocalNamePrefix$-Copy-LuaJITReleaseGC64Scripts',
+            }
+        }
+        Copy('$LocalNamePrefix$-Copy-Protoc') {
+            .Source = '$ExternalBase$/protobuf/protoc.exe'
+            .Dest = '$LocalBinBase$/protobuf/'
+        }
+        Copy('$LocalNamePrefix$-Copy-Roslyn') {
+            .Source = {
+                '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.dll',
+                '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.xml',
+                '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.CSharp.dll',
+                '$ExternalBase$/roslyn/Microsoft.CodeAnalysis.CSharp.xml',
+                '$ExternalBase$/roslyn/System.Collections.Immutable.dll',
+                '$ExternalBase$/roslyn/System.Collections.Immutable.xml',
+                '$ExternalBase$/roslyn/System.Reflection.Metadata.dll',
+                '$ExternalBase$/roslyn/System.Reflection.Metadata.xml',
+            }
+            .Dest = '$LocalBinBase$/'
+        }
+        Copy('$LocalNamePrefix$-Copy-SlimCSConfig') {
+            .Source = '$InputBase$/SlimCS/app.config'
+            .Dest = '$LocalBinBase$/SlimCS.exe.config'
+        }
+        Copy('$LocalNamePrefix$-Copy-SlimCSLibConfig') {
+            .Source = '$InputBase$/SlimCSLib/app.config'
+            .Dest = '$LocalBinBase$/SlimCSLib.dll.config'
+        }
+        Alias('$LocalNamePrefix$-Copy-All') {
+            .Targets = {
+                '$LocalNamePrefix$-Copy-Android-MinTools',
+                '$LocalNamePrefix$-Copy-AssetToolCss',
+                '$LocalNamePrefix$-Copy-FBX',
+#if SEOUL_WITH_FMOD
+                '$LocalNamePrefix$-Copy-FMOD',
+#endif
+                '$LocalNamePrefix$-Copy-LuaJIT',
+                '$LocalNamePrefix$-Copy-Protoc',
+                '$LocalNamePrefix$-Copy-Roslyn',
+                '$LocalNamePrefix$-Copy-SlimCSConfig',
+                '$LocalNamePrefix$-Copy-SlimCSLibConfig',
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Targets
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    Alias('PC-$LocalConfig$') {
+         .Targets = {
+             // Copy external dependencies and utilities.
+             'PC-$LocalConfig$-x64-Copy-All',
+             // Build executables.
+             'PC-$LocalConfig$-x64-AssetTool',
+             'PC-$LocalConfig$-x64-ConsoleTool',
+             'PC-$LocalConfig$-x64-Cooker',
+             'PC-$LocalConfig$-x64-CoreLib',
+             'PC-$LocalConfig$-x64-FalconCooker',
+             'PC-$LocalConfig$-x64-JsonFormatter',
+             'PC-$LocalConfig$-x64-JsonMerge',
+             'PC-$LocalConfig$-x64-Moriarty',
+             'PC-$LocalConfig$-x64-SarTool',
+             'PC-$LocalConfig$-x64-SeoulUtil',
+             'PC-$LocalConfig$-x64-SlimCS',
+        }
+    }
+}
+
+Alias('PC-All') {
+    .Targets = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        ^Targets + 'PC-$LocalConfig$'
+    }
+}
+
+//------------------------------------------------------------------------------
+// .sln and .vcxproj generation
+//------------------------------------------------------------------------------
+VSSolution('GenSln') {
+    .SolutionOutput = 'SeoulTools.sln'
+
+    // Build configurations.
+    .SolutionConfigs = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        .TmpConfig = [
+            .Config   = .LocalConfig
+            .Platform = 'x64'
+        ]
+        ^SolutionConfigs + .TmpConfig
+    }
+
+    // Solution folders
+    .CompilersFolder = [
+        .Path     = 'Compilers'
+        .Projects = { 'SlimCS-vcxproj', 'SlimCSCorlib-vcxproj', 'SlimCSLib-vcxproj' }
+    ]
+    .CookingFolder = [
+        .Path     = 'Cooking'
+        .Projects = {
+            'Cooker-vcxproj',
+            'CookerUnitTests-vcxproj',
+            'Cooking-vcxproj',
+            'EffectCompiler-vcxproj',
+            'FalconCooker-vcxproj',
+        }
+    ]
+    .CoreFolder = [
+        .Path     = 'Core'
+        .Projects = { 'CoreLib-vcxproj' }
+    ]
+    .ExternalFolder = [
+        .Path     = 'External'
+        .Projects = {
+            'amd_tootle-vcxproj',
+            'crunch-vcxproj',
+            'curl-vcxproj',
+            'jemalloc-vcxproj',
+            'miniz-vcxproj',
+            'nghttp2-vcxproj',
+            'spng-vcxproj',
+            'tess2-vcxproj',
+            'wjcryptlib-vcxproj',
+            'zlib-vcxproj',
+            'zstd-vcxproj',
+        }
+    ]
+    .MoriartyFolder = [
+        .Path     = 'Moriarty'
+        .Projects = { 'Moriarty-csproj' }
+    ]
+    .SeoulEngineFolder = [
+        .Path     = 'SeoulEngine'
+        .Projects = {
+            'Animation-vcxproj',
+            'Animation2D-vcxproj',
+            'Core-vcxproj',
+            'EffectConverter-vcxproj',
+            'Engine-vcxproj',
+            'Falcon-vcxproj',
+            'NullGraphics-vcxproj',
+            'NullPlatform-vcxproj',
+            'Reflection-vcxproj',
+        }
+    ]
+    .UtilitiesFolder = [
+        .Path     = 'Utilities'
+        .Projects = {
+            'AssetTool-vcxproj',
+            'ConsoleTool-vcxproj',
+            'JsonFormatter-vcxproj',
+            'JsonMerge-vcxproj',
+            'SarTool-vcxproj',
+            'SeoulUtil-vcxproj',
+        }
+    ]
+    .SolutionFolders = {
+        .CompilersFolder,
+        .CookingFolder,
+        .CoreFolder,
+        .ExternalFolder,
+        .MoriartyFolder,
+        .SeoulEngineFolder,
+        .UtilitiesFolder,
+    }
+
+    // Miscellaneous config.
+    .SolutionBuildProject               = 'Cooker-vcxproj'
+    .SolutionMinimumVisualStudioVersion = .VS_Version
+    .SolutionVisualStudioVersion        = .VS_Version
+}

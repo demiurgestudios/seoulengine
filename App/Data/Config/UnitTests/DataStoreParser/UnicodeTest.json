@@ -1,0 +1,37 @@
+// Test file part of IniFileSyntax.ini, test cases
+// for named sections
+{
+// Unicode strings for sanity - from http://www.cl.cam.ac.uk/~mgk25/ucs/examples/quickbrown.txt
+"UnicodeTest": {
+"Danish": "Quizdeltagerne spiste jordbær med fløde, mens cirkusklovnen Wolther spillede på xylofon.",
+"German1":"Falsches Üben von Xylophonmusik quält jeden größeren Zwerg",
+
+
+
+"German2":"Zwölf Boxkämpfer jagten Eva quer über den Sylter Deich",
+"German3":"Heizölrückstoßabdämpfung",
+"Greek1":"Γαζέες καὶ μυρτιὲς δὲν θὰ βρῶ πιὰ στὸ χρυσαφὶ ξέφωτο",
+"Greek2":"Ξεσκεπάζω τὴν ψυχοφθόρα βδελυγμία",
+"English":"The quick brown fox jumps over the lazy dog",
+"Spanish":"El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío, añoraba a su querido cachorro.",
+"French":"Portez ce vieux whisky au juge blond qui fume sur son île intérieure, à côté de l'alcôve ovoïde, où les bûches se consument dans l'âtre, ce qui lui permet de penser à la cænogenèse de l'être dont il est question dans la cause ambiguë entendue à Moÿ, dans un capharnaüm qui, pense-t-il, diminue çà et là la qualité de son œuvre.",
+"Irish Gaelic":"D'fhuascail Íosa, Úrmhac na hÓighe Beannaithe, pór Éava agus Ádhaimh",
+"Hungarian":"Árvíztűrő tükörfúrógép",
+"Icelandic":"Kæmi ný öxi hér ykist þjófum nú bæði víl og ádrepa Sævör grét áðan því úlpan var ónýt",
+"Japanese Hiragana":"いろはにほへとちりぬるをわかよたれそつねならむうゐのおくやまけふこえてあさきゆめみしゑひもせす",
+"Japanese Katakana":"イロハニホヘト チリヌルヲ ワカヨタレソ ツネナラムウヰノオクヤマ ケフコエテ アサキユメミシ ヱヒモセスン",
+"Hebrew":"? דג סקרן שט בים מאוכזב ולפתע מצא לו חברה איך הקליטה",
+"Polish":"Pchnąć w tę łódź jeża lub ośm skrzyń fig",
+"Russian1":"В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!",
+"Russian2":"Съешь же ещё этих мягких французских булок да выпей чаю",
+"Thai":"๏ เป็นมนุษย์สุดประเสริฐเลิศคุณค่า  กว่าบรรดาฝูงสัตว์เดรัจฉาน  จงฝ่าฟันพัฒนาวิชาการ           อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร     ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า     หัดอภัยเหมือนกีฬาอัชฌาสัย    ปฏิบัติประพฤติกฎกำหนดใจ        พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอย ฯ",
+"Turkish":"Pijamalı hasta, yağız şoföre çabucak güvendi.",
+
+"unicode_test":"escapes\ninside of quotes\n have the \n\t expected meanings even with \\Ξεσκεπάζω τὴν \\ψυ\\χοφθόρα βδελυγμία Unicode characters\"\"",
+
+"unicode_runtime_testA":"๏ เป็นมนุษย์สุดประเสริฐเลิศคุณค่า  กว่าบรรดาฝูงสัตว์เดรัจฉาน  จงฝ่าฟันพัฒนาวิชาการ           อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร     ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า     หัดอภัยเหมือนกีฬาอัชฌาสัย    ปฏิบัติประพฤติกฎกำหนดใจ        พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอย ฯ イロハニホヘト チリヌルヲ ワカヨタレソ ツネナラムウヰノオクヤマ ケフコエテ アサキユメミシ ヱヒモセスン Γαζέες καὶ μυρτιὲς δὲν θὰ βρῶ πιὰ στὸ χρυσαφὶ ξέφωτο 𝄞",
+"unicode_runtime_testB":"\u0E4F \u0E40\u0E1B\u0E47\u0E19\u0E21\u0E19\u0E38\u0E29\u0E22\u0E4C\u0E2A\u0E38\u0E14\u0E1B\u0E23\u0E30\u0E40\u0E2A\u0E23\u0E34\u0E10\u0E40\u0E25\u0E34\u0E28\u0E04\u0E38\u0E13\u0E04\u0E48\u0E32  \u0E01\u0E27\u0E48\u0E32\u0E1A\u0E23\u0E23\u0E14\u0E32\u0E1D\u0E39\u0E07\u0E2A\u0E31\u0E15\u0E27\u0E4C\u0E40\u0E14\u0E23\u0E31\u0E08\u0E09\u0E32\u0E19  \u0E08\u0E07\u0E1D\u0E48\u0E32\u0E1F\u0E31\u0E19\u0E1E\u0E31\u0E12\u0E19\u0E32\u0E27\u0E34\u0E0A\u0E32\u0E01\u0E32\u0E23           \u0E2D\u0E22\u0E48\u0E32\u0E25\u0E49\u0E32\u0E07\u0E1C\u0E25\u0E32\u0E0D\u0E24\u0E45\u0E40\u0E02\u0E48\u0E19\u0E06\u0E48\u0E32\u0E1A\u0E35\u0E11\u0E32\u0E43\u0E04\u0E23     \u0E44\u0E21\u0E48\u0E16\u0E37\u0E2D\u0E42\u0E17\u0E29\u0E42\u0E01\u0E23\u0E18\u0E41\u0E0A\u0E48\u0E07\u0E0B\u0E31\u0E14\u0E2E\u0E36\u0E14\u0E2E\u0E31\u0E14\u0E14\u0E48\u0E32     \u0E2B\u0E31\u0E14\u0E2D\u0E20\u0E31\u0E22\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E35\u0E2C\u0E32\u0E2D\u0E31\u0E0A\u0E0C\u0E32\u0E2A\u0E31\u0E22    \u0E1B\u0E0F\u0E34\u0E1A\u0E31\u0E15\u0E34\u0E1B\u0E23\u0E30\u0E1E\u0E24\u0E15\u0E34\u0E01\u0E0E\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E43\u0E08        \u0E1E\u0E39\u0E14\u0E08\u0E32\u0E43\u0E2B\u0E49\u0E08\u0E4A\u0E30\u0E46 \u0E08\u0E4B\u0E32\u0E46 \u0E19\u0E48\u0E32\u0E1F\u0E31\u0E07\u0E40\u0E2D\u0E22 \u0E2F \u30A4\u30ED\u30CF\u30CB\u30DB\u30D8\u30C8 \u30C1\u30EA\u30CC\u30EB\u30F2 \u30EF\u30AB\u30E8\u30BF\u30EC\u30BD \u30C4\u30CD\u30CA\u30E9\u30E0\u30A6\u30F0\u30CE\u30AA\u30AF\u30E4\u30DE \u30B1\u30D5\u30B3\u30A8\u30C6 \u30A2\u30B5\u30AD\u30E6\u30E1\u30DF\u30B7 \u30F1\u30D2\u30E2\u30BB\u30B9\u30F3 \u0393\u03B1\u03B6\u03AD\u03B5\u03C2 \u03BA\u03B1\u1F76 \u03BC\u03C5\u03C1\u03C4\u03B9\u1F72\u03C2 \u03B4\u1F72\u03BD \u03B8\u1F70 \u03B2\u03C1\u1FF6 \u03C0\u03B9\u1F70 \u03C3\u03C4\u1F78 \u03C7\u03C1\u03C5\u03C3\u03B1\u03C6\u1F76 \u03BE\u03AD\u03C6\u03C9\u03C4\u03BF \uD834\uDD1E"
+
+}
+
+}

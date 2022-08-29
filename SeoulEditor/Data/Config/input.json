@@ -1,0 +1,7 @@
+{
+	"InputAxisBindings": {},
+	"InputButtonBindings": {
+		/* Engine standards. */
+		"ALT+F4": ["UI.ExitGame"],
+	}
+}

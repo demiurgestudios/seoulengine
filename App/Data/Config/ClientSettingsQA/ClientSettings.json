@@ -1,0 +1,14 @@
+// Client settings for the QA server.
+{
+	// Analytics settings
+	"AnalyticsApiKeyAndroid": "",
+	"AnalyticsApiKeyIOS": "",
+	"AnalyticsApiKeyPC": "",
+
+	// Client settings
+	"SaveGameFilename": "player-save-qa.dat",
+
+	// Server settings
+	"ServerBaseURL": "http://localhost:8080",
+	"ServerType": "QA"
+}

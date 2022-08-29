@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamehelper_sign_in_failed">Connessione fallita. Verifica il tuo collegamento alla rete e riprova.</string>
+    <string name="gamehelper_app_misconfigured">L\'applicazione non è configurata in modo corretto. Verificare che il nome del pacchetto e il certificato di firma corrispondano all\'ID cliente creato nella console di sviluppo. Se l\'applicazione non è ancora stata pubblicata, verificare che l\'account al quale si sta tentando di accedere sia compreso tra gli account di collaudo. Consultare i log per ulteriori informazioni.</string>
+    <string name="gamehelper_license_failed">Verifica della licenza fallita.</string>
+    <string name="gamehelper_unknown_error">Errore sconosciuto.</string>
+</resources>

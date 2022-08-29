@@ -1,0 +1,9 @@
+{
+	"Conditions": {
+		"Advancing": false,
+	},
+	"Root": {
+		"$type": "AnimPlayClip",
+		"Name": "Base",
+	},
+}

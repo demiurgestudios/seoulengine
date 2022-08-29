@@ -1,0 +1,189 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+
+{
+    //------------------------------------------------------------------------------
+    // Default values
+    //------------------------------------------------------------------------------
+    .LocalDeps = .DepsCore
+    .LocalExterns = {}
+
+    //------------------------------------------------------------------------------
+    // Enumerate projects to generate static libs.
+    //------------------------------------------------------------------------------
+    .LocalProjs = {}
+    ForEach(.ToBuildProject in .ToBuildProjects) {
+        // Defaults
+
+        // Define to empty by default.
+        ."$ToBuildProject$_AdditionalOptionsClang" = ''
+        ."$ToBuildProject$_AdditionalOptionsVS" = ''
+        // Define to empty by default.
+        ."$ToBuildProject$_Defines" = {}
+        // Define to .DepsCore by default.
+        ."$ToBuildProject$_Deps" = .DepsCore
+        // Define to empty by default.
+        ."$ToBuildProject$_Externs" = {}
+        // Define to empty by default.
+        ."$ToBuildProject$_InputFiles" = {}
+        ."$ToBuildProject$_InputFiles_Android" = {}
+        ."$ToBuildProject$_InputFiles_Linux" = {}
+        ."$ToBuildProject$_InputFiles_PC" = {}
+        // Root directory by default.
+        ."$ToBuildProject$_InputPath" = '$StaticLibBase$/$ToBuildProject$/'
+        // Default to all SeoulEngine platforms.
+        ."$ToBuildProject$_Platforms" = .SeoulEnginePlatforms
+        // Default is the project name.
+        ."$ToBuildProject$_RootDirOverride" = .ToBuildProject
+
+        // Now expand the environment, which may override the values.
+        Using(.ToBuildProjectConfig)
+
+        // Root directory name.
+        .TmpRootName = ."$ToBuildProject$_RootDirOverride"
+
+        // Setup defines.
+        .TmpDefinesClang = ''
+        .TmpDefinesVS = ''
+        ForEach(.LocalDefine in ."$ToBuildProject$_Defines") {
+            ^TmpDefinesClang + ' -D'  + .LocalDefine
+            ^TmpDefinesVS    + ' /D"' + .LocalDefine + '"'
+        }
+
+        // Setup input files.
+        .TmpInputFiles = {}
+        ForEach(.LocalInputFile in ."$ToBuildProject$_InputFiles") {
+            ^TmpInputFiles + '$StaticLibBase$/$TmpRootName$/$LocalInputFile$'
+        }
+        // TODO: Better way than explicit enumeration?
+        .TmpInputFiles_Android = .TmpInputFiles
+        ForEach(.LocalInputFile in ."$ToBuildProject$_InputFiles_Android") {
+            ^TmpInputFiles_Android + '$StaticLibBase$/$TmpRootName$/$LocalInputFile$'
+        }
+        .TmpInputFiles_Linux = .TmpInputFiles
+        ForEach(.LocalInputFile in ."$ToBuildProject$_InputFiles_Linux") {
+            ^TmpInputFiles_Linux + '$StaticLibBase$/$TmpRootName$/$LocalInputFile$'
+        }
+        .TmpInputFiles_PC = .TmpInputFiles
+        ForEach(.LocalInputFile in ."$ToBuildProject$_InputFiles_PC") {
+            ^TmpInputFiles_PC + '$StaticLibBase$/$TmpRootName$/$LocalInputFile$'
+        }
+
+        // Setup include paths.
+        .TmpIncludesClang = ''
+        .TmpIncludesVS = ''
+        // Append any SeoulEngine includes.
+        ForEach(.LocalDep in ."$ToBuildProject$_Deps") {
+            ^TmpIncludesClang + ' -I"$SeoulEngineBase$/$LocalDep$"'
+            ^TmpIncludesVS    + ' /I"$SeoulEngineBase$/$LocalDep$"'
+        }
+        // Append any External includes.
+        ForEach(.LocalExtern in ."$ToBuildProject$_Externs") {
+            ^TmpIncludesClang + ' -I"$ExternalBase$/$LocalExtern$"'
+            ^TmpIncludesVS    + ' /I"$ExternalBase$/$LocalExtern$"'
+        }
+
+        // Extended options.
+        .TmpOptionsCppClang = ''
+        .TmpOptionsCppVS = ''
+        If(.StdCppExt) {
+            ^TmpOptionsCppClang + .StdCppExtClang
+            ^TmpOptionsCppVS    + .StdCppExtVS
+        }
+
+        // Define.
+        .TempProj = [
+            .LocalBasePath             = '$StaticLibBase$/$TmpRootName$'
+            .LocalName                 = .ToBuildProject
+            .LocalCompilerOptionsClang = .TmpIncludesClang + .TmpDefinesClang + ."$ToBuildProject$_AdditionalOptionsClang"
+            .LocalCompilerOptionsVS    = .TmpIncludesVS    + .TmpDefinesVS    + ."$ToBuildProject$_AdditionalOptionsVS"
+            .LocalInputFiles_Android   = .TmpInputFiles_Android
+            .LocalInputFiles_Linux     = .TmpInputFiles_Linux
+            .LocalInputFiles_PC        = .TmpInputFiles_PC
+            .LocalPlatforms            = ."$ToBuildProject$_Platforms"
+            .LocalInputPath            = ."$ToBuildProject$_InputPath"
+            .LocalCppOptionsClang      = .TmpOptionsCppClang
+            .LocalCppOptionsVS         = .TmpOptionsCppVS
+        ]
+        // Append.
+        ^LocalProjs + .TempProj
+    }
+
+    //------------------------------------------------------------------------------
+    // Generate static libs.
+    //------------------------------------------------------------------------------
+    ForEach(.LocalProj in .LocalProjs) {
+        // Expand environment to apply settings.
+        Using(.LocalProj)
+
+        // Process.
+        ForEach(.LocalConfig in .SeoulEngineConfigs) {
+            ForEach(.LocalPlatform in .LocalPlatforms) {
+                .LocalCompilerType       = .'$LocalPlatform$CompilerType'
+                .LocalCompilerOptions    = .'LocalCompilerOptions$LocalCompilerType$'
+                .LocalCompilerOptionsCpp = .'LocalCppOptions$LocalCompilerType$'
+
+                .LocalArchs = .'$LocalPlatform$Archs'
+                ForEach(.LocalArch in .LocalArchs) {
+                    .LocalNamePrefix = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+
+                    // Select the C/C++ compiler toolchain.
+                    Using(.'$LocalPlatform$-$LocalConfig$-$LocalArch$-CompilerC')
+
+                    // Common config.
+                    .CompilerOptions      + .LocalCompilerOptions + .StdIncludePaths
+                    .CompilerOutputPath   = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$/$LocalName$/'
+                    .LibrarianOutput      = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$/$LocalName$.lib'
+
+                    ObjectList('$LocalNamePrefix$-$LocalName$-C') {
+                        .CompilerInputAllowNoFiles = true
+                        .CompilerInputPath         = .LocalInputPath
+                        .CompilerInputPattern      = { '*.c' }
+                    }
+                    ObjectList('$LocalNamePrefix$-$LocalName$-Cpp') {
+                        .CompilerInputAllowNoFiles = true
+                        .CompilerOptions           + .LocalCompilerOptionsCpp
+                        .CompilerInputPath         = .LocalInputPath
+                        .CompilerInputPattern      = { '*.cpp' }
+                    }
+
+                    // Generate the library.
+                    Library('$LocalNamePrefix$-$LocalName$') {
+                        .CompilerInputFiles        = .'LocalInputFiles_$LocalPlatform$' // TODO: Problem if explicit lists require C++17 or C++20 support
+                        .CompilerInputPath         = {}
+                        .CompilerInputPattern      = {}
+                        .LibrarianAdditionalInputs = { '$LocalNamePrefix$-$LocalName$-C', '$LocalNamePrefix$-$LocalName$-Cpp' }
+                    }
+                }
+            }
+        }
+
+        // Generate a Visual Studio project (.vcxproj) if the project supports the PC platform.
+        If(.SeoulPlatformPC in .LocalPlatforms) {
+            VCXProject('$LocalName$-vcxproj') {
+                .ProjectBasePath              = .LocalBasePath
+                .ProjectFiles                 = .'LocalInputFiles_PC'
+                .ProjectInputPaths            = .LocalInputPath
+                .ProjectOutput                = '$ObjBase$/$LocalName$.vcxproj'
+                .PlatformToolset              = .VS_PlatformToolset
+
+                .ProjectConfigs = {}
+                ForEach(.LocalConfig in .SeoulEngineConfigs) {
+                    .TmpConfig = [
+                        .Config   = .LocalConfig
+                        .Platform = 'x64'
+                        .Target   = 'PC-$LocalConfig$-x64-$LocalName$'
+                    ]
+                    ^ProjectConfigs + .TmpConfig
+                }
+            }
+        }
+    }
+}
+
+// Clear at end.
+.ToBuildProjects = {}
+.ToBuildProjectConfig = []

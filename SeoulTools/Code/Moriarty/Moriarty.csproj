@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">DebugTools</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BB0C996E-36DF-4559-91E3-949F6543739E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Moriarty</RootNamespace>
+    <AssemblyName>Moriarty</AssemblyName>
+    <ApplicationIcon>Moriarty.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>Moriarty.MoriartyApp</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CopyRetryCount>5</CopyRetryCount>
+    <CopyRetryDelayMilliseconds>1000</CopyRetryDelayMilliseconds>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugTools|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\Binaries\PC\Debug\x64\</OutputPath>
+    <IntermediateOutputPath>..\..\Intermediate\PC\$(Configuration)\x64\Moriarty\</IntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DeveloperTools|x64'">
+    <OutputPath>..\..\Binaries\PC\Developer\x64\</OutputPath>
+    <IntermediateOutputPath>..\..\Intermediate\PC\$(Configuration)\x64\Moriarty\</IntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CoreLib" Condition="'$(Configuration)|$(Platform)' == 'DebugTools|x64'">
+      <HintPath>..\..\Binaries\PC\Debug\x64\CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreLib" Condition="'$(Configuration)|$(Platform)' == 'DeveloperTools|x64'">
+      <HintPath>..\..\Binaries\PC\Developer\x64\CoreLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\CopyResponse.cs" />
+    <Compile Include="Commands\CreateDirPathResponse.cs" />
+    <Compile Include="Commands\DeleteDirectoryResponse.cs" />
+    <Compile Include="Commands\DeleteResponse.cs" />
+    <Compile Include="Commands\FileStatCacheRefreshCommand.cs" />
+    <Compile Include="Commands\GetDirectoryListingResponse.cs" />
+    <Compile Include="Commands\CloseFileResponse.cs" />
+    <Compile Include="Commands\BaseMoriartyResponse.cs" />
+    <Compile Include="Commands\CookFileResponse.cs" />
+    <Compile Include="Commands\KeyboardCharEventCommand.cs" />
+    <Compile Include="Commands\KeyboardKeyEventCommand.cs" />
+    <Compile Include="Commands\RenameResponse.cs" />
+    <Compile Include="Commands\SetFileModifiedTimeResponse.cs" />
+    <Compile Include="Commands\SetReadOnlyBitResponse.cs" />
+    <Compile Include="Commands\WriteFileResponse.cs" />
+    <Compile Include="Commands\ReadFileResponse.cs" />
+    <Compile Include="Commands\ContentChangeEventCommand.cs" />
+    <Compile Include="Commands\FileStatResponse.cs" />
+    <Compile Include="Commands\BaseMoriartyCommand.cs" />
+    <Compile Include="Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Commands\OpenFileResponse.cs" />
+    <Compile Include="CookManager.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EndPointExtensions.cs" />
+    <Compile Include="UI\DynamicListBoxUITypeEditor.cs" />
+    <Compile Include="UI\FileBrowserUITypeEditor.cs" />
+    <Compile Include="Utilities\AndroidUtilities.cs" />
+    <Compile Include="Utilities\FileUtility.cs" />
+    <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="MoriartyConnectionManager.cs" />
+    <Compile Include="ContentChangeManager.cs" />
+    <Compile Include="Utilities\FilePath.cs" />
+    <Compile Include="MoriartyConnection.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\UserSettings.cs" />
+    <Compile Include="UI\KeyboardCaptureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\KeyboardCaptureForm.Designer.cs">
+      <DependentUpon>KeyboardCaptureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MoriartyCollectionEditor.cs" />
+    <Compile Include="UI\MoriartyConnectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\MoriartyConnectionControl.Designer.cs">
+      <DependentUpon>MoriartyConnectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MoriartyMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MoriartyMainForm.Designer.cs">
+      <DependentUpon>MoriartyMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoriartyApp.cs" />
+    <Compile Include="MoriartyManager.cs" />
+    <Compile Include="Settings\ProjectSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteFiles.cs" />
+    <EmbeddedResource Include="UI\KeyboardCaptureForm.resx">
+      <DependentUpon>KeyboardCaptureForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MoriartyConnectionControl.resx">
+      <DependentUpon>MoriartyConnectionControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MoriartyMainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MoriartyMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Moriarty.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

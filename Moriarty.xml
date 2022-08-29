@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ProjectSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Port>22180</Port>
+  <DefaultUserSettingsFilename>DefaultUserSettings.xml</DefaultUserSettingsFilename>
+  <AndroidActivityName>.AppLoadNativeLibrariesActivity</AndroidActivityName>
+  <AndroidPackageName>com.demiurgestudios.setestapp</AndroidPackageName>
+  <ExecutableNameAndroid>SETestApp</ExecutableNameAndroid>
+  <ExecutableNameIOS>SETestApp</ExecutableNameIOS>
+  <ProjectName>SETestApp</ProjectName>
+  <ProjectRoot>App</ProjectRoot>
+  <UserSettingsClassFile>MoriartyUserSettings.cs</UserSettingsClassFile>
+  <UserSettingsClass>Moriarty.Settings.MoriartyUserSettings</UserSettingsClass>
+  <UserSettingsReferencedAssemblies>
+    <string>System.dll</string>
+    <string>System.Design.dll</string>
+    <string>System.Drawing.dll</string>
+    <string>System.Xml.dll</string>
+  </UserSettingsReferencedAssemblies>
+</ProjectSettings>

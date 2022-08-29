@@ -1,0 +1,421 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+#once
+
+//------------------------------------------------------------------------------
+// Determine build features
+//------------------------------------------------------------------------------
+#if file_exists("../External/FMOD/Windows/api/core/inc/fmod.h")
+    #define SEOUL_WITH_FMOD
+#endif
+#if file_exists("../External/FxStudio/SDK/Include/FxStudioRT.h")
+    #define SEOUL_WITH_FX_STUDIO
+#endif
+
+//------------------------------------------------------------------------------
+// Normalize environment, prevent shifting of (e.g.) LIB environment
+//------------------------------------------------------------------------------
+// Android SDK configuration import.
+#import SEOUL_ANDROID_SDK
+// Linux SDK configuration import.
+#import SEOUL_LINUX_SDK
+
+// Default C++>11 value.
+.StdCppExt      = true
+.StdCppExtClang = ' -std=c++17'
+.StdCppExtVS    = ' /std:c++17'
+
+Settings {
+    #import SystemRoot
+    .Environment = {
+        'SystemRoot=$SystemRoot$' // cl.exe (error D8037)
+        'TMP=$SystemRoot$/temp'   // cl.exe (error D8050)
+    }
+}
+
+//------------------------------------------------------------------------------
+// Basic global values
+//------------------------------------------------------------------------------
+
+// Build configs.
+.SeoulEngineDebug          = 'Debug'
+.SeoulEngineDebugTools     = 'DebugTools'
+.SeoulEngineDeveloper      = 'Developer'
+.SeoulEngineDeveloperTools = 'DeveloperTools'
+.SeoulEngineProfiling      = 'Profiling'
+.SeoulEngineShip           = 'Ship'
+.SeoulEngineConfigs        = { .SeoulEngineDebug, .SeoulEngineDebugTools, .SeoulEngineDeveloper, .SeoulEngineDeveloperTools, .SeoulEngineProfiling, .SeoulEngineShip }
+
+// Build platforms.
+.SeoulPlatformAndroid      = 'Android'
+.SeoulPlatformLinux        = 'Linux'
+.SeoulPlatformPC           = 'PC'
+.SeoulEnginePlatforms      = { .SeoulPlatformAndroid, .SeoulPlatformLinux, .SeoulPlatformPC } // TODO: IOS
+
+// Build architectures.
+.AndroidArchs              = { 'armeabi-v7a', 'arm64-v8a' }
+.AndroidCompilerType       = 'Clang'
+.LinuxArchs                = { 'x64' }
+.LinuxCompilerType         = 'Clang'
+.PCArchs                   = { 'x64' }
+.PCCompilerType            = 'VS'
+
+// Miscellaneous
+.DepsCore      = { 'Core', 'Reflection' }
+.DepsEngine    = .DepsCore + { 'Content', 'Engine', 'Events', 'Fx', 'HAL', 'HTTP', 'Jobs', 'Rendering', 'Settings', 'Sound' }
+.DepsAnimation = .DepsEngine + 'Animation'
+
+.ExternalBase     = '$_CURRENT_BFF_DIR_$/../External'
+.SeoulEngineBase  = '$_CURRENT_BFF_DIR_$/Code'
+
+.SeoulEngineProjects = {
+    'Android', 'Animation', 'Animation2D', 'Animation3D',
+    'Content', 'Core', 'D3D11', 'D3DCommon', 'DevUI', 'EffectConverter',
+    'Engine', 'Events', 'Falcon', 'Fx', 'FMODSound', 'FxStudio', 'Game', 'HAL',
+    // TODO: 'IOS',
+    'HTTP', 'Jobs', 'Navigation', 'Network', 'NullGraphics',
+    'NullPlatform', 'OGLES2', 'PC', 'Physics',
+    'Reflection', 'Rendering', 'Scene', 'Script', 'ScriptAnimation2D',
+    'ScriptEngine', 'ScriptMotion', 'ScriptNetwork',
+    'ScriptScene', 'ScriptUI', 'Settings', 'Sound',
+    'Scc', 'Steam', 'UI', 'UnitTesting', 'UnitTests', 'Video',
+}
+
+//------------------------------------------------------------------------------
+// Utilities
+//------------------------------------------------------------------------------
+function GenExecutableClang(.Ctxt) {
+    // Expand environment.
+    Using(.Ctxt)
+
+    // Fill out include paths.
+    .TmpIncludePaths = ''
+    ForEach(.ArgInclude in .ArgIncludes) {
+        ^TmpIncludePaths + ' -I"$ArgInclude$"'
+    }
+
+    // Process any C/C++ files.
+    ObjectList('$LocalNamePrefix$-$LocalName$-Files-C') {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        .CompilerInputAllowNoFiles = true
+        .CompilerInputPath         = '$InputBase$/$LocalName$/'
+        .CompilerOptions           + ' -I"$InputBase$/$LocalName$"'
+                                   + .TmpIncludePaths
+                                   + .StdIncludePaths
+        .CompilerOutputPath        = '$LocalObjBase$/$LocalName$-Files/'
+        .CompilerInputPattern      = { '*.c' }
+    }
+    ObjectList('$LocalNamePrefix$-$LocalName$-Files-Cpp') {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        .CompilerInputPath  = '$InputBase$/$LocalName$/'
+        .CompilerOptions    + ' $StdCppExtClang$ -I"$InputBase$/$LocalName$"'
+                            + .TmpIncludePaths
+                            + .StdIncludePaths
+        .CompilerOutputPath = '$LocalObjBase$/$LocalName$-Files/'
+        .CompilerInputPattern = { '*.cpp' }
+    }
+    // Generate the executable.
+    {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        // Define library dependencies.
+        .Libraries = {
+            '$LocalNamePrefix$-$LocalName$-Files-C',
+            '$LocalNamePrefix$-$LocalName$-Files-Cpp',
+        }
+        ForEach(.ArgLibrary in .ArgLibraries) {
+            ^Libraries + '$LocalNamePrefix$-$ArgLibrary$'
+        }
+
+        // Output settings.
+        .LinkerOutput = '$LocalBinBase$/$LocalName$'
+        If(.ArgDLL) {
+            ^LinkerOutput = '$LocalBinBase$/lib$LocalName$.so'
+        }
+
+        // Paths.
+        ForEach(.ArgExtern in .ArgExterns) {
+            ^LinkerOptions + ' -L"$ExternalBase$/$ArgExtern$"'
+        }
+        .TmpExterns = .'$LocalReleasePrefix$-ArgExterns'
+        If(.SeoulEngineDebug == .LocalConfig) {
+            ^TmpExterns = .'$LocalDebugPrefix$-ArgExterns'
+        }
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^TmpExterns = .'$LocalDebugPrefix$-ArgExterns'
+        }
+        ForEach(.ArgExtern in .TmpExterns) {
+            ^LinkerOptions + ' -L"$ExternalBase$/$ArgExtern$"'
+        }
+
+        // Standard lib options.
+        .LinkerOptions + .StdLibPaths + .StdLibs
+        // Additional external libs.
+        ForEach(.ArgExtern in .ArgExternLibs) {
+            ^LinkerOptions + ' -l$ArgExtern$'
+        }
+        .TmpArgExternLibs = .'$LocalReleasePrefix$-ArgExternLibs'
+        If(.SeoulEngineDebug == .LocalConfig) {
+            ^TmpArgExternLibs = .'$LocalDebugPrefix$-ArgExternLibs'
+        }
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^TmpArgExternLibs = .'$LocalDebugPrefix$-ArgExternLibs'
+        }
+        ForEach(.ArgExtern in .TmpArgExternLibs) {
+            ^LinkerOptions + ' -l$ArgExtern$'
+        }
+
+        // Execute
+        If(.ArgDLL) {
+            DLL('$LocalNamePrefix$-$LocalName$') {}
+        }
+        If (!.ArgDLL) {
+            Executable('$LocalNamePrefix$-$LocalName$') {}
+        }
+    }
+}
+
+function GenExecutableVS(.Ctxt) {
+    // Expand environment.
+    Using(.Ctxt)
+
+    // Fill out include paths.
+    .TmpIncludePaths = ''
+    ForEach(.ArgInclude in .ArgIncludes) {
+        ^TmpIncludePaths + ' /I"$ArgInclude$"'
+    }
+
+    // Process any resource files.
+    If(!.ArgDLL) {
+        ObjectList('$LocalNamePrefix$-$LocalName$-Resources') {
+            // Select the RC toolchain.
+            Using(.'$LocalNamePrefix$-ResourceCompiler')
+
+            .CompilerInputPath  = '$InputBase$/$LocalName$/'
+            .CompilerOutputPath = '$LocalObjBase$/$LocalName$-Resources/'
+        }
+    }
+    // Process any C/C++ files.
+    ObjectList('$LocalNamePrefix$-$LocalName$-Files-C') {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        .CompilerInputAllowNoFiles = true
+        .CompilerInputPath         = '$InputBase$/$LocalName$/'
+        .CompilerOptions           + ' /I"$InputBase$/$LocalName$"'
+                                   + .TmpIncludePaths
+                                   + .StdIncludePaths
+        .CompilerOutputPath        = '$LocalObjBase$/$LocalName$-Files/'
+        .CompilerInputPattern      = { '*.c' }
+    }
+    ObjectList('$LocalNamePrefix$-$LocalName$-Files-Cpp') {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        .CompilerInputPath  = '$InputBase$/$LocalName$/'
+        .CompilerOptions    + ' $StdCppExtVS$ /I"$InputBase$/$LocalName$"'
+                            + .TmpIncludePaths
+                            + .StdIncludePaths
+        .CompilerOutputPath = '$LocalObjBase$/$LocalName$-Files/'
+        .CompilerInputPattern = { '*.cpp' }
+    }
+    // Generate the executable.
+    {
+        // Select the C/C++ compiler toolchain.
+        Using(.'$LocalNamePrefix$-CompilerC')
+
+        // Define library dependencies.
+        .Libraries = {
+            '$LocalNamePrefix$-$LocalName$-Files-C',
+            '$LocalNamePrefix$-$LocalName$-Files-Cpp',
+        }
+        If(!.ArgDLL) {
+            ^Libraries + '$LocalNamePrefix$-$LocalName$-Resources'
+        }
+        ForEach(.ArgLibrary in .ArgLibraries) {
+            ^Libraries + '$LocalNamePrefix$-$ArgLibrary$'
+        }
+
+        // Output settings.
+        .LinkerOutput = '$LocalBinBase$/$LocalName$.exe'
+        If(.ArgDLL) {
+            ^LinkerOutput = '$LocalBinBase$/$LocalName$.dll'
+        }
+
+        // Paths.
+        ForEach(.ArgExtern in .ArgExterns) {
+            ^LinkerOptions + ' /LIBPATH:"$ExternalBase$/$ArgExtern$"'
+        }
+        .TmpExterns = .'$LocalReleasePrefix$-ArgExterns'
+        If(.SeoulEngineDebug == .LocalConfig) {
+            ^TmpExterns = .'$LocalDebugPrefix$-ArgExterns'
+        }
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^TmpExterns = .'$LocalDebugPrefix$-ArgExterns'
+        }
+        ForEach(.ArgExtern in .TmpExterns) {
+            ^LinkerOptions + ' /LIBPATH:"$ExternalBase$/$ArgExtern$"'
+        }
+
+        // Standard lib options.
+        .LinkerOptions + .StdLibPaths + .StdLibs
+        // Additional external libs.
+        ForEach(.ArgExtern in .ArgExternLibs) {
+            ^LinkerOptions + ' $ArgExtern$.lib'
+        }
+        .TmpArgExternLibs = .'$LocalReleasePrefix$-ArgExternLibs'
+        If(.SeoulEngineDebug == .LocalConfig) {
+            ^TmpArgExternLibs = .'$LocalDebugPrefix$-ArgExternLibs'
+        }
+        If(.SeoulEngineDebugTools == .LocalConfig) {
+            ^TmpArgExternLibs = .'$LocalDebugPrefix$-ArgExternLibs'
+        }
+        ForEach(.ArgExtern in .TmpArgExternLibs) {
+            ^LinkerOptions + ' $ArgExtern$.lib'
+        }
+
+        // Execute
+        If(.ArgDLL) {
+            .LinkerOptions + ' /DLL'
+            DLL('$LocalNamePrefix$-$LocalName$') {}
+        }
+        If (!.ArgDLL) {
+            Executable('$LocalNamePrefix$-$LocalName$') {}
+        }
+    }
+}
+
+// Generate a Visual Studio project (.vcxproj)
+function GenVcxProj(.Ctxt) {
+    // Expand environment.
+    Using(.Ctxt)
+
+    VCXProject('$LocalName$-vcxproj') {
+        .ProjectBasePath              = '$InputBase$/$LocalName$/'
+        .ProjectInputPaths            = '$InputBase$/$LocalName$/'
+        .ProjectOutput                = '$ObjBase$/$LocalName$.vcxproj'
+        .PlatformToolset              = .VS_PlatformToolset
+
+        // Build commands.
+        .ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; ^$(SolutionDir)..\External\fastbuild\Windows\fbuild.exe -wrapper -ide PC-^$(Configuration)'
+        .ProjectCleanCommand   = 'cd ^$(SolutionDir) &amp; ^$(SolutionDir)..\External\fastbuild\Windows\fbuild.exe -wrapper -ide PC-^$(Configuration)-Clean'
+        .ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; ^$(SolutionDir)..\External\fastbuild\Windows\fbuild.exe -wrapper -ide -clean PC-^$(Configuration)'
+
+        // Target configs.
+        .ProjectConfigs = {}
+        ForEach(.LocalConfig in .LocalConfigs) {
+            .TmpConfig = [
+                .Config       = .LocalConfig
+                .Platform     = 'x64'
+                .Target       = 'PC-$LocalConfig$-x64-$LocalName$'
+                .BuildLogFile = '^$(IntDir)$LocalName$.log'
+            ]
+            ^ProjectConfigs + .TmpConfig
+        }
+    }
+}
+
+function GenExecutable(.Ctxt, .Args) {
+    // Combine.
+    .Ctxt + .Args
+    // Expand environment.
+    Using(.Ctxt)
+
+    If((.LocalPlatform == .SeoulPlatformAndroid) || (.LocalPlatform == .SeoulPlatformLinux)) {
+        GenExecutableClang(.Ctxt)
+    }
+    If(.LocalPlatform == .SeoulPlatformPC) {
+        GenExecutableVS(.Ctxt)
+
+        // A bit hacky, but convenient - GenExecutable() is called within a loop
+        // of configs, but we only want to gen a .vcxproj for one. So we key off
+        // .SeoulConfigShip or .SeoulConfigDeveloperTools, knowing that these configs
+        // will both be the last in the set of configs generated, and are also mutually
+        // exclusive.
+        If(.LocalConfig == .SeoulEngineShip) {
+            GenVcxProj(.Ctxt)
+        }
+        If(.LocalConfig == .SeoulEngineDeveloperTools) {
+            GenVcxProj(.Ctxt)
+        }
+    }
+}
+
+function GenCSAssembly(.Ctxt, .Args) {
+    // Combine.
+    .Ctxt + .Args
+    // Expand environment.
+    Using(.Ctxt)
+
+    // Generate the assembly .dll or executable.
+    CSAssembly('$LocalNamePrefix$-$LocalName$') {
+        .TmpCompiler = .'$LocalNamePrefix$-CompilerCSharp'
+        If(.ArgNakedLibrary) {
+            ^TmpCompiler = .'$LocalNamePrefix$-CompilerCSharpNaked'
+        }
+        Using(.TmpCompiler)
+
+        // Additional options.
+        .CompilerOptions + .ArgExtraOptions
+
+        // Icon
+        .TmpIcon = ''
+        If(.ArgIcon != .TmpIcon) {
+            ^CompilerOptions + ' /win32icon:$ArgIcon$'
+        }
+
+        // Library
+        .CompilerOutput    = ''
+        If(.ArgDLL) {
+            ^CompilerOptions + ' /target:library'
+            ^CompilerOutput  = '$LocalBinBase$/$LocalName$.dll'
+        }
+        If(!.ArgDLL) {
+            ^CompilerOptions + ' /target:exe'
+            ^CompilerOutput  = '$LocalBinBase$/$LocalName$.exe'
+        }
+
+        // References.
+        .CompilerReferences = {}
+        .TmpAddedReference = false
+        ForEach(.ArgReference in .ArgLibraries) {
+            // Update options.
+            If(!^TmpAddedReference) {
+                ^TmpAddedReference = true
+                ^CompilerOptions   + ' /reference:"%3"'
+            }
+            ^CompilerReferences + '$LocalNamePrefix$-$ArgReference$'
+        }
+        ForEach(.ArgReference in .ArgExternLibs) {
+            // Update options.
+            If(!^TmpAddedReference) {
+                ^TmpAddedReference = true
+                ^CompilerOptions   + ' /reference:"%3"'
+            }
+            ^CompilerReferences + '$ArgReference$'
+        }
+    }
+
+    // .vcxproj generation.
+    If(.LocalPlatform == .SeoulPlatformPC) {
+        // A bit hacky, but convenient - GenExecutable() is called within a loop
+        // of configs, but we only want to gen a .vcxproj for one. So we key off
+        // .SeoulConfigShip or .SeoulConfigDeveloperTools, knowing that these configs
+        // will both be the last in the set of configs generated, and are also mutually
+        // exclusive.
+        If(.LocalConfig == .SeoulEngineShip) {
+            GenVcxProj(.Ctxt)
+        }
+        If(.LocalConfig == .SeoulEngineDeveloperTools) {
+            GenVcxProj(.Ctxt)
+        }
+    }
+}

@@ -1,0 +1,13 @@
+// Global exclusion list for the deserialization
+// checker which looks for unknown properties in config files
+[
+	"AndroidID",
+	"FX",
+	"MovieFilePath",
+	"NativeMovie",
+	"PreloadFX",
+	"SoundEvents",
+	"SoundDuckers",
+	"SoundBanks",
+	"Settings"
+]

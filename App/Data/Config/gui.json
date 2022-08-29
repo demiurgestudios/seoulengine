@@ -1,0 +1,51 @@
+{
+	// State machine levels - if an entry is an
+	// array, then the second element indicates
+	// whether the state machine is developer-only
+	// or not (true for developer-only).
+	"StateMachines": [
+		["config://UI/FxPreview.json", "DevOnly"],
+		["config://UI/VideoCapture.json", "DevAndAutomation"],
+		"config://UI/GlobalBroadcastHandler.json"
+	],
+
+	// Font configuration
+	"Fonts": {
+		"Regular": "content://Authored/Engine/Roboto-Regular.ttf",
+		"Bold": "content://Authored/Engine/Roboto-Bold.ttf"
+	},
+
+	"FontAliases": {
+		"English": {
+			"Roboto Black": {
+				"regular": "Regular",
+				"bold": "Regular"
+			},
+			"Roboto Bold": {
+				"regular": "Regular",
+				"bold": "Regular"
+			}
+		}
+	},
+
+	"Stage3DSettings": "config://Stage3DSettings.json",
+	"TextEffects": "config://TextEffectSettings.json",
+
+	// Dev Only Screens
+	"Game::FxPreview": {
+		"AllowInputToScreensBelow": true,
+		"MovieFilePath": null,
+		"NativeMovie": true,
+		"InitalPreviewPosition": [0, -50, 0]
+	},
+
+	"Game::VideoCapture": {
+		"AllowInputToScreensBelow": true,
+		"NativeMovie": true
+	},
+
+	// Global Broadcast Handler
+	"GlobalBroadcastHandler": {
+		"AllowInputToScreensBelow": true
+	}
+}

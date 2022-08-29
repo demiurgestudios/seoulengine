@@ -1,0 +1,139 @@
+{
+	"type": "object",
+	"patternProperties": {
+		"^.+$": { "$ref": "#/definitions/TextEffectSetting" }
+	},
+	"additionalProperties": false,
+	"definitions": {
+		"TextEffectSetting": {
+			"type": "object",
+			"properties": {
+				"Color": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 1
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"ColorBottom": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 1
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"ColorTop": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 1
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"ShadowBlur": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 255
+				},
+				"ShadowColor": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 1
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"ShadowEnable": {
+					"type": "boolean"
+				},
+				"ShadowOffset": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 128,
+					},
+				},
+				"ShadowOutlineWidth": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 128
+				},
+				"ExtraOutlineBlur": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 255
+				},
+				"ExtraOutlineColor": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 1
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"ExtraOutlineEnable": {
+					"type": "boolean"
+				},
+				"ExtraOutlineOffset": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": 0,
+						"maximum": 128,
+					},
+				},
+				"ExtraOutlineWidth": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 128
+				},
+				"DetailMode": {
+					"type": "string",
+					"enum": ["Word", "Character"]
+				},
+				"DetailStretchMode": {
+					"type": "string",
+					"enum": ["Stretch", "FitWidth", "FitHeight"]
+				},
+				"DetailOffset": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": -1,
+						"maximum": 1,
+					},
+					"minItems": 2,
+					"maxItems": 2
+				},
+				"DetailFilePath": { "$ref": "FilePath.json#" },
+				"DetailSpeed": {
+					"type": "array",
+					"items": {
+						"type": "number",
+						"minimum": -1000,
+						"maximum": 1000,
+					},
+					"minItems": 2,
+					"maxItems": 2
+				},
+				"Detail": {
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

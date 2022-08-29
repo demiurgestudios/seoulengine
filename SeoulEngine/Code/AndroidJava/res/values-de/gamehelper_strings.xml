@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gamehelper_sign_in_failed">Anmeldung fehlgeschlagen. Bitte die Netzwerkverbindung prüfen und erneut versuchen.</string>
+    <string name="gamehelper_app_misconfigured">Die Anwendung ist nicht ordnungsgemäß konfiguriert. Bitte prüfen, ob der Name auf der Packung und das Zertifikat mit der in der Developer Console erstellten Client-ID übereinstimmen. Wenn die Anwendung zudem noch nicht veröffentlicht wurde, bitte prüfen, ob der zum Anmelden verwendete Account als Tester-Account eingetragen ist. Mehr Informationen dazu findest du auch in den Logs.</string>
+    <string name="gamehelper_license_failed">Lizenzprüfung fehlgeschlagen.</string>
+    <string name="gamehelper_unknown_error">Unbekannter Fehler.</string>
+</resources>

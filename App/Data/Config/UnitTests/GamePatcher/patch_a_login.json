@@ -1,0 +1,16 @@
+{
+	"AuthToken": "12345",
+	"AnalyticsGuid": "12345",
+	"RefreshData": {
+		"ConfigUpdateUrl": "http://localhost:8057/ConfigUpdateA.sar",
+		"ContentUpdateUrl": "http://localhost:8057/ContentUpdateA.sar",
+		"VersionRecommended": {
+			"VersionMajor": 0,
+			"Changelist": 0
+		},
+		"VersionRequired": {
+			"VersionMajor": 0,
+			"Changelist": 0
+		}
+	}
+}

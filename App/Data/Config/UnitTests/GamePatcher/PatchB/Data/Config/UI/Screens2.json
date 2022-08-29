@@ -1,0 +1,16 @@
+{
+	"DefaultState": "Empty",
+	"Transitions": [
+		{ "NegativeConditions": ["GameLoaded"], "Target": "Empty" },
+	],
+
+	"Empty": {
+		"Transitions": [
+			{ "Conditions": ["GameLoaded"], "Target": "TestMovie4" }
+		],
+	},
+
+	"TestMovie4": {
+		"Movies": ["GamePatcherTestMovie"]
+	},
+}

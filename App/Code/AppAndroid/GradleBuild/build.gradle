@@ -1,0 +1,139 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+
+assert System.env.containsKey("SEOUL_ANDROID_SDK") : "Define SEOUL_ANDROID_SDK environment variable to the Seoul assembled Android SDK root (e.g. 'C:\\seoul-android-sdk'";
+assert System.env.containsKey("SEOUL_ANDROID_DEBUG_KEYSTORE") : "Define SEOUL_ANDROID_DEBUG_KEYSTORE environment variable to the path of your Android debug .keystore (e.g. 'C:\\debug.keystore'";
+assert System.env.containsKey("SEOUL_ANDROID_SHIPPING_KEYSTORE") : "Define SEOUL_ANDROID_SHIPPING_KEYSTORE environment variable to the path of your Android shipping .keystore (e.g. 'C:\\setestapp.keystore'";
+assert System.env.containsKey("SEOUL_ANDROID_SHIPPING_KEYSTORE_PASSWORD") : "Define SEOUL_ANDROID_SHIPPING_KEYSTORE_PASSWORD environment variable to the password to unlock your Android shipping keystore";
+
+buildscript {
+	repositories {
+		if (gradle.startParameter.isOffline()) {
+			maven { url "${System.env.SEOUL_ANDROID_SDK}/gradle-5.5.1/repo-5" }
+		} else {
+			jcenter()
+			google()
+		}
+	}
+	dependencies {
+		classpath 'com.android.tools.build:gradle:3.2.0'
+	}
+}
+
+allprojects {
+	repositories {
+		if (gradle.startParameter.isOffline()) {
+			maven { url "${System.env.SEOUL_ANDROID_SDK}/gradle-5.5.1/repo-5" }
+		} else {
+			jcenter()
+			google()
+		}
+	}
+
+	// More aggressive lint checking.
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+			// TODO: Enable warnings as errors once we've replaced GCM.
+			// << "-Werror"
+		}
+	}
+}
+
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion 29
+	buildToolsVersion '29.0.2'
+
+	aaptOptions {
+		noCompress 'sar'
+	}
+
+	bundle {
+		density  { enableSplit true  } // Split based on screen density
+		abi      { enableSplit true  } // Split based on CPU (native .so)
+		language { enableSplit false } // Don't split based on languages
+	}
+
+	defaultConfig {
+		applicationId "com.demiurgestudios.setestapp"
+		minSdkVersion 16
+		targetSdkVersion 29
+		setProperty("archivesBaseName", "AppAndroid")
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_7
+		targetCompatibility JavaVersion.VERSION_1_7
+	}
+
+	lintOptions {
+		abortOnError true
+		checkAllWarnings true
+		checkReleaseBuilds true
+		enable 'InlinedApi', 'NewApi', 'RtlCompat', 'RtlEnabled', 'RtlHardcoded'
+		disable 'ButtonStyle', 'GoogleAppIndexingWarning', 'GoogleAppIndexingApiWarning',
+			'GradleCompatible', 'GradleDependency', 'GradleOverrides', 'IconLauncherShape',
+			'LabelFor', 'LambdaLast', 'UnusedAttribute', 'UnknownNullness', 'UnusedResources'
+		warningsAsErrors true
+	}
+
+	signingConfigs {
+		debug {
+			storeFile file("${System.env.SEOUL_ANDROID_DEBUG_KEYSTORE}")
+			storePassword "android"
+			keyAlias "androiddebugkey"
+			keyPassword "android"
+		}
+		release {
+			storeFile file("${System.env.SEOUL_ANDROID_SHIPPING_KEYSTORE}")
+			storePassword "${System.env.SEOUL_ANDROID_SHIPPING_KEYSTORE_PASSWORD}"
+			keyAlias "setestapp"
+			keyPassword "${System.env.SEOUL_ANDROID_SHIPPING_KEYSTORE_PASSWORD}"
+		}
+	}
+
+	buildTypes {
+		debug {
+			signingConfig signingConfigs.debug
+			debuggable true
+			zipAlignEnabled false
+			minifyEnabled false
+		}
+		release {
+			signingConfig signingConfigs.release
+			debuggable false
+			zipAlignEnabled true
+			minifyEnabled false
+		}
+	}
+
+	sourceSets {
+		debug {
+			manifest.srcFile 'AndroidManifest.xml'
+			assets.srcDirs = ['assets']
+			java.srcDirs = ['src']
+			jniLibs.srcDirs = [appJniLibsDir] // Set on the command-line, difference for (e.g. native Debug vs. Ship)
+			res.srcDirs = ['res']
+		}
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+		}
+		release {
+			manifest.srcFile 'AndroidManifest.xml'
+			assets.srcDirs = ['assets']
+			java.srcDirs = ['src']
+			jniLibs.srcDirs = [appJniLibsDir] // Set on the command-line, difference for (e.g. native Debug vs. Ship)
+			res.srcDirs = ['res']
+		}
+	}
+}
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation project(':AndroidJava')
+}

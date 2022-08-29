@@ -1,0 +1,13 @@
+/**
+ * WARNING: FxPreview is a special state machine that serves
+ * as a placeholder for the Fx preview playback functionality.
+ * Please do not modify this state machine,
+ * the one-and-only state needs to be always active.
+ */
+{
+	"DefaultState": "FxPreview",
+
+	"FxPreview": {
+		"Movies": ["Game::FxPreview"]
+	}
+}

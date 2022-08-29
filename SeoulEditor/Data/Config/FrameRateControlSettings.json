@@ -1,0 +1,11 @@
+{
+	// Settings that control framerate capping and control behavior.
+	"Min": 60,
+	"Max": 60,
+	"UseMedianTestTime": true,
+	"ThresholdTimeMs": 24,
+	"ConsiderBattery": true,
+	"LowBatteryThreshold": 0.0,
+	"HighBatteryThreshold": 0.1,
+	"PreferLowerFrameRates": true
+}

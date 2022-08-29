@@ -1,0 +1,14 @@
+// Client settings for the PROD server.
+{
+	// Analytics settings
+	"AnalyticsApiKeyAndroid": "",
+	"AnalyticsApiKeyIOS": "",
+	"AnalyticsApiKeyPC": "",
+
+	// Client settings
+	"SaveGameFilename": "player-save-prod.dat",
+
+	// Server settings
+	"ServerBaseURL": "http://localhost:8080",
+	"ServerType": "PROD"
+}

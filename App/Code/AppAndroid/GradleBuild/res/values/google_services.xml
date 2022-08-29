@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Present in all applications -->
+    <string name="google_app_id" translatable="false"></string>
+
+    <!-- Present in applications with the appropriate services configured -->
+    <string name="gcm_defaultSenderId" translatable="false"></string>
+    <string name="default_web_client_id" translatable="false"></string>
+    <string name="firebase_database_url" translatable="false"></string>
+    <string name="google_api_key" translatable="false"></string>
+    <string name="google_crash_reporting_api_key" translatable="false"></string>
+    <string name="project_id" translatable="false"></string>
+
+</resources>

@@ -1,0 +1,14 @@
+// Client settings for the STAGING server.
+{
+	// Analytics settings
+	"AnalyticsApiKeyAndroid": "",
+	"AnalyticsApiKeyIOS": "",
+	"AnalyticsApiKeyPC": "",
+
+	// Client settings
+	"SaveGameFilename": "player-save-staging.dat",
+
+	// Server settings
+	"ServerBaseURL": "http://localhost:8080",
+	"ServerType": "STAGING"
+}

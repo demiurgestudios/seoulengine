@@ -1,0 +1,23 @@
+{
+	"Default":{
+		"Lighting":{
+			"Props":{
+				"Color":[1, 1, 1]
+			}
+		},
+		"Perspective":{
+			"DebugShowGridTexture":false,
+			"Factor":0.2,
+			"Horizon":0.4
+		},
+		"Shadow":{
+			"Alpha":0.337255,
+			"DebugForceOnePass":false,
+			"Enabled":true,
+			"LightPitch":62,
+			"LightYaw":13,
+			"PlanePitch":38,
+			"ResolutionScale":0
+		}
+	}
+}

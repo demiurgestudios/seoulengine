@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimCSVS.Package", "SlimCSVS.Package\SlimCSVS.Package.csproj", "{FC65195B-207E-49C4-ACCF-979A869BA423}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimCSVS.Template", "SlimCSVS.Template\SlimCSVS.Template.csproj", "{9D1B5EE6-52FF-4256-935E-90BD9EF58949}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC65195B-207E-49C4-ACCF-979A869BA423}.Debug|x64.ActiveCfg = Debug|x64
+		{FC65195B-207E-49C4-ACCF-979A869BA423}.Debug|x64.Build.0 = Debug|x64
+		{FC65195B-207E-49C4-ACCF-979A869BA423}.Release|x64.ActiveCfg = Release|x64
+		{FC65195B-207E-49C4-ACCF-979A869BA423}.Release|x64.Build.0 = Release|x64
+		{9D1B5EE6-52FF-4256-935E-90BD9EF58949}.Debug|x64.ActiveCfg = Debug|x64
+		{9D1B5EE6-52FF-4256-935E-90BD9EF58949}.Debug|x64.Build.0 = Debug|x64
+		{9D1B5EE6-52FF-4256-935E-90BD9EF58949}.Release|x64.ActiveCfg = Release|x64
+		{9D1B5EE6-52FF-4256-935E-90BD9EF58949}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AAA337E3-3366-49EC-9511-0EF4FFDFD864}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,18 @@
+{
+	"DefaultState": "Startup",
+	"Transitions": [
+		{ "NegativeConditions": ["GameLoaded"], "Target": "Startup", "Tag": "RestartTransition" },
+	],
+
+	"Startup": {
+		"Movies": ["Game::PatcherStatus", "Game::Patcher"],
+		"Transitions": [
+			{ "Conditions": ["GameLoaded"], "Target": "TestMovie" }
+		],
+		"EnableTransitions": { "RestartTransition": false }
+	},
+
+	"TestMovie": {
+		"Movies": ["GamePatcherTestMovie"]
+	},
+}

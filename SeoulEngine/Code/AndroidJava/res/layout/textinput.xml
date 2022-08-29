@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/OuterRelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:layout_marginLeft="4dp"
+	android:layout_marginRight="4dp"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:id="@+id/InnerRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+		android:layout_marginLeft="4dp"
+		android:layout_marginRight="4dp"
+		android:paddingTop="16dp"
+		android:background="@android:color/transparent"
+        tools:ignore="UselessParent"
+	  >
+
+        <Button
+			android:id="@+id/okButton"
+			android:text="@string/text_button_ok"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+			android:background="@drawable/rounded_corners"
+			android:textColor="#010101"
+			android:textSize="15sp"
+			></Button>
+
+        <com.demiurgestudios.seoul.EditTextBackEvent
+			android:id="@+id/textEntry"
+            android:layout_width="fill_parent"
+            android:layout_toLeftOf="@id/okButton"
+            android:layout_height="40dp"
+			android:layout_marginRight="6dp"
+			android:imeOptions="actionSend"
+			android:inputType="textFilter"
+			android:minEms="16"
+			android:singleLine="true"
+			android:selectAllOnFocus="true"
+            android:layout_toStartOf="@id/okButton"
+			android:background="@drawable/rounded_corners"
+			android:textColor="#010101"
+			>
+        </com.demiurgestudios.seoul.EditTextBackEvent>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,118 @@
+{
+	"Application": {
+		// On Android, use the hardware scalar at resolutions above 1080 x 1920.
+		"AndroidMaxBackBufferHeight": 1920,
+
+		// App name/not public facing.
+		"ApplicationName": "SETestApp",
+
+		// Company used in some configs.
+		"CompanyName": "Demiurge Studios",
+
+		// Fallback audio project for the entire game.
+		// "DefaultAudioProject": "content://Authored/Sound/App.fspro",
+
+		"DefaultUTCOffset": 4,
+
+		"DefaultMinutesBeforeCountingNewLogin": 20,
+
+		// True to start the game in fullscreen mode on PC.
+		"Fullscreen": false,
+
+		// If true, hitting the maximize button will fullscreen the game on PC.
+		"FullscreenOnMaximize": false,
+
+		// HTTPManager - minimum delay between resend attempts
+		"HTTPResendMinTimeInSeconds": 0.5,
+
+		// HTTPManager - maximum delay between resend attempts
+		"HTTPResendMaxTimeInSeconds": 15,
+
+		// HTTPManager - each resend duration increases by this multiplier.
+		// Never lower than 1; rarely equal or close to 1. A value of 1 means
+		// the resend delay does not increase between attempts.
+		"HTTPResendBaseMultiplier": 1.5,
+
+		// HTTPManager - Each resend is modified by this factor.
+		// A 1-second resend delay with a random factor of 0.5 will
+		// delay for 0.5 to 1.5 seconds.
+		"HTTPResendRandomMultiplier": 0.5,
+
+		// HTTPManager - Each HTTP domain is limited to a certain number of requests per second.
+		// Domains start out with a "budget" of this many requests, so they're allowed to
+		// issue a short-term spike. If they sustain the spike for too long, rate limiting
+		// kicks in.
+		"HTTPDomainRequestBudgetInitial": 4,
+		// HTTPManager - Each domain's request budget increases by one every N seconds, up
+		// to the initial value.
+		"HTTPDomainRequestBudgetSecondsPerIncrease": 1,
+
+		// LocManager token used for displaying a localized app name on PC.
+		"LocalizedApplicationToken": "save_game_title",
+
+		// Script engine configuration.
+		"MainScriptFileName": "Main.lua",
+
+		// If true, audio will be silencted on PC when the app is in the background.
+		"MuteAudioWhenInactive": false,
+
+		// If defined, sets a preferred rendering backend on PC. Valid values
+		// are: "D3D11"
+		"PCRenderBackend": "D3D11",
+
+		// If defined, sets a default fixed aspect ratio mode.
+		// Valid values are:
+		// - "Off"
+		// - "4:5"
+		// - "3:4"
+		// - "2:3"
+		// - "10:16"
+		// - "3:5"
+		// - "9:16"
+		// - "9:21"
+		// - "5:4"
+		// - "4:3"
+		// - "3:2"
+		// - "16:10"
+		// - "5:3"
+		// - "16:9"
+		// - "21:9"
+		"FixedAspectRatioModePC": "9:16",
+
+		// Similar to FixedAspectRatioMode*, except only kicks in
+		// when the ratio is below this value (likewise,
+		// MaxAspectRatio should be used for widescreen style).
+		"MinAspectRatioAndroid": "9:16",
+		"MinAspectRatioBoxedAndroid": false,
+		"MinAspectRatioIOS": "9:16",
+		"MinAspectRatioBoxedIOS": false,
+		"MinAspectRatioPC": "9:16",
+
+		// Control values for the starting size and location of the render
+		// viewport on PC.
+		"ViewportX": 5,
+		"ViewportY": 25,
+		"ViewportWidth": 1280,
+		"ViewportHeight": 720,
+
+		//"ViewportX": 600,
+		//"ViewportY": 50,
+		//"ViewportWidth": 576,
+		//"ViewportHeight": 1024,
+
+		// Enable/disable vblank sync on PC.
+		"Vsync": true,
+
+		// If true, the game will not take exclusive ownership of the
+		// display in fullscreen on PC, allowing convenient task switching.
+		"WindowedFullscreen": true,
+
+		// FilePath to the game's script project.
+		"ScriptProject": "content://Authored/Scripts/Scripts.csproj",
+
+		// Use this to point your local client at a different server (uncomment
+		// to point at a local VM, or update to point at a different environment,
+		// e.g. staging/oqa).
+		//"ClientSettings": "config://ClientSettingsLocal/ClientSettings.json"
+	}
+}

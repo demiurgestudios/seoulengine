@@ -1,0 +1,7 @@
+# See discussion: https://www.freelists.org/post/luajit/Avoid-invalid-memory-reads
+#
+# str_fastcmp overflows by at most 3 bytes,
+# this is safe behavior on all of our target
+# platforms.
+fun:*str_fastcmp*
+fun:*lj_str_new*

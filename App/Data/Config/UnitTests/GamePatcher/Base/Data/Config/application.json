@@ -1,0 +1,27 @@
+{
+	"Application": {
+		"AndroidMaxBackBufferHeight": 1920,
+		"ApplicationName": "GamePatcherUnitTest",
+		"CompanyName": "Demiurge Studios",
+
+		// Fallback audio project for the entire game.
+		// "DefaultAudioProject": "content://Authored/Sound/App.fspro",
+
+		"Fullscreen": false,
+		"FullscreenOnMaximize": false,
+		"HTTPMaxResendTimeInSeconds": 7.5,
+		"HTTPRandomResendTimeInSeconds": 1.0,
+		"LoadingTextureFadeTimeInSeconds": 0.25,
+		"LocalizedApplicationToken": "save_game_title",
+		"MainScriptFileName": "Main.lua",
+		"MuteAudioWhenInactive": false,
+		"PCRenderBackend": "D3D11",
+		"FixedAspectRatioModePC": "9:16",
+		"ViewportX": 5,
+		"ViewportY": 25,
+		"ViewportWidth": 1280,
+		"ViewportHeight": 720,
+		"Vsync": true,
+		"WindowedFullscreen": true,
+	}
+}

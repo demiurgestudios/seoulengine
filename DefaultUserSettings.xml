@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<MoriartyUserSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchTargets>
+    <LaunchTargetSettings xsi:type="AndroidLaunchTargetSettings">
+      <Name>Android</Name>
+    </LaunchTargetSettings>
+    <LaunchTargetSettings xsi:type="IOSLaunchTargetSettings">
+      <Name>iOS</Name>
+    </LaunchTargetSettings>
+  </LaunchTargets>
+  <ActiveTarget>Android</ActiveTarget>
+</MoriartyUserSettings>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts.csproj", "{35F6D8BB-3868-136B-9024-2231859FA5E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Developer|x64 = Developer|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35F6D8BB-3868-136B-9024-2231859FA5E4}.Debug|x64.ActiveCfg = Debug|x64
+		{35F6D8BB-3868-136B-9024-2231859FA5E4}.Debug|x64.Build.0 = Debug|x64
+		{35F6D8BB-3868-136B-9024-2231859FA5E4}.Developer|x64.ActiveCfg = Developer|x64
+		{35F6D8BB-3868-136B-9024-2231859FA5E4}.Developer|x64.Build.0 = Developer|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CB980F1-ECA4-4FED-828D-C1B6CCA04DFF}
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Scripts.csproj
+		SccLocalPath1 = .
+	EndGlobalSection
+EndGlobal

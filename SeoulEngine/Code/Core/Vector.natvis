@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="Seoul::Vector&lt;*&gt;">
+		<DisplayString>Vector(size={m_Buffer.m_pEnd-m_Buffer.m_pBegin,i}, capacity={m_Buffer.m_pEndCapacity-m_Buffer.m_pBegin,i})</DisplayString>
+		<Expand>
+			<ArrayItems>
+				<Size>m_Buffer.m_pEnd-m_Buffer.m_pBegin</Size>
+				<ValuePointer>m_Buffer.m_pBegin</ValuePointer>
+			</ArrayItems>
+		</Expand>
+	</Type>
+</AutoVisualizer>

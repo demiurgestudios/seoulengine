@@ -1,0 +1,53 @@
+INSTRUCTIONS
+
+Commands will automatically update the next time you run a Developer
+PC build of AppPC. If this fails, or if you would like to update
+these commands manually, follow the steps below.
+
+To Add Commands to Adobe Animate:
+  1. First close Adobe Animate.
+  2. "Custom Commands" need to live in a particular place. Open Windows Explorer and paste:
+      %userprofile%\AppData\Local\Adobe\Animate CC 2019\en_US\Configuration\Commands
+
+      (AppData\Local\Adobe\Animate CC 2019\en_US\Configuration\Commands)
+  3. Copy in each JSFL files as desired
+  4. Launch Animate
+
+To Run Commands:
+  "Actually Update Image(s)" Command:
+    1. Select one or more images in your Flash Library with a absolute path.
+    2. Then click within the File Bar: Commands -> Actually Update Images.
+    3. A prompt will appear, "One of more library items already exist in the document"
+    4. Select "Replace exisiting items" and hit OK.
+
+  "Delete Unused" Command:
+    1. Click within the File Bar: Commands -> Delete Unused.
+    2. All items and folders will be removed
+
+  "Find Library Item Path" Command:
+    1. Select a single item in your library
+    2. Then click within the File Bar: Commands -> Find Library Item Path.
+    3. Two path lists will appear. One which shows the layers to navigate through,
+       and the other which shows the instance names of the movie clips
+
+  "Fix ActionScript" Command:
+    1. Click within the File Bar: Commands -> Fix ActionScript.
+    2. Generate .as stubs for any classes missing one. This command
+       is also run when the "Fix Sharing" Command is run.
+
+  "Fix Sharing" Command:
+    1. Click within the File Bar: Commands -> Fix Sharing.
+    2. Attempts to resolve a common error where a Movie Clip exported for AS/RS
+       has been copied instead of imported
+
+  "Update Shared" Command:
+    1. Click within the File Bar: Commands -> Update Shared
+    2. A robust version of "Authortime Sharing" update, attempts to refresh all
+       shared assets in Adobe Animate (vs. at runtime). Likely to fail if the
+       file being updated has duplicate assets.
+
+Further Documentation:
+https://docs.google.com/document/d/1IiSb530bxvTM3OKR2ieLdyggY3bNmUs5QU-IDbaF55Q/edit#heading=h.8yq4ivb7uqr3
+
+To Author Commands:
+https://help.adobe.com/archive/en_US/flash/cs5/flash_cs5_extending.pdf

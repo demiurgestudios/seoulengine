@@ -1,0 +1,77 @@
+{
+	"DefaultConfig": {
+		"DepthStencilSurfaces": {},
+
+		"RenderTargets": {},
+
+		"RenderSurfaces": {
+			"BackBuffer": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "BackBuffer"
+			}
+		},
+
+		"RenderPasses": [
+			{
+				"Name": "UI",
+				"TrackRenderStats": true,
+				"ClearFlags": ["Color", "Depth"],
+				"ClearColor": [0.0, 0.0, 0.0, 1.0],
+				"ClearDepth": 1.0,
+				"PassRootType": "UI",
+				"Surface": "BackBuffer",
+
+				// Unused, included to preload for ColorBlindConfig.
+				"PassEffect": "Authored/Effects/PostProcess/ColorBlindVisualization.fx",
+			}
+		]
+	},
+	"ColorBlindConfig": {
+		"DepthStencilSurfaces": {},
+
+		"RenderTargets": {
+			"ColorTarget": {
+				"HeightFactor": 1.0,
+				"HeightProportionalToBackBuffer": true,
+				"SameFormatAsBackBuffer": true,
+				"WidthFactor": 1.0,
+				"WidthProportionalToBackBuffer": true
+			}
+		},
+
+		"RenderSurfaces": {
+			"BackBuffer": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "BackBuffer"
+			},
+			"ColorSurface": {
+				"DepthStencil": "BackBufferDepth",
+				"RenderTarget": "ColorTarget"
+			}
+		},
+
+		"RenderPasses": [
+			{
+				"Name": "UI",
+				"TrackRenderStats": true,
+				"ClearFlags": ["Color", "Depth"],
+				"ClearColor": [0.0, 0.0, 0.0, 1.0],
+				"ClearDepth": 1.0,
+				"PassRootType": "UI",
+				"ResolveRenderTarget": true,
+				"Surface": "ColorSurface"
+			},
+			{
+				"Name": "ColorBlindViz",
+				"TrackRenderStats": true,
+				"ClearFlags": ["Color"],
+				"ClearColor": [0.0, 0.0, 0.0, 1.0],
+				"ClearDepth": 1.0,
+				"PassEffect": "Authored/Effects/PostProcess/ColorBlindVisualization.fx",
+				"PassRootType": "ColorBlindViz",
+				"Surface": "BackBuffer",
+				"SourceTarget": "ColorTarget"
+			}
+		]
+	}
+}

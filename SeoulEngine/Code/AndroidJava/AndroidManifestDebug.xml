@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.demiurgestudios.seoul" >
+    <!-- Used for automated testing hooks, place the app back in the foreground. -->
+    <uses-permission android:name="android.permission.REORDER_TASKS"/>
+</manifest>

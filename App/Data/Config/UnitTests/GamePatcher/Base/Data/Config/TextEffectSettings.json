@@ -1,0 +1,9 @@
+{
+	"BlackOutline":{
+		"ShadowBlur":0,
+		"ShadowColor":[0, 0, 0, 1],
+		"ShadowEnable":true,
+		"ShadowOffset":[0, 0],
+		"ShadowOutlineWidth":36
+	},
+}

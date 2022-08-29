@@ -1,0 +1,494 @@
+// Copyright (c) Demiurge Studios, Inc.
+// 
+// This source code is licensed under the MIT license.
+// Full license details can be found in the LICENSE file
+// in the root directory of this source tree.
+
+//------------------------------------------------------------------------------
+// Output paths
+//------------------------------------------------------------------------------
+.InputBase  = 'Code'
+.BinBase    = 'Binaries'
+.LibBase    = 'Lib'
+.ObjBase    = 'Intermediate'
+
+//------------------------------------------------------------------------------
+// SeoulEngine
+//------------------------------------------------------------------------------
+#include '../SeoulEngine/SeoulEngine.bff'
+
+//------------------------------------------------------------------------------
+// App
+//------------------------------------------------------------------------------
+.LocalConfigs     = { .SeoulEngineDebug, .SeoulEngineDeveloper, .SeoulEngineProfiling, .SeoulEngineShip }
+.LocalGradleBuild = '$InputBase$/AppAndroid/GradleBuild'
+.LocalProjectsEngine_PC = {
+    'Animation', 'Animation2D', 'Animation3D',
+    'Content', 'Core', 'D3DCommon', 'D3D11', 'DevUI',
+    'EffectConverter', 'Engine', 'Events', 'Falcon',
+    'FMODSound', 'Fx', 'FxStudio', 'Game', 'HAL', 'HTTP',
+    'Jobs', 'Navigation', 'Network', 'NullGraphics',
+    'NullPlatform', 'PC', 'Physics', 'Reflection',
+    'Rendering', 'Scene', 'Script', 'ScriptAnimation2D',
+    'ScriptEngine', 'ScriptMotion', 'ScriptNetwork',
+    'ScriptScene', 'ScriptUI', 'Settings', 'Sound',
+    'Scc', 'UI', 'UnitTesting', 'UnitTests', 'Video',
+}
+.LocalProjectsExtern_PC = {
+    'bounce', 'curl', 'fx11',
+#if SEOUL_WITH_FX_STUDIO
+    'FxStudioRuntime',
+#endif
+    'imgui', 'jemalloc', 'lua_protobuf', 'lz4',
+    'miniz', 'mongoose-mit', 'nghttp2',
+    'spng', 'tess2', 'wjcryptlib', 'zlib', 'zstd',
+}
+.LocalProjects_PC = .LocalProjectsEngine_PC + .LocalProjectsExtern_PC
+
+//------------------------------------------------------------------------------
+// Android - App dynamic libraries
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    .LocalPlatform       = .SeoulPlatformAndroid
+    .LocalArchs          = .'$LocalPlatform$Archs'
+    .LocalGradleLibsBase = '$LocalGradleBuild$/libs-$LocalConfig$'
+
+    ForEach(.LocalArch in .LocalArchs) {
+        .LocalBinBase       = '$BinBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalLibBase       = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalNamePrefix    = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+        .LocalObjBase       = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalDebugPrefix   = '$LocalPlatform$-Debug-$LocalArch$'
+        .LocalReleasePrefix = '$LocalPlatform$-Release-$LocalArch$'
+
+        // Local context for GenExecutable().
+        #include '../SeoulEngine/CaptureLocalCtxt.bff'
+
+        //------------------------------------------------------------------------------
+        // C/C++ executables and DLLs
+        //------------------------------------------------------------------------------
+        // AppAndroid
+        {
+            .TmpArgs = [
+                .LocalName = 'AppAndroid'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Android', '$SeoulEngineBase$/Engine',
+                    '$SeoulEngineBase$/Content', '$SeoulEngineBase$/Core',
+                    '$SeoulEngineBase$/Events', '$SeoulEngineBase$/Falcon',
+                    '$SeoulEngineBase$/Fx', '$SeoulEngineBase$/FxStudio',
+                    '$SeoulEngineBase$/Game', '$SeoulEngineBase$/HAL',
+                    '$SeoulEngineBase$/HTTP', '$SeoulEngineBase$/Jobs',
+                    '$SeoulEngineBase$/OGLES2', '$SeoulEngineBase$/Reflection',
+                    '$SeoulEngineBase$/Rendering', '$SeoulEngineBase$/Script',
+                    '$SeoulEngineBase$/Settings', '$SeoulEngineBase$/Sound',
+                    '$SeoulEngineBase$/Scc', '$SeoulEngineBase$/UI',
+                    '$SeoulEngineBase$/UnitTesting', '$SeoulEngineBase$/UnitTests',
+
+                    '$ExternalBase$/Android/native_app_glue',
+                }
+
+                // Linker settings
+                .ArgDLL = true
+                .ArgExterns = {
+                    'openssl/libs/Android/$LocalArch$',
+                    'FMOD/Android/api/core/lib/$LocalArch$',
+                    'FMOD/Android/api/studio/lib/$LocalArch$',
+                    'luajit/lib/Android/Release/$LocalArch$'
+                }
+                .ArgLibraries = {
+                    'Android', 'Animation', 'Animation2D', 'Animation3D',
+                    'Content', 'Core', 'DevUI', 'EffectConverter', 'Engine',
+                    'Events', 'Falcon', 'FMODSound', 'Fx', 'FxStudio', 'Game',
+                    'HAL', 'HTTP', 'Jobs', 'Navigation', 'Network',
+                    'NullGraphics', 'NullPlatform', 'OGLES2', 'Physics',
+                    'Reflection', 'Rendering', 'Scene', 'Script', 'ScriptAnimation2D',
+                    'ScriptEngine', 'ScriptMotion', 'ScriptNetwork',
+                    'ScriptScene', 'ScriptUI', 'Settings', 'Sound', 'Scc', 'UI',
+                    'UnitTesting', 'UnitTests', 'Video',
+
+                    'AndroidSupport', 'bounce', 'breakpad', 'curl',
+#if SEOUL_WITH_FX_STUDIO
+                    'FxStudioRuntime',
+#endif
+                    'imgui', 'jemalloc', 'lua_protobuf', 'lz4',
+                    'miniz', 'mongoose-mit', 'nghttp2', 'spng',
+                    'tess2', 'wjcryptlib', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = {
+#if SEOUL_WITH_FMOD
+                    'fmod', 'fmodstudio',
+#endif
+
+                    'luajit', 'crypto', 'ssl',
+
+                    'android', 'c', 'm', 'dl', 'log',
+                    'EGL', 'GLESv2',
+                }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+
+            //------------------------------------------------------------------------------
+            // Strip the .so (generate a .so without debug symbols)
+            //------------------------------------------------------------------------------
+            Exec('$LocalNamePrefix$-AppAndroid-Strip') {
+                // Select the strip toolchain.
+                Using(.'$LocalNamePrefix$-Strip')
+
+                .ExecInput            = '$LocalBinBase$/libAppAndroid.so'
+                .ExecOutput           = '$LocalBinBase$/libAppAndroid-stripped.so'
+                .PreBuildDependencies = { '$LocalNamePrefix$-AppAndroid' }
+            }
+
+            //------------------------------------------------------------------------------
+            // Copy results to the appropriate place to AppAndroid/Code
+            // for the Gradle build.
+            //------------------------------------------------------------------------------
+            .LocalGradleBase     = '$LocalGradleLibsBase$/$LocalArch$'
+            Copy('$LocalNamePrefix$-AppAndroid-Copy1') {
+                .Source               = '$LocalBinBase$/libAppAndroid-stripped.so'
+                .Dest                 = '$LocalGradleBase$/libAppAndroid.so'
+                .PreBuildDependencies = '$LocalNamePrefix$-AppAndroid-Strip'
+            }
+#if SEOUL_WITH_FMOD
+            Copy('$LocalNamePrefix$-AppAndroid-FMOD') {
+                .Source = '$ExternalBase$/FMOD/Android/api/core/lib/$LocalArch$/libfmod.so'
+                .Dest   = '$LocalGradleBase$/libfmod.so'
+            }
+            Copy('$LocalNamePrefix$-AppAndroid-FMODStudio') {
+                .Source = '$ExternalBase$/FMOD/Android/api/studio/lib/$LocalArch$/libfmodstudio.so'
+                .Dest   = '$LocalGradleBase$/libfmodstudio.so'
+            }
+#endif
+            Alias('$LocalNamePrefix$-AppAndroid-Copy') {
+                .Targets = {
+                    '$LocalNamePrefix$-AppAndroid-Copy1',
+#if SEOUL_WITH_FMOD
+                    '$LocalNamePrefix$-AppAndroid-FMOD',
+                    '$LocalNamePrefix$-AppAndroid-FMODStudio',
+#endif
+                }
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------
+    // Clean Targets
+    //------------------------------------------------------------------------------
+    RemoveDir('Android-$LocalConfig$-Clean') {
+        .RemovePaths = {}
+        ForEach(.LocalArch in .AndroidArchs) {
+            ^RemovePaths + '$ObjBase$/Android/$LocalConfig$/$LocalArch$'
+        }
+        .RemovePaths + '$ObjBase$/Gradle/$LocalConfig$'
+    }
+}
+
+//------------------------------------------------------------------------------
+// Linux - App executables
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    .LocalPlatform       = .SeoulPlatformLinux
+    .LocalArchs          = .'$LocalPlatform$Archs'
+
+    ForEach(.LocalArch in .LocalArchs) {
+        .LocalBinBase       = '$BinBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalLibBase       = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalNamePrefix    = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+        .LocalObjBase       = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalDebugPrefix   = '$LocalPlatform$-Debug-$LocalArch$'
+        .LocalReleasePrefix = '$LocalPlatform$-Release-$LocalArch$'
+
+        // Local context for GenExecutable().
+        #include '../SeoulEngine/CaptureLocalCtxt.bff'
+
+        //------------------------------------------------------------------------------
+        // C/C++ executables
+        //------------------------------------------------------------------------------
+        // AppLinux
+        {
+            .TmpArgs = [
+                .LocalName = 'AppLinux'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Content',
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/Engine',
+                    '$SeoulEngineBase$/Events', '$SeoulEngineBase$/Falcon',
+                    '$SeoulEngineBase$/Fx', '$SeoulEngineBase$/FxStudio',
+                    '$SeoulEngineBase$/Game', '$SeoulEngineBase$/HAL',
+                    '$SeoulEngineBase$/HTTP', '$SeoulEngineBase$/Jobs',
+                    '$SeoulEngineBase$/NullPlatform', '$SeoulEngineBase$/OGLES2',
+                    '$SeoulEngineBase$/Reflection', '$SeoulEngineBase$/Rendering',
+                    '$SeoulEngineBase$/Script', '$SeoulEngineBase$/Settings',
+                    '$SeoulEngineBase$/Sound', '$SeoulEngineBase$/Scc',
+                    '$SeoulEngineBase$/UI',
+                    '$SeoulEngineBase$/UnitTesting', '$SeoulEngineBase$/UnitTests',
+                }
+
+                // Linker settings
+                .ArgExterns = {
+                    'openssl/libs/Linux/$LocalArch$',
+                    'luajit/lib/Linux/ReleaseGC64', // TODO:
+                }
+                .ArgLibraries = {
+                    'Reflection', 'Game', 'UnitTests', 'ScriptAnimation2D',
+                    'ScriptEngine', 'ScriptMotion', 'ScriptNetwork',
+                    'ScriptScene', 'ScriptUI', 'Scene', 'UI',
+                    'Animation', 'Animation2D', 'Animation3D',
+                    'DevUI',  'FxStudio', 'Navigation', 'Network',
+                    'NullPlatform', 'NullGraphics', 'Physics',
+                    'Script', 'Video', 'Engine', 'Rendering', 'HAL',
+                    'Settings', 'Sound', 'Content', 'Jobs', 'HTTP',
+                    'Events', 'Falcon', 'EffectConverter', 'Fx', 'Scc',
+                    'UnitTesting', 'Reflection', 'Core',
+
+                    'bounce', 'curl',
+#if SEOUL_WITH_FX_STUDIO
+                    'FxStudioRuntime',
+#endif
+                    'imgui', 'jemalloc', 'lua_protobuf', 'lz4',
+                    'miniz', 'mongoose-mit', 'nghttp2', 'spng',
+                    'tess2', 'wjcryptlib', 'zlib', 'zstd',
+                }
+                .ArgExternLibs = {
+                    'luajit', 'ssl', 'crypto',
+
+                    'm', 'dl', 'pthread',
+                }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+
+            //------------------------------------------------------------------------------
+            // Strip the binary
+            //------------------------------------------------------------------------------
+            Exec('$LocalNamePrefix$-AppLinux-Strip') {
+                // Select the strip toolchain.
+                Using(.'$LocalNamePrefix$-Strip')
+
+                .ExecInput            = '$LocalBinBase$/AppLinux'
+                .ExecOutput           = '$LocalBinBase$/AppLinux-stripped'
+                .PreBuildDependencies = { '$LocalNamePrefix$-AppLinux' }
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------
+    // Clean Targets
+    //------------------------------------------------------------------------------
+    RemoveDir('Linux-$LocalConfig$-Clean') {
+        .RemovePaths = {}
+        ForEach(.LocalArch in .LinuxArchs) {
+            ^RemovePaths + '$BinBase$/Linux/$LocalConfig$/$LocalArch$'
+            ^RemovePaths + '$ObjBase$/Linux/$LocalConfig$/$LocalArch$'
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// PC - App executables and dynamic libraries (C++ DLL and C# assemblies)
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    .LocalPlatform = .SeoulPlatformPC
+    .LocalArchs = .'$LocalPlatform$Archs'
+    ForEach(.LocalArch in .LocalArchs) {
+        .LocalBinBase       = '$BinBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalLibBase       = '$LibBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalNamePrefix    = '$LocalPlatform$-$LocalConfig$-$LocalArch$'
+        .LocalObjBase       = '$ObjBase$/$LocalPlatform$/$LocalConfig$/$LocalArch$'
+        .LocalDebugPrefix   = '$LocalPlatform$-Debug-$LocalArch$'
+        .LocalReleasePrefix = '$LocalPlatform$-Release-$LocalArch$'
+
+        // Local context for GenExecutable().
+        #include '../SeoulEngine/CaptureLocalCtxt.bff'
+
+        //------------------------------------------------------------------------------
+        // C/C++ executables and DLLs
+        //------------------------------------------------------------------------------
+        // AppPC
+        {
+            .TmpArgs = [
+                .LocalName = 'AppPC'
+
+                // Compilation settings
+                .ArgIncludes = {
+                    '$SeoulEngineBase$/Content',
+                    '$SeoulEngineBase$/Core', '$SeoulEngineBase$/D3DCommon',
+                    '$SeoulEngineBase$/Engine', '$SeoulEngineBase$/Events',
+                    '$SeoulEngineBase$/Falcon', '$SeoulEngineBase$/Fx',
+                    '$SeoulEngineBase$/Game', '$SeoulEngineBase$/HAL',
+                    '$SeoulEngineBase$/HTTP', '$SeoulEngineBase$/Jobs',
+                    '$SeoulEngineBase$/NullPlatform', '$SeoulEngineBase$/PC',
+                    '$SeoulEngineBase$/Reflection', '$SeoulEngineBase$/Rendering',
+                    '$SeoulEngineBase$/Script', '$SeoulEngineBase$/Settings',
+                    '$SeoulEngineBase$/Sound', '$SeoulEngineBase$/Scc',
+                    '$SeoulEngineBase$/UI', '$SeoulEngineBase$/UnitTesting',
+                    '$SeoulEngineBase$/UnitTests',
+                }
+
+                // Linker settings
+                .ArgExterns   = {
+                    'openssl/libs/Windows/x64',
+                    'FMOD/Windows/api/core/lib/x64',
+                    'FMOD/Windows/api/studio/lib/x64',
+                    'luajit/lib/x64/ReleaseGC64',
+                    'Steamworks/redistributable_bin/win64',
+                }
+                .ArgLibraries = .LocalProjects_PC
+                .ArgExternLibs = {
+                    'Ws2_32', 'version', 'dbghelp', 'd3dcompiler', 'd3d9',
+                    'd3d11', 'dxgi',
+#if SEOUL_WITH_FMOD
+                    'fmod_vc', 'fmodstudio_vc',
+#endif
+                    'lua51', 'libeay32', 'ssleay32', 'XInput'
+                }
+            ]
+            GenExecutable(.LocalCtxt, .TmpArgs)
+        }
+
+        //------------------------------------------------------------------------------
+        // Dependency copies.
+        //------------------------------------------------------------------------------
+        Copy('$LocalNamePrefix$-AppPC-DepCopy') {
+            // Common sources, the same for all builds.
+            .Source = {
+#if SEOUL_WITH_FMOD
+                '$ExternalBase$/FMOD/Windows/api/core/lib/x64/fmod.dll',
+                '$ExternalBase$/FMOD/Windows/api/studio/lib/x64/fmodstudio.dll',
+#endif
+            }
+            .Dest = '$LocalBinBase$/'
+        }
+
+        //------------------------------------------------------------------------------
+        // Clean Targets
+        //------------------------------------------------------------------------------
+        RemoveDir('PC-$LocalConfig$-Clean') {
+            .RemovePaths = {
+                '$LocalBinBase$',
+                '$LocalObjBase$',
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+// Android Targets
+//------------------------------------------------------------------------------
+ForEach(.LocalArch in .AndroidArchs) {
+    ForEach(.LocalConfig in .LocalConfigs) {
+        Alias('Android-$LocalConfig$-$LocalArch$') {
+            .Targets = {
+                'Android-$LocalConfig$-$LocalArch$-AppAndroid-Copy',
+            }
+        }
+    }
+}
+
+ForEach(.LocalArch in .AndroidArchs) {
+    Alias('Android-$LocalArch$-All') {
+        .Targets = {}
+        ForEach(.LocalConfig in .LocalConfigs) {
+            ^Targets + 'Android-$LocalConfig$-$LocalArch$'
+        }
+    }
+}
+
+Alias('Android-All') {
+    .Targets = {}
+    ForEach(.LocalArch in .AndroidArchs) {
+        ^Targets + 'Android-$LocalArch$-All'
+    }
+}
+
+//------------------------------------------------------------------------------
+// Linux Targets
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    Alias('Linux-$LocalConfig$') {
+        .Targets = {
+            'Linux-$LocalConfig$-x64-AppLinux-Strip'
+        }
+    }
+}
+
+Alias('Linux-All') {
+    .Targets = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        ^Targets + 'Linux-$LocalConfig$'
+    }
+}
+
+//------------------------------------------------------------------------------
+// PC Targets
+//------------------------------------------------------------------------------
+ForEach(.LocalConfig in .LocalConfigs) {
+    Alias('PC-$LocalConfig$') {
+        .Targets = {
+            'PC-$LocalConfig$-x64-AppPC',
+            'PC-$LocalConfig$-x64-AppPC-DepCopy'
+        }
+    }
+}
+
+Alias('PC-All') {
+    .Targets = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        ^Targets + 'PC-$LocalConfig$'
+    }
+}
+
+//------------------------------------------------------------------------------
+// Utility/Convenience Targets
+//------------------------------------------------------------------------------
+Alias('All') {
+    .Targets = {
+        'Android-All',
+        'PC-All',
+    }
+}
+
+//------------------------------------------------------------------------------
+// .sln and .vcxproj generation
+//------------------------------------------------------------------------------
+VSSolution('GenSln') {
+    .SolutionOutput = 'App.sln'
+
+    // Build configurations.
+    .SolutionConfigs = {}
+    ForEach(.LocalConfig in .LocalConfigs) {
+        .TmpConfig = [
+            .Config   = .LocalConfig
+            .Platform = 'x64'
+        ]
+        ^SolutionConfigs + .TmpConfig
+    }
+
+    // Solution folders
+    .AppFolder = [
+        .Path = 'App'
+        .Projects = { 'AppPC-vcxproj' }
+    ]
+    .EngineFolder = [
+        .Path = 'Engine'
+        .Projects = {}
+        ForEach(.LocalProject in .LocalProjectsEngine_PC) {
+            ^Projects + '$LocalProject$-vcxproj'
+        }
+    ]
+    .ExternFolder = [
+        .Path = 'External'
+        .Projects = {}
+        ForEach(.LocalProject in .LocalProjectsExtern_PC) {
+            ^Projects + '$LocalProject$-vcxproj'
+        }
+    ]
+    .SolutionFolders = { .AppFolder, .EngineFolder, .ExternFolder }
+
+    // Miscellaneous config.
+    .SolutionBuildProject               = 'AppPC-vcxproj'
+    .SolutionMinimumVisualStudioVersion = .VS_Version
+    .SolutionVisualStudioVersion        = .VS_Version
+}
